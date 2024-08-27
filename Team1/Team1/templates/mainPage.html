@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>운동 센터 검색</title>
+    <style>
+        /* 기본 CSS 스타일 */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .dropdown, .search-button {
+            margin-right: 10px;
+        }
+        .result-item {
+            margin: 20px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>서비스명</h1>
+    <div>
+        <select id="dong" class="dropdown">
+            <option value="">동/읍 선택</option>
+            <option value="효창동">효창동</option>
+            <option value="이촌1동">이촌1동</option>
+            <option value="이촌2동">이촌2동</option>
+            <option value="한강로동">한강로동</option>
+            <option value="남영동">남영동</option>
+            <option value="이태원1동">이태원1동</option>
+            <option value="한남동">한남동</option>
+            <!-- 다른 동/읍 옵션 추가 -->
+        </select>
+        <select id="exercise" class="dropdown">
+            <option value="">운동 종류 선택</option>
+            <option value="PT&헬스">PT&헬스</option>
+            <option value="필라테스">필라테스</option>
+            <option value="요가">요가</option>
+            <option value="크로스핏">크로스핏</option>
+            <option value="필라테스">골프</option>
+            <option value="필라테스">복싱</option>
+            <option value="필라테스">수영</option>
+            <option value="필라테스">클라이밍</option>
+            <!-- 다른 운동 종류 옵션 추가 -->
+        </select>
+        <button id="searchButton" class="search-button">검색</button>
+    </div>
+
+    <div id="results">
+        <!-- 검색 결과가 여기에 표시됩니다 -->
+    </div>
+
+    <script>
+        // 페이지가 처음 로드될 때 데이터를 가져옵니다.
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch(`/mainPage/filter_centers/`)
+                .then(response => response.json())
+                .then(data => {
+                    const resultsDiv = document.getElementById('results');
+                    resultsDiv.innerHTML = ''; 
+    
+                    if (data.length > 0) {
+                        data.forEach(center => {
+                            const resultItem = document.createElement('div');
+                            resultItem.classList.add('result-item');
+                            resultItem.innerHTML = `
+                                <h3>${center['센터 이름']}</h3>
+                                <p>주소: ${center['주소']}</p>
+                                <p>전화번호: ${center['전화번호']}</p>
+                            `;
+                            resultsDiv.appendChild(resultItem);
+                        });
+                    } else {
+                        resultsDiv.innerHTML = '<p>검색 결과가 없습니다.</p>';
+                    }
+                });
+        });
+    
+        document.getElementById('searchButton').addEventListener('click', function() {
+            const dong = document.getElementById('dong').value;
+            const exercise = document.getElementById('exercise').value;
+    
+            fetch(`/mainPage/filter_centers/?dong=${dong}&exercise=${exercise}`)
+                .then(response => response.json())
+                .then(data => {
+                    const resultsDiv = document.getElementById('results');
+                    resultsDiv.innerHTML = ''; 
+    
+                    if (data.length > 0) {
+                        data.forEach(center => {
+                            const resultItem = document.createElement('div');
+                            resultItem.classList.add('result-item');
+                            resultItem.innerHTML = `
+                                <h3>${center['센터 이름']}</h3>
+                                <p>주소: ${center['주소']}</p>
+                                <p>전화번호: ${center['전화번호']}</p>
+                            `;
+                            resultsDiv.appendChild(resultItem);
+                        });
+                    } else {
+                        resultsDiv.innerHTML = '<p>검색 결과가 없습니다.</p>';
+                    }
+                });
+        });
+    </script>    
+</body>
+</html>
