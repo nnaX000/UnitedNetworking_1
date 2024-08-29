@@ -19,10 +19,15 @@
             border: 1px solid #ddd;
             border-radius: 5px;
         }
+        .result-item img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
-    <h1>서비스명</h1>
+    <h1>운동 센터 검색</h1>
     <div>
         <select id="dong" class="dropdown">
             <option value="">동/읍 선택</option>
@@ -33,6 +38,7 @@
             <option value="남영동">남영동</option>
             <option value="이태원1동">이태원1동</option>
             <option value="한남동">한남동</option>
+            <option value="청파동">청파동</option>
             <!-- 다른 동/읍 옵션 추가 -->
         </select>
         <select id="exercise" class="dropdown">
@@ -41,10 +47,10 @@
             <option value="필라테스">필라테스</option>
             <option value="요가">요가</option>
             <option value="크로스핏">크로스핏</option>
-            <option value="필라테스">골프</option>
-            <option value="필라테스">복싱</option>
-            <option value="필라테스">수영</option>
-            <option value="필라테스">클라이밍</option>
+            <option value="골프">골프</option>
+            <option value="테니스&배드민턴">테니스&배드민턴</option>
+            <option value="복싱">복싱</option>
+            <option value="수영">수영</option>
             <!-- 다른 운동 종류 옵션 추가 -->
         </select>
         <button id="searchButton" class="search-button">검색</button>
@@ -69,8 +75,7 @@
                             resultItem.classList.add('result-item');
                             resultItem.innerHTML = `
                                 <h3>${center['센터 이름']}</h3>
-                                <p>주소: ${center['주소']}</p>
-                                <p>전화번호: ${center['전화번호']}</p>
+                                <img src="${center['사진']}" alt="${center['센터 이름']} 사진">
                             `;
                             resultsDiv.appendChild(resultItem);
                         });
@@ -96,8 +101,7 @@
                             resultItem.classList.add('result-item');
                             resultItem.innerHTML = `
                                 <h3>${center['센터 이름']}</h3>
-                                <p>주소: ${center['주소']}</p>
-                                <p>전화번호: ${center['전화번호']}</p>
+                                <img src="${center['사진']}" alt="${center['센터 이름']} 사진">
                             `;
                             resultsDiv.appendChild(resultItem);
                         });
