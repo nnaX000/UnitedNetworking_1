@@ -6,6 +6,7 @@ from django.template.loader import get_template, TemplateDoesNotExist
 import re
 import os
 from django.conf import settings
+from .models import Class 
 
 
 logger = logging.getLogger(__name__)
@@ -65,6 +66,7 @@ def center_detail(request, center_id):
 
     context = {
         'center': {
+            'id':center_data['id'],
             'name': center_data['센터 이름'],
             'address': center_data['주소'],
             'phone': center_data['전화번호'],
@@ -77,6 +79,19 @@ def center_detail(request, center_id):
     }
 
     return render(request, 'detailed_center.html', context)
+
+#기관별 스케줄 가져오기
+def get_schedule(request, center_id):
+
+    # Fetch all classes associated with the given center_id
+    classes = Class.objects.filter(center_data_id=center_id).values(
+        'time', 'detail', 'credit_num', 'duration', 'teacher'
+    )
+
+    # Convert queryset to list of dictionaries
+    classes_list = list(classes)
+
+    return JsonResponse(classes_list, safe=False)
 
 
 
