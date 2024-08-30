@@ -11,27 +11,17 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-
-import os, environ
-
-env = environ.Env(
-    # set casting, default value
-    DEBUG=(bool, False)
-)
+import os
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Take environment variables from .env file
-environ.Env.read_env(
-    env_file= os.path.join(BASE_DIR, '.env')
-)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -48,10 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'signInUp',
     'myPage',
-    'mainPage',
     'detailPage',
+    'mainPage',
+    'signInUp',
+    'Team1'
 ]
 
 MIDDLEWARE = [
@@ -69,7 +60,7 @@ ROOT_URLCONF = 'Team1.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'Team1/templates')], 
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -131,12 +122,18 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-# STATICFILES_DIRS 설정
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
-]
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# 환경 변수 사용 설정
+env = environ.Env()
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+
+# API 키 설정
+KAKAO_API_JS_KEY = env('KAKAO_API_JS_KEY')
+KAKAO_API_REST_KEY = env('KAKAO_API_REST_KEY')
+SECRET_KEY = env('SECRET_KEY')
+
+
