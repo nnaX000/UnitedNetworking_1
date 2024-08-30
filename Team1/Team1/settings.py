@@ -22,7 +22,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-ygk)jn+u567#919g_cowano(ak*#i7mrfzb^)z%_c=4zls5k^3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -135,5 +134,6 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 # API 키 설정
 KAKAO_API_JS_KEY = env('KAKAO_API_JS_KEY')
 KAKAO_API_REST_KEY = env('KAKAO_API_REST_KEY')
+SECRET_KEY = env('SECRET_KEY')
 
 
