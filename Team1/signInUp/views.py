@@ -58,7 +58,7 @@ def login(request):
         if user is not None:
             auth_login(request, user)
             print('로그인 성공')
-            return redirect('mypage')  # 로그인 성공 후 mypage.html로 이동(임의)
+            return redirect('mainPage')  # 로그인 성공 후 mainPage로 이동
         else:
             error_message = "아이디 또는 비밀번호가 잘못되었습니다."
             return render(request, 'login.html', {'error_message': error_message})
