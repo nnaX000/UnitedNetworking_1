@@ -77,7 +77,7 @@
 <body>
 
     <div class="center-info">
-        <img src="image-placeholder.jpg" alt="센터 사진" id="centerImage">
+        <img src="{{ center.image_url }}" alt="센터 사진" id="centerImage">
         <h2 id="centerName">{{ center.name }}</h2>
         <p id="centerAddress">{{ center.address }}</p>
         <p id="centerPhone">{{ center.phone }}</p>
@@ -151,7 +151,7 @@
         // 카카오맵 API 비동기 로드
         function loadScript() {
             var script = document.createElement('script');
-            script.src = 'https://dapi.kakao.com/v2/maps/sdk.js?appkey=YOUR_KAKAO_API_KEY&autoload=false';
+            script.src = 'https://dapi.kakao.com/v2/maps/sdk.js?appkey={{ kakao_api_key }}&autoload=false';
             script.onload = function() {
                 kakao.maps.load(initMap); // 지도 API를 로드한 후 initMap 함수 호출
             };
