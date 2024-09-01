@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 import re
 
+
 def signup(request):
     form_errors = {}
     missing_fields = []
@@ -41,10 +42,23 @@ def signup(request):
         elif User.objects.filter(first_name=nickname).exists():
             form_errors['nickname'] = '중복된 닉네임입니다.'
 
-        # 모든 조건이 충족되면 회원 가입 진행
-        if not form_errors and not missing_fields:
-            new_user = User.objects.create_user(username=email, email=email, password=password, first_name=nickname)
-            messages.success(request, '회원가입 성공')
+            # 모든 조건이 충족되면 회원 가입 진행
+            if not form_errors and not missing_fields:
+                new_user = User.objects.create_user(username=email, email=email, password=password, first_name=nickname)
+
+                # UserProfile 생성
+                UserProfile.objects.create(
+                    user=new_user,
+                    # 기본값을 사용하거나 다른 기본값 설정
+                    alert=False,
+                    using_credit=0,
+                    remaining_credit=0,
+                    credit_period='',
+                    phone_number=''
+                )
+
+                auth_login(request, new_user)  # 자동 로그인
+                messages.success(request, '회원가입 성공')
             return redirect('signInUp:login')
 
     return render(request, 'signup.html', {'form_errors': form_errors, 'missing_fields': missing_fields})
@@ -68,4 +82,4 @@ def login(request):
 def logout(request):
     auth_logout(request)
     print('로그아웃 성공')
-    return redirect('main')
+    return redirect('mainPage')

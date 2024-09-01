@@ -78,5 +78,13 @@ def center_detail(request, center_id):
 
     return render(request, 'detailed_center.html', context)
 
+# 마이페이지로 이동
+def myPage(request):
+    return render(request, 'myPage.html')
+
+# 멤버쉽 페이지로 이동
+def membership(request):
+    return render(request, 'membership.html')
+
 
 
