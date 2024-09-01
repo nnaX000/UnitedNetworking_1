@@ -6,7 +6,8 @@ from django.template.loader import get_template, TemplateDoesNotExist
 import re
 import os
 from django.conf import settings
-from .models import Class 
+from .models import Class, Reservation
+from django.contrib.auth.models import User
 
 
 logger = logging.getLogger(__name__)
@@ -73,7 +74,11 @@ def center_detail(request, center_id):
             'latitude': center_data['위도'],
             'longitude': center_data['경도'],
             'image_url': center_data['사진'],
-            'info': center_data['기타 정보'],  # 기타 필요한 정보
+            'number':center_data['전화번호'],
+            'time':center_data['운영 시간'],
+            'detail_info':center_data['센터 정보(설명)'],
+            'free':center_data['무료로 이용할 수 있어요'],
+            'supplies':center_data['따로 준비하면 좋아요']
         },
         'kakao_api_key': settings.KAKAO_API_JS_KEY,  # API 키를 템플릿으로 전달
     }
@@ -92,6 +97,37 @@ def get_schedule(request, center_id):
     classes_list = list(classes)
 
     return JsonResponse(classes_list, safe=False)
+
+
+
+#예약 정보 저장
+def reservation_view(request):
+    class_id = request.GET.get('classId')
+    class_instance = Class.objects.get(id=class_id)
+
+    if request.method == 'POST':
+        name = request.POST['name']
+        phone = request.POST['phone']
+        email = request.POST['email']
+        user = User.objects.get(email=email)
+        
+        # 예약 저장
+        reservation = Reservation(
+            user_id=user.id,
+            class_id=class_instance,
+            is_expired=False
+        )
+        reservation.save()
+        
+        return redirect('reservation_success')  # 예약 완료 페이지로 리다이렉트
+
+    context = {
+        'class_instance': class_instance,
+        'name': request.POST.get('name', ''),
+        'phone': request.POST.get('phone', ''),
+        'email': request.POST.get('email', '')
+    }
+    return render(request, 'reservation_form.html', context)
 
 
 

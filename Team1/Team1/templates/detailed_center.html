@@ -5,41 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>센터 상세 정보</title>
     <style>
-        /* 기본 CSS 스타일 */
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
             line-height: 1.6;
         }
+
         .center-info {
-            text-align: center;
+            text-align: left;
             margin-bottom: 20px;
         }
+
         .center-info img {
             width: 100%;
             max-width: 500px;
             height: auto;
             border-radius: 10px;
+            margin-bottom: 10px;
         }
-        .center-info h2 {
-            margin-top: 10px;
-            font-size: 24px;
-        }
-        .center-info p {
-            margin: 5px 0;
-            font-size: 16px;
-            color: #555;
-        }
+
         .map-container {
             width: 100%;
             height: 300px;
             margin-bottom: 20px;
+            border-radius: 10px;
+            overflow: hidden;
         }
+
         .tabs {
             display: flex;
             justify-content: center;
             margin-bottom: 20px;
         }
+
         .tabs button {
             flex: 1;
             padding: 10px;
@@ -47,30 +45,82 @@
             background: #f9f9f9;
             cursor: pointer;
         }
+
         .tabs button.active {
             background: #fff;
             border-bottom: none;
             font-weight: bold;
         }
+
         .tab-content {
             border: 1px solid #ddd;
             padding: 20px;
             background: #fff;
             display: none;
         }
+
         .tab-content.active {
             display: block;
         }
+
         .reviews {
             margin-top: 30px;
         }
+
         .review-item {
             border-bottom: 1px solid #ddd;
             padding-bottom: 10px;
             margin-bottom: 10px;
         }
+
         .review-item:last-child {
             border-bottom: none;
+        }
+
+        .facility-icons {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+
+        .facility-icons button {
+            background-color: #e0e0e0;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .facility-icons button:focus {
+            outline: none;
+            background-color: #d0d0d0;
+        }
+
+        .image-gallery {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+
+        .image-gallery img {
+            width: 48%;
+            border-radius: 10px;
+        }
+
+        .info-section {
+            margin-top: 20px;
+        }
+
+        .info-section h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .info-section p {
+            margin: 5px 0;
+            font-size: 16px;
+            color: #555;
         }
     </style>
 </head>
@@ -85,13 +135,18 @@
 
     <div id="map" class="map-container"></div>
 
+    <div class="facility-icons">
+        <button>샤워실</button>
+        <button>파우더룸</button>
+    </div>
+
     <div class="tabs">
         <button id="infoTab" class="active">정보</button>
         <button id="scheduleTab">스케줄</button>
     </div>
 
     <div id="infoContent" class="tab-content active">
-        <p id="centerInfo">{{ center.info }}</p>
+        <p id="centerInfo">{{ center.detail_info }}</p>
     </div>
 
     <div id="scheduleContent" class="tab-content">
@@ -100,15 +155,16 @@
         </ul>
     </div>
 
-    <div class="reviews">
-        <h3>후기</h3>
-        <div id="reviewList">
-            <div class="review-item">
-                <p><strong>리뷰어 이름</strong> ★★★★★</p>
-                <p>리뷰 내용이 여기에 표시됩니다.</p>
-            </div>
-            <!-- 추가 리뷰 항목들 -->
-        </div>
+    <div class="image-gallery" id="imageGallery">
+        <img src="https://via.placeholder.com/300x200" alt="샤워실">
+        <img src="https://via.placeholder.com/300x200" alt="파우더룸">
+    </div>
+
+    <div class="info-section">
+        <h3>따로 준비하면 좋아요</h3>
+        <p>- 타월</p>
+        <p>- 개인 물병</p>
+        <p>- 토삭스</p>
     </div>
 
     <script>
@@ -154,6 +210,7 @@
                                 <div>
                                     <strong>${item.time}</strong> - ${item.detail} - ${item.credit_num} 크레딧
                                     <br> ${item.duration}분 ${item.teacher} 강사
+                                    <button onclick="openReservationForm('${item.id}', '${item.time}', '${item.detail}', '${item.credit_num}', '${item.teacher}', '${item.duration}')">예약</button>
                                 </div>
                             `;
                             scheduleList.appendChild(listItem);
@@ -164,6 +221,12 @@
                     console.error('Error loading schedule:', error);
                     document.getElementById('scheduleList').innerHTML = '<li>스케줄을 불러오는 중 오류가 발생했습니다.</li>';
                 });
+        }
+
+        function openReservationForm(classId, time, detail, creditNum, teacher, duration) {
+            // 예약 페이지로 이동할 수 있도록 수정
+            const url = `/mainPage/reservation/?classId=${classId}&time=${time}&detail=${detail}&creditNum=${creditNum}&teacher=${teacher}&duration=${duration}`;
+            window.location.href = url;
         }
 
         var centerLat = "{{ center.latitude }}";
