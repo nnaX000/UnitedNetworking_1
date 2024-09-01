@@ -58,15 +58,17 @@ def signup(request):
                 phone_number=''
             )
 
+            request.session['nickname'] = nickname
+
             auth_login(request, new_user)  # 자동 로그인
             messages.success(request, '회원가입 성공')
-            return redirect('signInUp:login')  # 이 줄이 올바르게 들여쓰기 되어야 합니다
+            return redirect('signInUp:login')
 
     return render(request, 'signup.html', {'form_errors': form_errors, 'missing_fields': missing_fields})
 
 def login(request):
     if request.method == 'POST':
-        username = request.POST.get('email', '')  # 'email' 필드에서 username 값을 가져옵니다.
+        username = request.POST.get('email', '')
         password = request.POST.get('password', '')
 
         user = authenticate(request, username=username, password=password)  # 'username'으로 변경
@@ -83,4 +85,4 @@ def login(request):
 def logout(request):
     auth_logout(request)
     print('로그아웃 성공')
-    return redirect('mainPage')
+    return redirect('myPage')
