@@ -5,3 +5,4 @@ from django.http import Http404
 
 def detailPage(request):
     return render(request, 'detailed_center.html')
+
