@@ -1,3 +1,13 @@
 myenv
-db.splite3
 .env
+Team1/db.sqlite3
+/Team1/detailPage/__pycache__
+/Team1/mainPage/__pycache__
+/Team1/mainPage/migrations/__pycache__
+/Team1/myPage/__pycache__
+/Team1/signInUp/__pycache__
+/Team1/myPage/migrations/__pycache__
+/Team1/Team1/__pycache__
+/Team1/signInUp/migrations/__pycache__
+/Team1/Team1/__pycache__
+/Team1/detailPage/migrations/__pycache__

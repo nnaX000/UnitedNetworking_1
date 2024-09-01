@@ -8,4 +8,8 @@ urlpatterns = [
     path('filter_centers/', views.filter_centers, name='filter_centers'),
     #센터 클릭하면 상세페이지로 넘어가기
     path('center/<int:center_id>/', views.center_detail, name='center_detail'),
+    #센터별 스케줄 불러오기
+    path('get_schedule/<int:center_id>/', views.get_schedule, name='get_schedule'),
+    #예약 저장
+    path('reservation/', views.reservation_view, name='reservation_form'),
 ]
