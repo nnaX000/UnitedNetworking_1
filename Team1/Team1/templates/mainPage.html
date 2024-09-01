@@ -61,6 +61,10 @@
         <!-- 검색 결과가 여기에 표시됩니다 -->
     </div>
 
+    <div style="position: absolute; top: 20px; right: 20px;">
+        <button onclick="location.href='{% url 'myPage' %}'">마이페이지</button>
+    </div>
+
     <script>
         // 페이지가 처음 로드될 때 데이터를 가져옵니다.
         document.addEventListener('DOMContentLoaded', function() {

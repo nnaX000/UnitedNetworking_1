@@ -129,5 +129,13 @@ def reservation_view(request):
     }
     return render(request, 'reservation_form.html', context)
 
+# 마이페이지로 이동
+def myPage(request):
+    return render(request, 'myPage.html')
+
+# 멤버쉽 페이지로 이동
+def membership(request):
+    return render(request, 'membership.html')
+
 
 
