@@ -16,9 +16,10 @@ def myPage(request):
     else:
         # 로그인한 경우
         user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+        nickname = request.user.first_name
         context = {
             'logged_in': True,
-            'user_name': request.user.username,
+            'nickname': nickname,
             'remaining_credit': user_profile.remaining_credit,
             'using_credit': user_profile.using_credit,
             'credit_period': user_profile.credit_period,
