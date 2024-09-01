@@ -61,8 +61,10 @@
                 <label>
                     <input type="radio" name="alert" value="off" {% if not alert %}checked{% endif %}> OFF
                 </label>
+                <button type="submit">변경</button> <!-- submit 버튼 추가 -->
             </form>
         </div>
+
 
         <form method="post" action="{% url 'signInUp:logout' %}">
             {% csrf_token %}
