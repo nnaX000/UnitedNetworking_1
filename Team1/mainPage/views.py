@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404,redirect
 import pandas as pd
-from django.http import JsonResponse
+from django.http import JsonResponse,HttpResponseRedirect,HttpResponse
+from django.urls import reverse
 import logging
 from django.template.loader import get_template, TemplateDoesNotExist
 import re
@@ -8,7 +9,7 @@ import os
 from django.conf import settings
 from .models import Class, Reservation
 from django.contrib.auth.models import User
-
+import csv
 
 logger = logging.getLogger(__name__)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -18,6 +19,7 @@ csv_file_path = os.path.join(BASE_DIR, 'yongsan.csv')
 #메인페이지 로딩
 def mainPage(request):
     return render(request, 'mainPage.html')
+
 
 #지역,운동종류에 맞게 검색하기
 def filter_centers(request):
@@ -85,12 +87,14 @@ def center_detail(request, center_id):
 
     return render(request, 'detailed_center.html', context)
 
+
+
 #기관별 스케줄 가져오기
 def get_schedule(request, center_id):
 
     # Fetch all classes associated with the given center_id
     classes = Class.objects.filter(center_data_id=center_id).values(
-        'time', 'detail', 'credit_num', 'duration', 'teacher'
+        'id','time', 'detail', 'credit_num', 'duration', 'teacher'
     )
 
     # Convert queryset to list of dictionaries
@@ -100,16 +104,39 @@ def get_schedule(request, center_id):
 
 
 
-#예약 정보 저장
+#센터이름찾기
+def get_center_name_by_id(center_id):
+    with open('yongsan.csv', mode='r', encoding='utf-8-sig') as file:
+        reader = csv.DictReader(file)
+        
+        for row in reader:
+            if row['id'] == str(center_id): 
+                return row['센터 이름'] 
+
+    return None  # 해당 ID에 대한 센터 이름이 없을 경우
+
+
+
+# 예약하기
 def reservation_view(request):
     class_id = request.GET.get('classId')
-    class_instance = Class.objects.get(id=class_id)
+    
+    # 올바른 클래스 인스턴스를 가져옴
+    class_instance = get_object_or_404(Class, id=class_id)
+
+    # center_data_id를 이용하여 센터 이름을 가져옴
+    center_name = get_center_name_by_id(class_instance.center_data_id)
+    
+    if not center_name:
+        return render(request, 'error_page.html', {"error": "센터 이름을 찾을 수 없습니다."})
 
     if request.method == 'POST':
         name = request.POST['name']
         phone = request.POST['phone']
         email = request.POST['email']
-        user = User.objects.get(email=email)
+        
+        # 사용자 찾기 또는 생성
+        user, created = User.objects.get_or_create(email=email, defaults={"username": email})
         
         # 예약 저장
         reservation = Reservation(
@@ -118,20 +145,30 @@ def reservation_view(request):
             is_expired=False
         )
         reservation.save()
-        
-        return redirect('reservation_success')  # 예약 완료 페이지로 리다이렉트
 
+        # 예약 완료 후 팝업 메시지를 포함한 HTML 응답을 반환
+        return HttpResponse("""
+            <script type="text/javascript">
+                alert("예약이 완료되었습니다.");
+                window.location.href = '/mainPage/';
+            </script>
+        """)
+    
     context = {
         'class_instance': class_instance,
+        'center_name': center_name,  # 센터 이름을 템플릿으로 넘김
         'name': request.POST.get('name', ''),
         'phone': request.POST.get('phone', ''),
-        'email': request.POST.get('email', '')
+        'email': request.POST.get('email', ''),
     }
     return render(request, 'reservation_form.html', context)
+
+
 
 # 마이페이지로 이동
 def myPage(request):
     return render(request, 'myPage.html')
+
 
 # 멤버쉽 페이지로 이동
 def membership(request):

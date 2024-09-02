@@ -187,9 +187,9 @@
         });
 
         function loadScheduleData() {
-            // data-center-id 속성에서 값 가져오기
             const centerId = document.getElementById('centerInfo').getAttribute('data-center-id');
             console.log('centerId:', centerId);
+
             fetch(`/mainPage/get_schedule/${centerId}`)
                 .then(response => {
                     if (!response.ok) {
@@ -198,6 +198,8 @@
                     return response.json();
                 })
                 .then(data => {
+                    console.log('Schedule data:', data);  // 데이터를 출력해 무엇을 받았는지 확인합니다.
+
                     const scheduleList = document.getElementById('scheduleList');
                     scheduleList.innerHTML = ''; // 이전 스케줄 항목들 제거
 
@@ -205,6 +207,8 @@
                         scheduleList.innerHTML = '<li>스케줄이 없습니다.</li>';
                     } else {
                         data.forEach(item => {
+                            console.log('Item:', item);  // 각 item의 구조를 확인하기 위해 출력
+
                             const listItem = document.createElement('li');
                             listItem.innerHTML = `
                                 <div>
@@ -221,13 +225,17 @@
                     console.error('Error loading schedule:', error);
                     document.getElementById('scheduleList').innerHTML = '<li>스케줄을 불러오는 중 오류가 발생했습니다.</li>';
                 });
-        }
+                }
 
-        function openReservationForm(classId, time, detail, creditNum, teacher, duration) {
-            // 예약 페이지로 이동할 수 있도록 수정
-            const url = `/mainPage/reservation/?classId=${classId}&time=${time}&detail=${detail}&creditNum=${creditNum}&teacher=${teacher}&duration=${duration}`;
-            window.location.href = url;
-        }
+
+                function openReservationForm(classId, time, detail, creditNum, teacher, duration) {
+                    if (!classId) {
+                        console.error("classId is undefined or null");
+                        return;
+                    }
+                    const url = `/mainPage/reservation/?classId=${classId}&time=${time}&detail=${detail}&creditNum=${creditNum}&teacher=${teacher}&duration=${duration}`;
+                    window.location.href = url;
+            }
 
         var centerLat = "{{ center.latitude }}";
         var centerLng = "{{ center.longitude }}";
