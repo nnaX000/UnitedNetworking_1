@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>멤버십 구매 확인</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+        .confirm-button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>멤버십 구매 확인</h1>
+    <h3>{{ product }} 구매</h3>
+
+    <button id="confirmButton" class="confirm-button">구매</button>
+
+    <script>
+        document.getElementById('confirmButton').addEventListener('click', function() {
+            // 구매 요청을 서버로 전송
+            fetch(`/myPage/purchase_membership/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'  // CSRF 토큰 필요
+                },
+                body: JSON.stringify({ 'product': '{{ product }}' })
+            })
+
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // 구매가 완료되면 멤버십 페이지로 리디렉트
+                    window.location.href = '/myPage/membership/';
+                } else {
+                    alert('프리미엄 멤버십 상태에서는 추가 크레딧을 구매할 수 없습니다.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
