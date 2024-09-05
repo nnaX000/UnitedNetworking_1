@@ -11,6 +11,8 @@ from .models import Class, Reservation
 from myPage.models import UserProfile
 from django.contrib.auth.models import User
 import csv
+from django.db import transaction
+
 
 logger = logging.getLogger(__name__)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -117,81 +119,77 @@ def get_center_name_by_id(center_id):
     return None  # 해당 ID에 대한 센터 이름이 없을 경우
 
 
-
-# 예약하기
 def reservation_view(request):
     class_id = request.GET.get('classId')
-    
-    # 올바른 클래스 인스턴스를 가져옴
     class_instance = get_object_or_404(Class, id=class_id)
-
-    # center_data_id를 이용하여 센터 이름을 가져옴
     center_name = get_center_name_by_id(class_instance.center_data_id)
     
-    if not center_name:
-        return render(request, 'error_page.html', {"error": "센터 이름을 찾을 수 없습니다."})
 
     if request.method == 'POST':
-        name = request.POST['name']
-        phone = request.POST['phone']
-        email = request.POST['email']
+        with transaction.atomic():  # 트랜잭션 내에서 수행
+            name = request.POST['name']
+            phone = request.POST['phone']
+            email = request.POST['email']
         
-        # 사용자 찾기 또는 생성
-        user, created = User.objects.get_or_create(email=email, defaults={"username": email})
-        
-        # 프로필이 존재하지 않는다면 생성, 존재한다면 가져오기
-        profile, profile_created = UserProfile.objects.get_or_create(user=user)
-        
-        # 기존 크레딧 상태 확인
-        remaining_credit = int(profile.remaining_credit) if profile.remaining_credit else 0
-        class_credit = class_instance.credit_num
-        
-        # 예약하려는 수업의 크레딧이 현재 남은 크레딧보다 큰지 확인
-        if remaining_credit - class_credit < 0:
-            # 크레딧이 부족한 경우
+            # 사용자 찾기 또는 생성
+            user, created = User.objects.get_or_create(email=email, defaults={"username": email})
+            
+            # 프로필이 존재하지 않는다면 생성, 존재한다면 가져오기
+            profile, profile_created = UserProfile.objects.get_or_create(user=user)
+
+            # 크레딧 계산 로직
+            if profile.remaining_credit != "프리미엄 멤버십":
+                try:
+                    remaining_credit = int(profile.remaining_credit) if profile.remaining_credit else 0
+                    class_credit = class_instance.credit_num
+
+                    if remaining_credit - class_credit < 0:
+                        return HttpResponse("""
+                            <script type="text/javascript">
+                                if (confirm("크레딧이 부족합니다. 구매하러 가시겠습니까?")) {
+                                    window.location.href = '/myPage/membership/';
+                                } else {
+                                    window.history.back();
+                                }
+                            </script>
+                        """)
+
+                    # 기존 사용 크레딧을 가져오고 누적
+                    existing_using_credit = int(profile.using_credit) if profile.using_credit else 0
+                    new_using_credit = existing_using_credit + class_credit
+                    profile.using_credit = str(new_using_credit)
+
+                    # 남은 크레딧 업데이트
+                    profile.remaining_credit = str(remaining_credit - class_credit)
+
+                except ValueError:
+                    return HttpResponse("잘못된 크레딧 값입니다.", status=400)
+
+            # 전화번호 업데이트
+            profile.phone_number = phone
+
+            # 프로필 저장
+            profile.save()
+
+            # 예약 저장
+            reservation = Reservation(
+                user_id=user.id,
+                class_id=class_instance,
+                is_expired=False
+            )
+            reservation.save()
+
+            # 예약 완료 후 팝업 메시지를 포함한 HTML 응답을 반환
             return HttpResponse("""
                 <script type="text/javascript">
-                    if (confirm("크레딧이 부족합니다. 구매하러 가시겠습니까?")) {
-                        window.location.href = '/myPage/membership/';
-                    } else {
-                        window.history.back();
-                    }
+                    alert("예약이 완료되었습니다.");
+                    window.location.href = '/mainPage/';
                 </script>
             """)
 
-        # 전화번호 업데이트
-        profile.phone_number = phone
-        
-        # 기존 사용 크레딧을 가져오고 누적
-        existing_using_credit = int(profile.using_credit) if profile.using_credit else 0
-        new_using_credit = existing_using_credit + class_credit
-        profile.using_credit = str(new_using_credit)
-        
-        # 남은 크레딧 업데이트
-        profile.remaining_credit = str(remaining_credit - class_credit)
-
-        # 프로필 저장
-        profile.save()
-        
-        # 예약 저장
-        reservation = Reservation(
-            user_id=user.id,
-            class_id=class_instance,
-            is_expired=False
-        )
-        reservation.save()
-
-        # 예약 완료 후 팝업 메시지를 포함한 HTML 응답을 반환
-        return HttpResponse("""
-            <script type="text/javascript">
-                alert("예약이 완료되었습니다.");
-                window.location.href = '/mainPage/';
-            </script>
-        """)
-    
     context = {
         'class_instance': class_instance,
-        'center_name': center_name,  # 센터 이름을 템플릿으로 넘김
+        'center_name': center_name,
         'name': request.POST.get('name', ''),
         'phone': request.POST.get('phone', ''),
         'email': request.POST.get('email', ''),
