@@ -1,0 +1,91 @@
+@import url('//fonts.googleapis.com/earlyaccess/notosanskr.css');
+body {
+    font-family: 'Noto Sans KR';
+    background-color: #f7f7f7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.logo {
+    width: 150px;
+    margin-bottom: 20px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.login-form input[type="text"],
+.login-form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.login-options {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+
+.login-button {
+    background-color: #e7e7e7;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.login-button:hover {
+    background-color: #d0d0d0;
+}
+
+.social-login {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.social-icon {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.extra-options {
+    margin-top: 20px;
+    font-size: 12px;
+    color: #666;
+}
+
+.extra-options a {
+    text-decoration: none;
+    color: #666;
+}
+
+
+@media (max-width: 390px) and (max-height: 850px) {
+    .logo {
+        width: 80px;
+    }
+
+    p {
+        font-size: 14px;
+    }
+
+    button {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+}
