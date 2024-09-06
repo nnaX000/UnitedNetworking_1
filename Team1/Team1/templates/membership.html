@@ -4,70 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>멤버십</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        .membership-item {
-            margin: 20px 0;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .membership-item h3 {
-            margin: 0;
-        }
-        .purchase-button {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .purchase-button:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
-        }
-    </style>
+    <link rel="stylesheet" href="../../Team1/static/css/membership.css">
 </head>
 <body>
-    <h1>멤버십 구매</h1>
-
+    <div class="container">
+        <header>
+            <a href="../../Team1/templates/membership_purchase.html">
+                <button id="membership-btn" class="membership-button">멤버십</button>
+            </a>
+            <img src="../../signInUp/static/png/logo.png" alt="CLASSFIT 로고" class="logo">
+            <img src="../../myPage/static/account.png" alt="User Icon" class="user-icon">
+        </header>
+    </div>
+    
     <div class="membership-item">
-        <h3>프리미엄 멤버십 - 500,000원</h3>
+        <h2>프리미엄 멤버십<br>500,000원</h2><br>
         <button class="purchase-button" onclick="window.location.href='{% url 'membership_purchase' product='프리미엄 멤버십' %}'">구매</button>
+        <!---<p class = "descibe">월 50만원으로 무제한 운동을 즐길 수 있어요</p>-->
     </div>
 
     <div class="membership-item">
-        <h3>5 크레딧 - 100,000원</h3>
+        <h2>5 크레딧<br>100,000원</h2>
         <button class="purchase-button" onclick="window.location.href='{% url 'membership_purchase' product='5 크레딧' %}'">구매</button>
     </div>
 
     <div class="membership-item">
-        <h3>3 크레딧 - 60,000원</h3>
+        <h2>3 크레딧<br>60,000원</h2>
         <button class="purchase-button" onclick="window.location.href='{% url 'membership_purchase' product='3 크레딧' %}'">구매</button>
     </div>
 
     <div class="membership-item">
-        <h3>1 크레딧 - 20,000원</h3>
+        <h2>1 크레딧<br>20,000원</h2>
         <button class="purchase-button" onclick="window.location.href='{% url 'membership_purchase' product='1 크레딧' %}'">구매</button>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // 로그인 여부에 따른 구매 버튼 활성화/비활성화
-            {% if not logged_in %}
-                const purchaseButtons = document.querySelectorAll('.purchase-button');
-                purchaseButtons.forEach(button => {
-                    button.disabled = true;
-                });
-            {% endif %}
-        });
-    </script>
+    <script src="../../Team1/static/js/membership.js"></script>
 </body>
 </html>
