@@ -8,6 +8,7 @@ import re
 import os
 from django.conf import settings
 from .models import Class, Reservation
+from myPage.models import UserProfile
 from django.contrib.auth.models import User
 import csv
 
@@ -138,6 +139,40 @@ def reservation_view(request):
         # 사용자 찾기 또는 생성
         user, created = User.objects.get_or_create(email=email, defaults={"username": email})
         
+        # 프로필이 존재하지 않는다면 생성, 존재한다면 가져오기
+        profile, profile_created = UserProfile.objects.get_or_create(user=user)
+        
+        # 기존 크레딧 상태 확인
+        remaining_credit = int(profile.remaining_credit) if profile.remaining_credit else 0
+        class_credit = class_instance.credit_num
+        
+        # 예약하려는 수업의 크레딧이 현재 남은 크레딧보다 큰지 확인
+        if remaining_credit - class_credit < 0:
+            # 크레딧이 부족한 경우
+            return HttpResponse("""
+                <script type="text/javascript">
+                    if (confirm("크레딧이 부족합니다. 구매하러 가시겠습니까?")) {
+                        window.location.href = '/myPage/membership/';
+                    } else {
+                        window.history.back();
+                    }
+                </script>
+            """)
+
+        # 전화번호 업데이트
+        profile.phone_number = phone
+        
+        # 기존 사용 크레딧을 가져오고 누적
+        existing_using_credit = int(profile.using_credit) if profile.using_credit else 0
+        new_using_credit = existing_using_credit + class_credit
+        profile.using_credit = str(new_using_credit)
+        
+        # 남은 크레딧 업데이트
+        profile.remaining_credit = str(remaining_credit - class_credit)
+
+        # 프로필 저장
+        profile.save()
+        
         # 예약 저장
         reservation = Reservation(
             user_id=user.id,
@@ -162,7 +197,6 @@ def reservation_view(request):
         'email': request.POST.get('email', ''),
     }
     return render(request, 'reservation_form.html', context)
-
 
 
 # 마이페이지로 이동

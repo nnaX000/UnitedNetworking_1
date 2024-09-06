@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>멤버십</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .membership-item {
+            margin: 20px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .membership-item h3 {
+            margin: 0;
+        }
+        .purchase-button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .purchase-button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <h1>멤버십 구매</h1>
+
+    <div class="membership-item">
+        <h3>프리미엄 멤버십 - 500,000원</h3>
+        <button class="purchase-button" onclick="window.location.href='{% url 'membership_purchase' product='프리미엄 멤버십' %}'">구매</button>
+    </div>
+
+    <div class="membership-item">
+        <h3>5 크레딧 - 100,000원</h3>
+        <button class="purchase-button" onclick="window.location.href='{% url 'membership_purchase' product='5 크레딧' %}'">구매</button>
+    </div>
+
+    <div class="membership-item">
+        <h3>3 크레딧 - 60,000원</h3>
+        <button class="purchase-button" onclick="window.location.href='{% url 'membership_purchase' product='3 크레딧' %}'">구매</button>
+    </div>
+
+    <div class="membership-item">
+        <h3>1 크레딧 - 20,000원</h3>
+        <button class="purchase-button" onclick="window.location.href='{% url 'membership_purchase' product='1 크레딧' %}'">구매</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 로그인 여부에 따른 구매 버튼 활성화/비활성화
+            {% if not logged_in %}
+                const purchaseButtons = document.querySelectorAll('.purchase-button');
+                purchaseButtons.forEach(button => {
+                    button.disabled = true;
+                });
+            {% endif %}
+        });
+    </script>
+</body>
+</html>

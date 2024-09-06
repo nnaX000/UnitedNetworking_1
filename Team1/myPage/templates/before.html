@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mypagebeforelogin</title>
+    <link rel="stylesheet" href="../static/css/before.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <button id="membership-btn" class="membership-button">멤버십</button>
+        </header>
+
+        <main>
+            <img src="../../signInUp/static/logo.png" alt="CLASSFIT 로고" class="logo">
+            <div class="login-section">
+                <img src="../static/account.png" alt="User Icon" class="user-icon">
+                <a href="../../signInUp/templates/login.html">
+                    <h2>로그인 하기</h2>
+                </a>
+                <div class="credits">
+                    <button class="credit-button">잔여 크레딧</button>
+                    <button class="credit-button">소진 크레딧</button>
+                    <button class="credit-button">잔여 기간</button>
+                </div>
+            </div>
+            <div class="notification-section">
+                <div class="divider"></div> <!-- 구분선 추가 -->
+                <h3>예약 내역</h3>
+                <div class="divider"></div>
+                <div class="toggle-wrapper">
+                    <label for="notification-toggle"><h3>수업 전 푸시 알림</h3></label>
+                    <label class="switch">
+                        <input type="checkbox" id="notification-toggle" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="divider"></div>
+            </div>
+        </main>
+    <script src="../static/js/before.js"></script>
+</body>
+</html>

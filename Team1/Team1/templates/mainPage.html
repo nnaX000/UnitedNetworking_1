@@ -28,6 +28,11 @@
     </style>
 </head>
 <body>
+    <div class="button-container">
+        <button onclick="location.href='{% url 'membership' %}'">멤버쉽</button>
+        <button onclick="location.href='{% url 'myPage' %}'">마이페이지</button>
+    </div>
+
     <h1>운동 센터 검색</h1>
     <div>
         <select id="dong" class="dropdown">
@@ -59,10 +64,6 @@
 
     <div id="results">
         <!-- 검색 결과가 여기에 표시됩니다 -->
-    </div>
-
-    <div style="position: absolute; top: 20px; right: 20px;">
-        <button onclick="location.href='{% url 'myPage' %}'">마이페이지</button>
     </div>
 
     <script>
