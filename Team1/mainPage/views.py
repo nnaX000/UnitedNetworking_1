@@ -124,7 +124,6 @@ def reservation_view(request):
     class_instance = get_object_or_404(Class, id=class_id)
     center_name = get_center_name_by_id(class_instance.center_data_id)
     
-
     if request.method == 'POST':
         with transaction.atomic():  # 트랜잭션 내에서 수행
             name = request.POST['name']
@@ -161,31 +160,49 @@ def reservation_view(request):
 
                     # 남은 크레딧 업데이트
                     profile.remaining_credit = str(remaining_credit - class_credit)
+                    
+                    # 크레딧 정보 업데이트
+                    profile.save()
 
                 except ValueError:
                     return HttpResponse("잘못된 크레딧 값입니다.", status=400)
 
             # 전화번호 업데이트
             profile.phone_number = phone
-
-            # 프로필 저장
             profile.save()
 
-            # 예약 저장
-            reservation = Reservation(
-                user_id=user.id,
-                class_id=class_instance,
-                is_expired=False
-            )
-            reservation.save()
+            # 정원이 다 찼는지 확인
+            if class_instance.current_people >= class_instance.capacity:
+                # 대기 명단에 추가하는 로직
+                return HttpResponse(f"""
+                    <script type="text/javascript">
+                        if (confirm("수업이 모두 찼습니다. 대기하시겠습니까?")) {{
+                            window.location.href = '/mainPage/waiting_list/?classId={class_id}&userId={user.id}';
+                        }} else {{
+                            window.history.back();
+                        }}
+                    </script>
+                """)
+            else:
+                # current_people +1
+                class_instance.current_people += 1
+                class_instance.save()  # 수업 인원 업데이트
 
-            # 예약 완료 후 팝업 메시지를 포함한 HTML 응답을 반환
-            return HttpResponse("""
-                <script type="text/javascript">
-                    alert("예약이 완료되었습니다.");
-                    window.location.href = '/mainPage/';
-                </script>
-            """)
+                # 예약 저장
+                reservation = Reservation(
+                    user_id=user.id,
+                    class_id=class_instance,
+                    is_expired=False
+                )
+                reservation.save()
+
+                # 예약 완료 후 팝업 메시지를 포함한 HTML 응답을 반환
+                return HttpResponse("""
+                    <script type="text/javascript">
+                        alert("예약이 완료되었습니다.");
+                        window.location.href = '/mainPage/';
+                    </script>
+                """)
 
     context = {
         'class_instance': class_instance,
@@ -196,6 +213,27 @@ def reservation_view(request):
     }
     return render(request, 'reservation_form.html', context)
 
+
+def add_to_waiting_list(request):
+    class_id = request.GET.get('classId')
+    user_id = request.GET.get('userId')
+    
+    # 수업과 유저 객체를 가져옴
+    class_instance = get_object_or_404(Class, id=class_id)
+    user = get_object_or_404(User, id=user_id)
+
+    # waiting_people 필드가 문자열로 저장되어 있는지 확인
+    waiting_list = str(class_instance.waiting_people).split(',') if class_instance.waiting_people else []
+    
+    # 유저가 이미 대기 명단에 있는지 확인 후 추가
+    if str(user.id) not in waiting_list:
+        waiting_list.append(str(user.id))
+        class_instance.waiting_people = ','.join(waiting_list)
+        class_instance.save()  # 수업 객체 저장
+
+    # 대기 명단 추가 후 메인 페이지로 리다이렉트
+    return HttpResponseRedirect('/mainPage/')
+    
 
 # 마이페이지로 이동
 def myPage(request):

@@ -12,7 +12,7 @@ class Class(models.Model):
     credit_num = models.IntegerField()  # 크레딧 몇 개인지
     capacity = models.IntegerField()  # 정원
     current_people = models.IntegerField()  # 현재까지 찬 사람
-    waiting_people = models.IntegerField()  # 대기하는 사람
+    waiting_people = models.CharField(max_length=100)  # 대기하는 사람
 
     def __str__(self):
         return f"{self.teacher} - {self.date} {self.time}"
