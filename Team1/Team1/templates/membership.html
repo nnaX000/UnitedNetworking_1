@@ -18,24 +18,34 @@
     </div>
     
     <div class="membership-item">
-        <h2>프리미엄 멤버십<br>500,000원</h2><br>
-        <button class="purchase-button" onclick="window.location.href='{% url 'membership_purchase' product='프리미엄 멤버십' %}'">구매</button>
-        <!---<p class = "descibe">월 50만원으로 무제한 운동을 즐길 수 있어요</p>-->
+        <div class="title-and-button">
+            <h2>프리미엄 멤버십<br>500,000원</h2>
+            <button class="purchase-button" onclick="window.location.href='{% url 'membership_purchase' product='프리미엄 멤버십' %}'">구매</button>
+        </div>
+        <p class = "discribe">월 50만원으로 무제한 운동을 즐길 수 있어요</p>
+    </div>
+    <div class="membership-item">
+        <div class="title-and-button">
+            <h2>5 크레딧<br>100,000원</h2>
+            <button class="purchase-button" onclick="window.location.href='{% url 'membership_purchase' product='5 크레딧' %}'">구매</button>
+        </div>
+        <p class = "discribe">월 50만원으로 무제한 운동을 즐길 수 있어요</p>
     </div>
 
     <div class="membership-item">
-        <h2>5 크레딧<br>100,000원</h2>
-        <button class="purchase-button" onclick="window.location.href='{% url 'membership_purchase' product='5 크레딧' %}'">구매</button>
+        <div class="title-and-button">
+            <h2>3 크레딧<br>60,000원</h2>
+            <button class="purchase-button" onclick="window.location.href='{% url 'membership_purchase' product='3 크레딧' %}'">구매</button>
+        </div>
+        <p class = "discribe">월 50만원으로 무제한 운동을 즐길 수 있어요</p>
     </div>
 
     <div class="membership-item">
-        <h2>3 크레딧<br>60,000원</h2>
-        <button class="purchase-button" onclick="window.location.href='{% url 'membership_purchase' product='3 크레딧' %}'">구매</button>
-    </div>
-
-    <div class="membership-item">
-        <h2>1 크레딧<br>20,000원</h2>
-        <button class="purchase-button" onclick="window.location.href='{% url 'membership_purchase' product='1 크레딧' %}'">구매</button>
+        <div class="title-and-button">
+            <h2>1 크레딧<br>20,000원</h2>
+            <button class="purchase-button" onclick="window.location.href='{% url 'membership_purchase' product='1 크레딧' %}'">구매</button>
+        </div>
+        <p class = "discribe">월 50만원으로 무제한 운동을 즐길 수 있어요</p>
     </div>
 
     <script src="../../Team1/static/js/membership.js"></script>

@@ -12,4 +12,6 @@ urlpatterns = [
     path('get_schedule/<int:center_id>/', views.get_schedule, name='get_schedule'),
     #예약 저장
     path('reservation/', views.reservation_view, name='reservation_form'),
+    #수업 다 찼을 경우 대기명단에 추가하기
+    path('waiting_list/', views.add_to_waiting_list, name='waiting_list'),
 ]

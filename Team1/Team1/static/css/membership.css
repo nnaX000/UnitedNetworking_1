@@ -39,12 +39,22 @@ header {
     border: 1px solid #efe7ff;
     border-radius: 5px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column; /* 세로 정렬을 위해 flex-direction을 column으로 변경 */
+    align-items: flex-start; /* 아이템을 왼쪽으로 정렬 */
     background: #e5e7ff;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
-
+.describe {
+    margin-top: 10px; /* 금액과 설명 사이의 여백 */
+    font-size: 16px;
+    color: #555;
+}
+.title-and-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
 .purchase-button {
     padding: 10px 20px;
     background-color: #7c89ff;
