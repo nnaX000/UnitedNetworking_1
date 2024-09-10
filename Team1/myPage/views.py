@@ -9,7 +9,8 @@ from django.contrib.auth import logout as auth_logout
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 
-from .models import UserProfile, Reservation
+from .models import UserProfile
+from mainPage.models import Reservation
 
 import datetime
 from datetime import date, timedelta
@@ -60,9 +61,21 @@ def myPage(request):
 
 @login_required
 def my_reservation(request):
-    # 사용자의 예약 정보를 가져옴
-    user_reservations = Reservation.objects.filter(user_id=request.user)
-    return render(request, 'my_reservation.html', {'reservations': user_reservations})
+    # 로그인한 사용자의 예약 정보를 가져옴
+    user_reservations = Reservation.objects.filter(user_id=request.user.id)
+    
+    # 예약이 없을 경우를 대비하여 예약 내역 확인
+    if not user_reservations.exists():
+        message = "현재 예약된 클래스가 없습니다."
+    else:
+        message = None
+
+    # 템플릿에 예약 내역과 메시지를 전달
+    return render(request, 'my_reservation.html', {
+        'reservations': user_reservations,
+        'message': message
+    })
+
 
 @login_required
 def update_alert(request):
