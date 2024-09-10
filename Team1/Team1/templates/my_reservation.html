@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>예약 내역</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <h1>예약 내역</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>센터 이름</th>
+                <th>강사 이름</th>
+                <th>수업 날짜</th>
+                <th>수업 시간</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for reservation in reservations %}
+            <tr>
+                <td>{{ reservation.center_name }}</td>
+                <td>{{ reservation.class_id.teacher }}</td>
+                <td>{{ reservation.class_id.date }}</td>
+                <td>{{ reservation.class_id.time }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">예약 내역이 없습니다.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{% url 'myPage' %}">마이페이지</a>
+</body>
+</html>

@@ -9,8 +9,7 @@ from django.contrib.auth import logout as auth_logout
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 
-from .models import UserProfile
-
+from .models import UserProfile, Reservation
 
 import datetime
 from datetime import date, timedelta
@@ -45,6 +44,9 @@ def myPage(request):
         else:
             credit_period_display = "멤버십을 구매하세요"
 
+        # 예약 내역 조회
+        reservations = Reservation.objects.filter(user_id=request.user)
+
         context = {
             'logged_in': True,
             'nickname': nickname,
@@ -52,9 +54,15 @@ def myPage(request):
             'using_credit': user_profile.using_credit or 0,
             'credit_period': credit_period_display,
             'alert': user_profile.alert,
+            'reservations': reservations,
         }
         return render(request, 'myPage.html', context)
 
+@login_required
+def my_reservation(request):
+    # 사용자의 예약 정보를 가져옴
+    user_reservations = Reservation.objects.filter(user_id=request.user)
+    return render(request, 'my_reservation.html', {'reservations': user_reservations})
 
 @login_required
 def update_alert(request):
