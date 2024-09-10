@@ -43,14 +43,13 @@
 
             <div class="input-container">
                 <span class="required">*</span>
-                <label class="label-text">성별</label><br>
                 
                 <!-- Gender buttons -->
-                <button type="button" id="male-btn" class="gender-btn {% if request.POST.gender == 'male' %}selected{% endif %}">
-                    남성
-                </button>
                 <button type="button" id="female-btn" class="gender-btn {% if request.POST.gender == 'female' %}selected{% endif %}">
                     여성
+                </button>
+                <button type="button" id="male-btn" class="gender-btn {% if request.POST.gender == 'male' %}selected{% endif %}">
+                    남성
                 </button>
                 
                 <!-- Hidden input to store selected gender -->
@@ -64,18 +63,20 @@
                 <span class="required">*</span>
                 <label for="birth" class="label-text">생년월일</label>
                 <div class="birth-inputs">
-                    <input type="text" id="birth_year" class="birth-field" placeholder="년" maxlength="4">
-                    <input type="text" id="birth_month" class="birth-field" placeholder="월" maxlength="2">
-                    <input type="text" id="birt_day" class="birth-field" placeholder="일" maxlength="2">
+                    <input type="text" id="birth_year" class="birth-field" p maxlength="4">
+                    <label for="birth" class="label-text">년</label>
+                    <input type="text" id="birth_month" class="birth-field" maxlength="2">
+                    <label for="birth" class="label-text">월</label>
+                    <input type="text" id="birth_day" class="birth-field" maxlength="2">
+                    <label for="birth" class="label-text">일</label>
                 </div>
                 <p class="error-message" id="birth-error"></p>
             </div>
-
-            <div class="input-container">
-                <span class="required">*</span>
-                <label class="label-text">개인 정보 수집 및 이용(필수)</label><br>
+            
+            <div class="last">
                 <input type="radio" name="privacy" id="privacy-agree" value="agree">
-                <label for="privacy-agree">동의합니다</label><br>
+                <label for="privacy-agree">개인 정보 수집 및 이용(필수)
+                <button type="button" id="privacy" class="privacylist"> 전체 >
                 <p class="error-message" id="privacy-error"></p>
             </div>
 

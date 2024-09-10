@@ -21,8 +21,12 @@ body {
 }
 
 .logo {
-    width: 100px;
-    margin-left: 10px;
+    width: 150px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    align-items: center;
+    display: block;
+    margin-left: 30%;
 }
 
 .wrapper {
@@ -39,24 +43,31 @@ h1.title {
 }
 
 .input-container {
-    margin-bottom: 20px;
+    display: flex;
+    margin-bottom: 10px;
     text-align: left;
+    justify-content: left;
+    align-items: center;
+
 }
 
 .label-text {
     display: block;
-    font-size: 14px;
+    font-size: 13px;
     margin-bottom: 5px;
     color: #000;
-    font-weight: bold;
+   
 }
 
 .input-field {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #e5e5e5;
-    border-radius: 5px;
-    font-size: 14px;
+    padding: 15px;
+    border: 1px solid #d9d9d9;
+    background-color: #d9d9d9;
+    border-radius: 15px;
+    font-size: 10px;
+    color:#676767;
+    font-weight: medium;
 }
 
 .error-message {
@@ -74,47 +85,67 @@ h1.title {
 }
 
 .gender-btn {
-    background-color: #f1f1f1;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px 20px;
+    background-color: #d9d9d9;
+    border: 1px solid #d9d9d9;
+    border-radius: 15px;
+    padding: 10px 40px;
     margin: 5px;
     cursor: pointer;
-    font-size: 16px;
+    font-weight: bold;
+    
 }
 
 .gender-btn.selected {
-    background-color: #b3d7ff; /* Change to your desired color */
-    border-color: #0056b3;
-    color: #0056b3;
+    background-color: #e5e7ff; /* Change to your desired color */
+    border-color: #e5e7ff;
+    
 }
 
 .birth-inputs {
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    max-width: 250px;
+    max-width: 320px;
     margin: 0 auto;
 }
 
 .birth-field {
-    width: 30%;
-    padding: 10px;
-    border: 1px solid #e5e5e5;
-    border-radius: 5px;
+    width: 60px;
+    padding: 10px 0;
+    border: none;
+    border-bottom: 1px solid #000;
     font-size: 14px;
     text-align: center;
+    outline: none;
+    
 }
 
+
+.last{
+    margin-top: 30%;
+    font-size: 13px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+.privacylist{
+    background: none;
+    border:none;
+    font-size: 8px;
+    cursor: pointer;
+}
 .submit-btn {
-    background-color: #567eff;
+    background-color: #7c89ff;
     color: white;
     border: none;
     padding: 12px 20px;
-    border-radius: 5px;
+    border-radius: 10px;
     font-size: 16px;
+    font-weight: bold;
     cursor: pointer;
-    width: 100%;
+    width: 70%;
     margin-top: 20px;
+    box-shadow: 2px 4px 6px 2px rgba(0.1, 0, 0, 0.1);
 }
 
 .submit-btn:hover {

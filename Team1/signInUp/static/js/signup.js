@@ -62,18 +62,22 @@ function validateForm() {
         genderError.style.display = "none";
     }
 
-    // Birthdate validation
-    const birthYear = document.getElementById("birth_year").value;
-    const birthMonth = document.getElementById("birth_month").value;
-    const birthDay = document.getElementById("birth_day").value;
-    const birthError = document.getElementById("birth_error");
-    if (!birthYear || !birthMonth || !birthDay) {
-        birthError.textContent = "생년월일을 입력해주세요.";
-        birthError.style.display = "block";
-        isValid = false;
-    } else {
-        birthError.style.display = "none";
-    }
+    //birthday validation
+    document.getElementById("submit").addEventListener("click", function() {
+        const birthYear = document.getElementById("birth_year").value;
+        const birthMonth = document.getElementById("birth_month").value;
+        const birthDay = document.getElementById("birth_day").value;
+        const birthError = document.getElementById("birth-error");
+    
+        if (!birthYear || !birthMonth || !birthDay) {
+            birthError.textContent = "생년월일을 입력해주세요.";
+            birthError.style.display = "block";
+            isValid = false;
+        } else {
+            birthError.style.display = "none";
+        }
+    });
+    
 
     // Privacy agreement validation
     const privacyAgree = document.querySelector('input[name="privacy"]:checked');
