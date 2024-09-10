@@ -61,11 +61,8 @@ def myPage(request):
 
 @login_required
 def my_reservation(request):
-    print(request.user.id)
     # 로그인한 사용자의 예약 정보를 가져옴
     user_reservations = Reservation.objects.filter(user_id=request.user.id)
-
-    print("필터링된 예약 내역:", user_reservations)
     
     # 예약이 없을 경우를 대비하여 예약 내역 확인
     if not user_reservations.exists():
