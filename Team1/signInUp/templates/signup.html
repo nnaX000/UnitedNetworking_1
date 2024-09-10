@@ -1,53 +1,89 @@
-{% block content %}
-<div class="wrapper" style="text-align: center;">
-    <h1>회원가입</h1>
-    <form method="POST">
-        {% csrf_token %}
-        이메일: <br>
-        <input name="email" type="email" value="{{ request.POST.email }}">
-        <br>
-        {% if form_errors.email %}
-            <p style="color: red;">{{ form_errors.email }}</p>
-        {% endif %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLASSFIT 회원가입</title>
+    <link rel="stylesheet" href="../static/css/signup.css">
+</head>
+<body>
+    <div class="header">
+        <!-- Back button -->
+        <img src="../static/png/back.png" id="back-btn" alt="뒤로 가기" class="back-btn" onclick="goBack()">
+        <!-- Logo -->
+        <img src="../static/png/logo.png" alt="CLASSFIT 로고" class="logo">
+    </div>
 
-        비밀번호: <br>
-        <input name="password" type="password" value="{{ request.POST.password }}">
-        <br>
-        {% if form_errors.password %}
-            <p style="color: red;">{{ form_errors.password }}</p>
-        {% endif %}
+    <div class="wrapper">
+        <h1 class="title">회원가입</h1>
+        <form id="signupForm" onsubmit="return validateForm()">
+            <div class="input-container">
+                <span class="required">*</span>
+                <input type="email" id="email" class="input-field" placeholder="이메일(아이디)">
+                <p class="error-message" id="email-error"></p>
+            </div>
+            
+            <div class="input-container">
+                <span class="required">*</span>
+                <input type="password" id="password" class="input-field" placeholder="비밀번호(8자 이상, 문자/숫자/기호 사용 가능)">
+                <p class="error-message" id="password-error"></p>
+            </div>
 
-        비밀번호 확인: <br>
-        <input name="repeat_password" type="password" value="{{ request.POST.repeat_password }}">
-        <br>
+            <div class="input-container">
+                <span class="required">*</span>
+                <input type="password" id="repeated_password" class="input-field" placeholder="비밀번호 확인">
+                <p class="error-message" id="repeated-password-error"></p>
+            </div>
 
-        닉네임: <br>
-        <input name="nickname" type="text" value="{{ request.POST.nickname }}">
-        <br>
-        {% if form_errors.nickname %}
-            <p style="color: red;">{{ form_errors.nickname }}</p>
-        {% endif %}
+            <div class="input-container">
+                <span class="required">*</span>
+                <input type="text" id="nickname" class="input-field" placeholder="닉네임(1-8자)">
+                <p class="error-message" id="nickname-error"></p>
+            </div>
 
-        성별: <br>
-        <input type="radio" name="gender" value="male" {% if request.POST.gender == 'male' %}checked{% endif %}> 남자
-        <input type="radio" name="gender" value="female" {% if request.POST.gender == 'female' %}checked{% endif %}> 여자
-        <br>
+            <div class="input-container">
+                <span class="required">*</span>
+                <label class="label-text">성별</label><br>
+                
+                <!-- Gender buttons -->
+                <button type="button" id="male-btn" class="gender-btn {% if request.POST.gender == 'male' %}selected{% endif %}">
+                    남성
+                </button>
+                <button type="button" id="female-btn" class="gender-btn {% if request.POST.gender == 'female' %}selected{% endif %}">
+                    여성
+                </button>
+                
+                <!-- Hidden input to store selected gender -->
+                <input type="hidden" name="gender" id="gender" value="{% if request.POST.gender %}{{ request.POST.gender }}{% endif %}">
+                
+                <p class="error-message" id="gender-error"></p>
+            </div>
+            
 
-        생년월일: <br>
-        <input name="birth_year" type="text" placeholder="YYYY" maxlength="4" value="{{ request.POST.birth_year }}">년
-        <input name="birth_month" type="text" placeholder="MM" maxlength="2" value="{{ request.POST.birth_month }}">월
-        <input name="birth_day" type="text" placeholder="DD" maxlength="2" value="{{ request.POST.birth_day }}">일
-        <br>
+            <div class="input-container">
+                <span class="required">*</span>
+                <label for="birth" class="label-text">생년월일</label>
+                <div class="birth-inputs">
+                    <input type="text" id="birth_year" class="birth-field" placeholder="년" maxlength="4">
+                    <input type="text" id="birth_month" class="birth-field" placeholder="월" maxlength="2">
+                    <input type="text" id="birt_day" class="birth-field" placeholder="일" maxlength="2">
+                </div>
+                <p class="error-message" id="birth-error"></p>
+            </div>
 
-        <input type="checkbox" name="privacy_agree" {% if request.POST.privacy_agree %}checked{% endif %}> 개인 정보 수집 및 이용(필수)
-        <br><br>
+            <div class="input-container">
+                <span class="required">*</span>
+                <label class="label-text">개인 정보 수집 및 이용(필수)</label><br>
+                <input type="radio" name="privacy" id="privacy-agree" value="agree">
+                <label for="privacy-agree">동의합니다</label><br>
+                <p class="error-message" id="privacy-error"></p>
+            </div>
 
-        <input type="submit" class="btn btn-primary" value="가입">
+            <input type="submit" class="submit-btn" value="가입하기">
+            <p class="error-message" id="submit-error"></p>
+        </form>
+    </div>
 
-        {% if missing_fields %}
-            <p style="color: red;">{{ missing_fields.0 }}</p>
-        {% endif %}
-
-    </form>
-</div>
-{% endblock %}
+    <script src="../static/js/signup.js"></script>
+</body>
+</html>
