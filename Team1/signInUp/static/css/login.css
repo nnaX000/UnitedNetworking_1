@@ -11,6 +11,8 @@ body {
 .logo {
     width: 150px;
     margin-bottom: 20px;
+    margin-left: 30px;
+
 }
 
 .login-form {
@@ -76,9 +78,11 @@ body {
 }
 
 
-@media (max-width: 390px) and (max-height: 850px) {
+@media (max-width: 400px) and (max-height: 850px) {
+  
     .logo {
-        width: 80px;
+        width: 150px;
+        margin-bottom: 20px;
+        display: block;
     }
-
 }

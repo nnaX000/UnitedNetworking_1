@@ -40,6 +40,7 @@ class Reservation(models.Model):
 
     def __str__(self):
         return f"Reservation for User {self.user_id} - Class {self.class_id}"
+    
 
 # Review (수업별 리뷰 관련)
 class Review(models.Model):

@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from datetime import datetime
 
 # Class(수업 목록 관련)
 class Class(models.Model):
@@ -28,6 +29,22 @@ class Reservation(models.Model):
 
     def __str__(self):
         return f"Reservation for User {self.user_id} - Class {self.class_id}"
+    
+    
+    def update_expiration_status(self):
+        # "8월 31일 18:00" 같은 형식을 처리하기 위한 파싱
+        reservation_datetime_str = f"{self.date} {self.time}"
+        
+        try:
+            # 한글 날짜를 파싱하기 위한 맞춤형 형식
+            reservation_datetime = datetime.strptime(reservation_datetime_str, "%m월 %d일 %H:%M")
+        except ValueError:
+            return  # 잘못된 형식의 경우 에러 처리
+            
+        # 현재 시각과 비교
+        if datetime.now() > reservation_datetime:
+            self.is_expired = True
+            self.save()
 
 # Review(수업별 리뷰 관련)
 class Review(models.Model):
