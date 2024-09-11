@@ -4,24 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CLASSFIT 회원가입</title>
-    <link rel="stylesheet" href="../static/css/signup.css">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}">
 </head>
 <body>
     <div class="header">
         <!-- Back button -->
-        <img src="../static/png/back.png" id="back-btn" alt="뒤로 가기" class="back-btn" onclick="goBack()">
+        <img src="{% static 'img/back.png' %}" id="back-btn" alt="뒤로 가기" class="back-btn" onclick="goBack()">
         <!-- Logo -->
-        <img src="../static/png/logo.png" alt="CLASSFIT 로고" class="logo">
+        <img src="{%static 'img/logo.png' %}" alt="CLASSFIT 로고" class="logo">
     </div>
-
+    {% block content %}
     <div class="wrapper">
         <h1 class="title">회원가입</h1>
-        <form id="signupForm" onsubmit="return validateForm()">
-            <div class="input-container">
-                <span class="required">*</span>
-                <input type="email" id="email" class="input-field" placeholder="이메일(아이디)">
-                <p class="error-message" id="email-error"></p>
-            </div>
+        <form method="POST">
+            {% csrf_token %}
+            <form id="signupForm" onsubmit="return validateForm()">
+                <div class="input-container">
+                    <span class="required">*</span>
+                    <input type="email" id="email" class="input-field" placeholder="이메일(아이디)">
+                    <p class="error-message" id="email-error"></p>
+                </div>
             
             <div class="input-container">
                 <span class="required">*</span>

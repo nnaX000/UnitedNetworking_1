@@ -4,21 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>멤버십</title>
-    <link rel="stylesheet" href="../../Team1/static/css/membership.css">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/membership.css' %}">
 </head>
 <body>
     <div class="container">
         <header>
-            <a href="../../Team1/templates/membership_purchase.html">
-                <button id="membership-btn" class="membership-button">멤버십</button>
-            </a>
-            <img src="../../signInUp/static/png/logo.png" alt="CLASSFIT 로고" class="logo">
-            <img src="../../myPage/static/account.png" alt="User Icon" class="user-icon">
+            <button id="membership-btn" class="membership-button">멤버십</button>
+            <img src="{% static 'img/logo.png' %}" alt="CLASSFIT 로고" class="logo">
+            <img src="{% static 'img/account.png' %}" alt="User Icon" class="user-icon">
         </header>
     </div>
     
     <div class="membership-item">
         <div class="title-and-button">
+            <img src="{% static 'img/thumb.png' %}" alt="추천이모지" class="thumb">
             <h2>프리미엄 멤버십<br>500,000원</h2>
             <button class="purchase-button" onclick="window.location.href='{% url 'membership_purchase' product='프리미엄 멤버십' %}'">구매</button>
         </div>
@@ -48,6 +48,16 @@
         <p class = "discribe">월 50만원으로 무제한 운동을 즐길 수 있어요</p>
     </div>
 
-    <script src="../../Team1/static/js/membership.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 로그인 여부에 따른 구매 버튼 활성화/비활성화
+            {% if not logged_in %}
+                const purchaseButtons = document.querySelectorAll('.purchase-button');
+                purchaseButtons.forEach(button => {
+                    button.disabled = true;
+                });
+            {% endif %}
+        });
+    </script>
 </body>
 </html>

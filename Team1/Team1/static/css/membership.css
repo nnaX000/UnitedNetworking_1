@@ -3,6 +3,9 @@ body {
     font-family: 'Noto Sans KR';
     margin: 20px;
 }
+.container{
+    margin-top: 30px;
+}
 .logo {
     width: 150px;
     margin-bottom: 10px;
@@ -21,6 +24,16 @@ header {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+}
+.thumb {
+    margin-right: -130px;
+    width: 10px;
+    margin-top: -30px;
+    display: inline-block;
+    margin-left: 0;
+}
+h2{
+    margin-left: 10px;
 }
 
 .membership-button {
@@ -43,11 +56,13 @@ header {
     align-items: flex-start; /* 아이템을 왼쪽으로 정렬 */
     background: #e5e7ff;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    
 }
 .describe {
     margin-top: 10px; /* 금액과 설명 사이의 여백 */
     font-size: 16px;
     color: #555;
+    padding-left: 20px;
 }
 .title-and-button {
     display: flex;
