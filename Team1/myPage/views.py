@@ -10,7 +10,7 @@ from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 
 from .models import UserProfile
-
+from mainPage.models import Reservation
 
 import datetime
 from datetime import date, timedelta
@@ -45,6 +45,9 @@ def myPage(request):
         else:
             credit_period_display = "멤버십을 구매하세요"
 
+        # 예약 내역 조회
+        reservations = Reservation.objects.filter(user_id=request.user)
+
         context = {
             'logged_in': True,
             'nickname': nickname,
@@ -52,8 +55,26 @@ def myPage(request):
             'using_credit': user_profile.using_credit or 0,
             'credit_period': credit_period_display,
             'alert': user_profile.alert,
+            'reservations': reservations,
         }
         return render(request, 'myPage.html', context)
+
+@login_required
+def my_reservation(request):
+    # 로그인한 사용자의 예약 정보를 가져옴
+    user_reservations = Reservation.objects.filter(user_id=request.user.id)
+    
+    # 예약이 없을 경우를 대비하여 예약 내역 확인
+    if not user_reservations.exists():
+        message = "현재 예약된 클래스가 없습니다."
+    else:
+        message = None
+
+    # 템플릿에 예약 내역과 메시지를 전달
+    return render(request, 'my_reservation.html', {
+        'reservations': user_reservations,
+        'message': message
+    })
 
 
 @login_required

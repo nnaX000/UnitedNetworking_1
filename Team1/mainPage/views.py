@@ -118,25 +118,20 @@ def get_center_name_by_id(center_id):
 
     return None  # 해당 ID에 대한 센터 이름이 없을 경우
 
-
 def reservation_view(request):
     class_id = request.GET.get('classId')
     class_instance = get_object_or_404(Class, id=class_id)
     center_name = get_center_name_by_id(class_instance.center_data_id)
-    
+
     if request.method == 'POST':
-        with transaction.atomic():  # 트랜잭션 내에서 수행
+        with transaction.atomic():
             name = request.POST['name']
             phone = request.POST['phone']
             email = request.POST['email']
-        
-            # 사용자 찾기 또는 생성
+
             user, created = User.objects.get_or_create(email=email, defaults={"username": email})
-            
-            # 프로필이 존재하지 않는다면 생성, 존재한다면 가져오기
             profile, profile_created = UserProfile.objects.get_or_create(user=user)
 
-            # 크레딧 계산 로직
             if profile.remaining_credit != "프리미엄 멤버십":
                 try:
                     remaining_credit = int(profile.remaining_credit) if profile.remaining_credit else 0
@@ -153,15 +148,10 @@ def reservation_view(request):
                             </script>
                         """)
 
-                    # 기존 사용 크레딧을 가져오고 누적
                     existing_using_credit = int(profile.using_credit) if profile.using_credit else 0
                     new_using_credit = existing_using_credit + class_credit
                     profile.using_credit = str(new_using_credit)
-
-                    # 남은 크레딧 업데이트
                     profile.remaining_credit = str(remaining_credit - class_credit)
-                    
-                    # 크레딧 정보 업데이트
                     profile.save()
 
                 except ValueError:
@@ -183,20 +173,22 @@ def reservation_view(request):
                         }}
                     </script>
                 """)
+
             else:
-                # current_people +1
                 class_instance.current_people += 1
                 class_instance.save()  # 수업 인원 업데이트
 
-                # 예약 저장
                 reservation = Reservation(
-                    user_id=user.id,
+                    user_id=user,
                     class_id=class_instance,
-                    is_expired=False
+                    is_expired=False,
+                    center_name=center_name,
+                    teacher=class_instance.teacher,
+                    date=class_instance.date,
+                    time=class_instance.time
                 )
                 reservation.save()
 
-                # 예약 완료 후 팝업 메시지를 포함한 HTML 응답을 반환
                 return HttpResponse("""
                     <script type="text/javascript">
                         alert("예약이 완료되었습니다.");
@@ -212,7 +204,6 @@ def reservation_view(request):
         'email': request.POST.get('email', ''),
     }
     return render(request, 'reservation_form.html', context)
-
 
 def add_to_waiting_list(request):
     class_id = request.GET.get('classId')
