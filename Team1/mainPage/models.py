@@ -32,19 +32,27 @@ class Reservation(models.Model):
     
     
     def update_expiration_status(self):
-        # "8월 31일 18:00" 같은 형식을 처리하기 위한 파싱
-        reservation_datetime_str = f"{self.date} {self.time}"
+        # 현재 연도 가져오기
+        current_year = datetime.now().year
+        
+        # "9월 20일 18:00" 같은 형식을 처리하기 위한 파싱
+        reservation_datetime_str = f"{current_year}년 {self.date} {self.time}"
         
         try:
-            # 한글 날짜를 파싱하기 위한 맞춤형 형식
-            reservation_datetime = datetime.strptime(reservation_datetime_str, "%m월 %d일 %H:%M")
+            # 연도를 포함한 날짜 형식을 파싱 (예: '2024년 9월 20일 18:00')
+            reservation_datetime = datetime.strptime(reservation_datetime_str, "%Y년 %m월 %d일 %H:%M")
         except ValueError:
             return  # 잘못된 형식의 경우 에러 처리
-            
-        # 현재 시각과 비교
-        if datetime.now() > reservation_datetime:
+        
+        # 현재 시각과 비교하여 예약이 만료되었는지 확인
+        current_datetime = datetime.now()
+        
+        if current_datetime > reservation_datetime:
             self.is_expired = True
             self.save()
+        else:
+            print(f"예약 유지: {reservation_datetime_str}, 현재 시각보다 미래임.")
+
 
 # Review(수업별 리뷰 관련)
 class Review(models.Model):
