@@ -123,6 +123,10 @@ def reservation_view(request):
     class_instance = get_object_or_404(Class, id=class_id)
     center_name = get_center_name_by_id(class_instance.center_data_id)
 
+    # CSV 파일에서 센터 이미지를 가져옴
+    df = pd.read_csv(csv_file_path, encoding='utf-8')
+    center_image_url = df[df['id'] == class_instance.center_data_id]['사진'].values[0]  # 이미지 URL 추출
+
     if request.method == 'POST':
         with transaction.atomic():
             name = request.POST['name']
@@ -182,6 +186,7 @@ def reservation_view(request):
                     user_id=user,
                     class_id=class_instance,
                     is_expired=False,
+                    center_image_url=center_image_url,
                     center_name=center_name,
                     teacher=class_instance.teacher,
                     date=class_instance.date,

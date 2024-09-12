@@ -22,6 +22,7 @@ class Reservation(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name='mainPage_reservation')  # FK로 설정할 수 있지만, 다른 테이블에서 가져온다고 가정
     class_id = models.ForeignKey(Class, on_delete=models.CASCADE)
     is_expired = models.BooleanField()
+    center_image_url = models.CharField(max_length=255, blank=True)
     center_name = models.CharField(max_length=100)
     teacher = models.CharField(max_length=100)
     date = models.CharField(max_length=50)
