@@ -7,4 +7,5 @@ urlpatterns = [
     path('signup/', views.signup, name='signup'),
     path('login/', views.login, name='login'),
     path('logout/', views.logout, name='logout'),
+    path('signin/', views.signup, name='signin'),  # 회원가입 완료시 넘어가는 페이지
 ]

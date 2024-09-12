@@ -24,7 +24,7 @@
                     <span class="required">*</span>
                     <input name="email" type="email" class="input-field" placeholder="이메일(아이디)" value="{{ request.POST.email }}">
                     {% if form_errors.email %}
-                    <p class="error-message">{{ form_errors.email }}</p>
+                    <p class="error-message" id="email-error">{{ form_errors.email }}</p>
                     {% endif %}
                 </div>
             
@@ -46,7 +46,7 @@
                 <span class="required">*</span>
                 <input name="nickname" type="text" class="input-field" placeholder="닉네임(1-8자)" value="{{ request.POST.nickname }}">
                 {% if form_errors.nickname %}
-                <p class="error-message">{{ form_errors.nickname }}</p>
+                <p class="error-message" id="nickname-error">{{ form_errors.nickname }}</p>
                 {% endif %}
             </div>
 
@@ -54,17 +54,14 @@
                 <span class="required">*</span>
                 
                 <!-- Gender buttons -->
-                <button type="button" id="female-btn" class="gender-btn" {% if request.POST.gender == 'female' %}selected{% endif %}>
+                <button type="button" name="gender" id="female-btn" class="gender-btn" value="female" {% if request.POST.gender == 'female' %}selected{% endif %}>
                     여성
                 </button>
-                <button type="button" id="male-btn" class="gender-btn {% if request.POST.gender == 'male' %}selected{% endif %}">
+                <button type="button" name = "gender" id="male-btn" class="gender-btn" value="male" {% if request.POST.gender == 'male' %}selected{% endif %}>
                     남성
                 </button>
-                
                 <!-- Hidden input to store selected gender -->
                 <input type="hidden" name="gender" id="gender" value="{% if request.POST.gender %}{{ request.POST.gender }}{% endif %}">
-                
-                <p class="error-message" id="gender-error"></p>
             </div>
             
 
@@ -72,28 +69,28 @@
                 <span class="required">*</span>
                 <label for="birth" class="label-text">생년월일</label>
                 <div class="birth-inputs">
-                    <input type="text" id="birth_year" class="birth-field" p maxlength="4">
+                    <input name="birth_year" type="text" id="birth_year" class="birth-field" p maxlength="4">
                     <label for="birth" class="label-text">년</label>
                     <input type="text" id="birth_month" class="birth-field" maxlength="2">
                     <label for="birth" class="label-text">월</label>
                     <input type="text" id="birth_day" class="birth-field" maxlength="2">
                     <label for="birth" class="label-text">일</label>
                 </div>
-                <p class="error-message" id="birth-error"></p>
             </div>
             
             <div class="last">
-                <input type="radio" name="privacy" id="privacy-agree" value="agree">
+                <input type="radio" name="privacy_agree" id="privacy-agree" value="agree"  {% if request.POST.privacy_agree %}checked{% endif %}>
                 <label for="privacy-agree">개인 정보 수집 및 이용(필수)
                 <button type="button" id="privacy" class="privacylist"> 전체 >
-                <p class="error-message" id="privacy-error"></p>
             </div>
 
-            <input type="submit" class="submit-btn" value="가입하기">
-            <p class="error-message" id="submit-error"></p>
+            <input type="submit" class="submit-button" value="가입하기">
+            {% if missing_fields %}
+                <p class="error-message" id="submit-error">{{ missing_fields.0 }}</p>
+            {% endif %}
         </form>
     </div>
-
-    <script src="../static/js/signup.js"></script>
+    {% endblock %}
+    <script src="{% static 'js/signup.js' %}"></script>
 </body>
 </html>

@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원가입완료</title>
-    <link rel="stylesheet" href="../static/css/signin.css">
+    <link rel="stylesheet" href="{% static 'css/signin.css' %}">
 </head>
 <body>
     <div class="container">
-        <img src="../static/png/logo.png" alt="CLASSFIT 로고" class="logo">
-        <p>환영합니다, <span id="nickname"></span>님</p>
+        <img src="{% static 'img/logo.png' %}" alt="CLASSFIT 로고" class="logo">
+        <p>환영합니다, <span id="nickname">{{ nickname }}</span>님</p>
         <p>회원가입이 완료되었습니다.</p>
         <button id="loginButton">로그인하러 가기</button>
     </div>

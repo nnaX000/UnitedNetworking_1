@@ -62,7 +62,7 @@ def signup(request):
 
             auth_login(request, new_user)  # 자동 로그인
             messages.success(request, '회원가입 성공')
-            return redirect('signInUp:login')
+            return redirect('signInUp:signin')
 
     return render(request, 'signup.html', {'form_errors': form_errors, 'missing_fields': missing_fields})
 
