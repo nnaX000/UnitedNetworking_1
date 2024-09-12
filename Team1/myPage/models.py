@@ -33,6 +33,7 @@ class Reservation(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name='myPage_reservation')  # username을 email로 설정해놔서
     class_id = models.ForeignKey(Class, on_delete=models.CASCADE)
     is_expired = models.BooleanField()
+    center_image_url = models.CharField(max_length=255, blank=True)
     center_name = models.CharField(max_length=100)
     teacher = models.CharField(max_length=100)
     date = models.CharField(max_length=50)

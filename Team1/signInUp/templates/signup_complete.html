@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입 완료</title>
+</head>
+<body>
+    <div style="text-align: center;">
+        <h1>환영합니다, {{ nickname }}님!</h1>
+        <p>회원가입이 완료되었습니다.</p>
+        <a href="{% url 'signInUp:login' %}">
+            <button>로그인</button>
+        </a>
+    </div>
+</body>
+</html>
