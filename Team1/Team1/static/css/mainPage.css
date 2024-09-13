@@ -1,0 +1,95 @@
+@import url('//fonts.googleapis.com/earlyaccess/notosanskr.css');
+body {
+    font-family: 'Noto Sans KR';
+    margin: 20px;
+}
+.container{
+    margin-top: 30px;
+}
+.logo {
+    width: 150px;
+    margin-bottom: 10px;
+    align-items: center;
+    display: block;
+    margin-left: 20%;
+}
+.user-icon {
+    width: 30px;
+    margin-bottom: 10px;
+    margin-left: 20%;
+    align-items: right;
+}
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.search {
+    background-color: #7b88fe; /* Light blue background */
+    width: 392px;              /* Fixed width */
+    height: 240px;             /* Fixed height */
+    border-radius: 20px;       /* Rounded corners for the entire search area */
+    padding: 20px;             /* Padding around the content */
+    display: flex;
+    justify-content: space-around; /* Space between the dropdowns and button */
+    align-items: flex-start;       /* Center the items vertically */
+    gap: 20px;                 /* Gap between items */
+   
+}
+
+.dropdown {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;           /* Remove default browser styling */
+    background-color: white;    /* White background */
+    border: none;
+    padding: 10px 40px 10px 20px; /* Padding to allow for custom arrow */
+    font-size: 16px;
+    border-radius: 50px;        /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Light shadow */
+    cursor: pointer;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2210%22%20height%3D%2210%22%3E%3Cpath%20d%3D%22M0%2C0%20L5%2C5%20L10%2C0%22%20fill%3D%22%23000%22/%3E%3C/svg%3E'); /* Custom dropdown arrow */
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 10px 10px;
+    width: 150px; /* Set a fixed width for the dropdowns */
+    outline: none;
+}
+
+.dropdown option {
+    padding: 10px;
+    font-size: 16px;
+    background-color: #E8EAF6; /* Light blue background for options */
+}
+
+.search-button {
+    background-color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 50px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Shadow for the button */
+    font-size: 16px;
+    cursor: pointer;
+    width: 100px; /* Fixed width for the search button */
+    text-align: center;
+}
+
+/* Hover effect for the button */
+.search-button:hover {
+    background-color: #f0f0f0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Stronger shadow on hover */
+}
+
+.result-item {
+    margin: 20px 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer; /* 클릭할 수 있음을 나타내는 스타일 */
+}
+.result-item img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}

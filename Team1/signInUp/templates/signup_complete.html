@@ -11,17 +11,15 @@
         <img src="{% static 'img/logo.png' %}" alt="CLASSFIT 로고" class="logo">
         <p>환영합니다, <span id="nickname">{{ nickname }}</span>님</p>
         <p>회원가입이 완료되었습니다.</p>
-        <button id="loginButton">로그인하러 가기</button>
+        <a href="{% url 'signInUp:login' %}">
+            <button id="loginButton">로그인하러 가기</button>
+        </a>
     </div>
 
     <script>
         // 백엔드에서 닉네임 데이터를 받아와서 표시
         document.getElementById('nickname').textContent = '{{ request.POST.nickname }}';
-
-        // 로그인 버튼 클릭 시 login.html로 이동
-        document.getElementById('loginButton').addEventListener('click', function() {
-            window.location.href = 'login.html';
-        });
+       
     </script>
 </body>
 </html>
