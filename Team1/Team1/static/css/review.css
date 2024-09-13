@@ -1,0 +1,241 @@
+html, body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    width: 393px;
+    height: 100%;
+    margin: 0;
+}
+
+.container {
+    width: 100%;
+}
+
+.topBar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 50px;
+    margin-top: 77px;
+    margin-bottom: 40px;
+}
+
+.topBar-membership {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    color: #000000;
+}
+
+.topBar-classfit {
+    font-family: 'Exo';
+    font-style: italic;
+    font-weight: 700;
+    font-size: 32px;
+    color: #7C89FF;
+}
+
+.topBar-profileIcon {
+    width: 24px;
+    height: 24px;
+}
+
+.review-title {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    color: #000000;
+    margin-left: 52px;
+}
+
+.info-container {
+    background-color: #E5E7FF;
+    border-radius: 5px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    height: auto;
+    margin-bottom: 56px;
+    width: 348px;
+    margin-left: 25px;
+}
+
+.grid-review {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 두 열 설정 */
+    gap: 10px 39px; /* 요소 사이의 간격 */
+}
+
+.centerName-review {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    color: #000000;
+    margin-left: 18px;
+    padding-top: 12px;
+    padding-bottom: 7px;
+}
+
+.classTime-review .classDetail-review .classDuration-review .classTeacher-review{
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    color: #000000;
+}
+
+.classTime-review .classDuration-review {
+    margin-left: 103px;
+}
+
+.star-rating {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+}
+
+.reviewEmptyStar-icon {
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+
+}
+
+.reviewEmptyStar-icon.filled {
+    content: url('/Team1/Team1/static/img/reviewFilledStar-icon.png'); /* 색이 채워진 별 이미지 */
+    width: 50px;
+    height: 52px;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.chooseKeyword-container {
+    margin-left: 52px;
+    margin-top: 49px;
+}
+
+.chooseKeyword {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    color: #000000;
+}
+
+.keywords {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2개의 열을 만듭니다 */
+    justify-items: center;
+    align-items: center;
+    column-gap: 8px; /* 버튼 간의 수평 간격 조정 */
+    row-gap: 18px; /* 버튼 간의 수직 간격 조정 */
+}
+
+.keyword-button {
+    background-color: #C0C5FF;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;    
+    text-align: center;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    color: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    padding: 11px 24px;
+    margin: 0;
+}
+
+.keyword-button.selected {
+    background-color: #7C89FF; /* 선택된 상태의 배경색 */
+    outline: none;
+}
+
+.keyword-button:focus {
+    outline: none; /* 포커스 시 기본 테두리 제거 */
+}
+
+
+.reviewForm-container {
+    width: 348px;
+    height: 198px;
+    padding: 26px 36px;
+    background: #E5E7FF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    margin-top: 37px;
+    border: none;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+textarea {
+    width: 100%;
+    height: 180px;
+    padding: 10px;
+    resize: none;
+    border: none;
+    background-color: #E5E7FF;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #656565;
+}
+
+.char-count {
+    margin-top: 15px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #000000;
+    text-align: right;
+}
+
+.reviewButton {
+    margin-bottom: 77px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.reviewButton button {
+    margin-top: 43px;
+    padding: 9px 20px;
+    background-color: #5A6BFF;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 16px;
+    color: #FFFFFF;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    width: 98px;
+    height: 34px;
+    text-align: center;
+}

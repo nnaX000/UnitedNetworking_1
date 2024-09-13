@@ -8,8 +8,11 @@ import re
 import os
 from django.conf import settings
 from .models import Class, Reservation
+from myPage.models import UserProfile
 from django.contrib.auth.models import User
 import csv
+from django.db import transaction
+
 
 logger = logging.getLogger(__name__)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -115,55 +118,118 @@ def get_center_name_by_id(center_id):
 
     return None  # 해당 ID에 대한 센터 이름이 없을 경우
 
-
-
-# 예약하기
 def reservation_view(request):
     class_id = request.GET.get('classId')
-    
-    # 올바른 클래스 인스턴스를 가져옴
     class_instance = get_object_or_404(Class, id=class_id)
-
-    # center_data_id를 이용하여 센터 이름을 가져옴
     center_name = get_center_name_by_id(class_instance.center_data_id)
-    
-    if not center_name:
-        return render(request, 'error_page.html', {"error": "센터 이름을 찾을 수 없습니다."})
+
+    # CSV 파일에서 센터 이미지를 가져옴
+    df = pd.read_csv(csv_file_path, encoding='utf-8')
+    center_image_url = df[df['id'] == class_instance.center_data_id]['사진'].values[0]  # 이미지 URL 추출
 
     if request.method == 'POST':
-        name = request.POST['name']
-        phone = request.POST['phone']
-        email = request.POST['email']
-        
-        # 사용자 찾기 또는 생성
-        user, created = User.objects.get_or_create(email=email, defaults={"username": email})
-        
-        # 예약 저장
-        reservation = Reservation(
-            user_id=user.id,
-            class_id=class_instance,
-            is_expired=False
-        )
-        reservation.save()
+        with transaction.atomic():
+            name = request.POST['name']
+            phone = request.POST['phone']
+            email = request.POST['email']
 
-        # 예약 완료 후 팝업 메시지를 포함한 HTML 응답을 반환
-        return HttpResponse("""
-            <script type="text/javascript">
-                alert("예약이 완료되었습니다.");
-                window.location.href = '/mainPage/';
-            </script>
-        """)
-    
+            user, created = User.objects.get_or_create(email=email, defaults={"username": email})
+            profile, profile_created = UserProfile.objects.get_or_create(user=user)
+
+            if profile.remaining_credit != "프리미엄 멤버십":
+                try:
+                    remaining_credit = int(profile.remaining_credit) if profile.remaining_credit else 0
+                    class_credit = class_instance.credit_num
+
+                    if remaining_credit - class_credit < 0:
+                        return HttpResponse("""
+                            <script type="text/javascript">
+                                if (confirm("크레딧이 부족합니다. 구매하러 가시겠습니까?")) {
+                                    window.location.href = '/myPage/membership/';
+                                } else {
+                                    window.history.back();
+                                }
+                            </script>
+                        """)
+
+                    existing_using_credit = int(profile.using_credit) if profile.using_credit else 0
+                    new_using_credit = existing_using_credit + class_credit
+                    profile.using_credit = str(new_using_credit)
+                    profile.remaining_credit = str(remaining_credit - class_credit)
+                    profile.save()
+
+                except ValueError:
+                    return HttpResponse("잘못된 크레딧 값입니다.", status=400)
+
+            # 전화번호 업데이트
+            profile.phone_number = phone
+            profile.save()
+
+            # 정원이 다 찼는지 확인
+            if class_instance.current_people >= class_instance.capacity:
+                # 대기 명단에 추가하는 로직
+                return HttpResponse(f"""
+                    <script type="text/javascript">
+                        if (confirm("수업이 모두 찼습니다. 대기하시겠습니까?")) {{
+                            window.location.href = '/mainPage/waiting_list/?classId={class_id}&userId={user.id}';
+                        }} else {{
+                            window.history.back();
+                        }}
+                    </script>
+                """)
+
+            else:
+                class_instance.current_people += 1
+                class_instance.save()  # 수업 인원 업데이트
+
+                reservation = Reservation(
+                    user_id=user,
+                    class_id=class_instance,
+                    is_expired=False,
+                    center_image_url=center_image_url,
+                    center_name=center_name,
+                    teacher=class_instance.teacher,
+                    date=class_instance.date,
+                    time=class_instance.time
+                )
+                reservation.save()
+
+                return HttpResponse("""
+                    <script type="text/javascript">
+                        alert("예약이 완료되었습니다.");
+                        window.location.href = '/mainPage/';
+                    </script>
+                """)
+
     context = {
         'class_instance': class_instance,
-        'center_name': center_name,  # 센터 이름을 템플릿으로 넘김
+        'center_name': center_name,
         'name': request.POST.get('name', ''),
         'phone': request.POST.get('phone', ''),
         'email': request.POST.get('email', ''),
     }
     return render(request, 'reservation_form.html', context)
 
+def add_to_waiting_list(request):
+    class_id = request.GET.get('classId')
+    user_id = request.GET.get('userId')
+    
+    # 수업과 유저 객체를 가져옴
+    class_instance = get_object_or_404(Class, id=class_id)
+    user = get_object_or_404(User, id=user_id)
 
+    # waiting_people 필드가 문자열로 저장되어 있는지 확인
+    waiting_list = str(class_instance.waiting_people).split(',') if class_instance.waiting_people else []
+    
+    # 유저가 이미 대기 명단에 있는지 확인 후 추가
+    if str(user.id) not in waiting_list:
+        waiting_list.append(str(user.id))
+        class_instance.waiting_people = ','.join(waiting_list)
+        class_instance.save()  # 수업 객체 저장
+
+    # 대기 명단 추가 후 메인 페이지로 리다이렉트
+    return HttpResponseRedirect('/mainPage/')
+    
 
 # 마이페이지로 이동
 def myPage(request):

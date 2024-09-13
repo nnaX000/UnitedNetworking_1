@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Exo:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/Team1/Team1/static/css/review.css">
+    <title>리뷰</title>
+</head>
+<body>
+    <div class="container">
+        <div class="topBar">
+            <p class="topBar-membership">멤버십</p>
+            <P class="topBar-classfit">CLASSFIT</P>
+            <img src="/Team1/Team1/static/img/profile-icon.png" alt="프로필 아이콘" class="topBar-profileIcon">
+        </div>
+        <div class="review-title">
+            이 수업 어떠셨나요?
+        </div>
+        <div class="info-container">
+        <p class="centerName-review">{{ center_name }}</p>
+            <div class="grid-review">
+                <p class="classTime-review">{{ class_instance.time }}</p>
+                <p class="classDetail-review">{{ class_instance.detail }}</p>
+                <p class="classDuration-review">({{ class_instance.duration }}분)</p>
+                <p class="classTeacher-review">{{ class_instance.teacher }} 강사</p>
+            </div>
+        </div>
+        <div class="star-rating">
+            <img src="/Team1/Team1/static/img/reviewEmptyStar-icon.png" alt=" 빈 리뷰 별 아이콘" class="reviewEmptyStar-icon" data-value="1">
+            <img src="/Team1/Team1/static/img/reviewEmptyStar-icon.png" alt="빈 리뷰 별 아이콘" class="reviewEmptyStar-icon" data-value="2">
+            <img src="/Team1/Team1/static/img/reviewEmptyStar-icon.png" alt="빈 리뷰 별 아이콘" class="reviewEmptyStar-icon" data-value="3">
+            <img src="/Team1/Team1/static/img/reviewEmptyStar-icon.png" alt="빈 리뷰 별 아이콘" class="reviewEmptyStar-icon" data-value="4">
+            <img src="/Team1/Team1/static/img/reviewEmptyStar-icon.png" alt="빈 리뷰 별 아이콘" class="reviewEmptyStar-icon" data-value="5">
+        </div>
+        <div class="chooseKeyword-container">
+            <p class="chooseKeyword">키워드를 골라주세요</p>
+            <div class="keywords">
+                <button class="keyword-button">친절해요</button>
+                <button class="keyword-button">깔끔해요</button>
+                <button class="keyword-button">재방문각</button>
+                <button class="keyword-button">운동맛집</button>
+            </div>
+        </div>
+        <div class="reviewForm-container">
+            <form id="textForm">
+                <textarea id="textInput" name="textInput" maxlength="50" placeholder="수업에 대한 후기를 남겨주세요."></textarea>
+            </form>
+        </div>
+        <div id="charCount" class="char-count">0/50</div>
+        <div class="reviewButton">
+            <button class="cancel">취소하기</button>
+            <button class="enroll">등록하기</button>
+        </div>
+    </div>
+    <script src="/Team1/Team1/static/js/review.js"></script>
+</body>
+</html>
