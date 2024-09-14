@@ -14,4 +14,6 @@ urlpatterns = [
     path('reservation/', views.reservation_view, name='reservation_form'),
     #수업 다 찼을 경우 대기명단에 추가하기
     path('waiting_list/', views.add_to_waiting_list, name='waiting_list'),
+    #리뷰 불러오기
+    path('review_list/<int:center_id>/', views.review_list, name='review_list'),
 ]
