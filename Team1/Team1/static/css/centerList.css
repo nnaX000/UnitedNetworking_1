@@ -1,0 +1,108 @@
+html, body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    width: 393px;
+    height: 100%;
+    margin: 0;
+}
+
+.container {
+    width: 100%;
+}
+
+.topBar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 50px;
+    margin-top: 67px;
+    margin-bottom: 40px;
+}
+
+.topBar-membership {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    color: #000000;
+}
+
+.topBar-classfit {
+    font-family: 'Exo';
+    font-style: italic;
+    font-weight: 700;
+    font-size: 32px;
+    color: #7C89FF;
+}
+
+.topBar-profileIcon {
+    width: 24px;
+    height: 24px;
+}
+
+.secondContainer {
+    display: flex;
+    align-items: center;
+}
+
+.dropdown-container {
+    display: flex;
+    align-items: center;
+}
+
+.dropdown {
+    position: relative;
+    margin-right: 10px;
+}
+
+.dropdown select {
+    text-align: center;
+    padding: 12px 16px;
+    gap: 8px;
+    background: #FFFFFF;
+    border: 1px solid #D9D9D9;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 42px;
+}
+
+.dropdown i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.25px;
+}
+
+.btn {
+    padding: 10px 20px;
+    background-color: #E5E7FF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 12px 16px;
+    gap: 8px;
+    background: #E5E7FF;
+    border: 1px solid #D9D9D9;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 42px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.25px;
+    color: #1E1E1E;
+}

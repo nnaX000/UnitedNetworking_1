@@ -6,6 +6,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Exo:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <link rel="stylesheet" href="/Team1/Team1/static/css/review.css">
     <title>리뷰</title>
 </head>
@@ -22,10 +23,10 @@
         <div class="info-container">
         <p class="centerName-review">{{ center_name }}</p>
             <div class="grid-review">
-                <p class="classTime-review">{{ class_instance.time }}</p>
-                <p class="classDetail-review">{{ class_instance.detail }}</p>
-                <p class="classDuration-review">({{ class_instance.duration }}분)</p>
-                <p class="classTeacher-review">{{ class_instance.teacher }} 강사</p>
+                <p class="classTime-review" id="classTime-review">{{ class_instance.time }}</p>
+                <p class="classDetail-review" id="classDetail-review">{{ class_instance.detail }}</p>
+                <p class="classDuration-review" id="classDuration-review">({{ class_instance.duration }}분)</p>
+                <p class="classTeacher-review" id="classTeacher-review">{{ class_instance.teacher }} 강사</p>
             </div>
         </div>
         <div class="star-rating">

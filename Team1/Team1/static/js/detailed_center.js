@@ -1,3 +1,4 @@
+                
         // 탭 기능 구현
         document.getElementById('infoTab').addEventListener('click', function() {
             document.getElementById('infoContent').classList.add('active');
