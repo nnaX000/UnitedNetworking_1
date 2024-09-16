@@ -47,14 +47,26 @@
     </div>
     <div class="thirdContainer">
         <div class="listContainer">
-            <div>
-                <img src="">
-                <div>
-                    <p>{{ center_name }}</p>
-                    <img src="/Team1/Team1/static/img/reviewStar-icon.png" alt="리뷰 별 점수" class="reviewStar-icon">
+            <div class="boxContainer">
+                <img src="{{ center.image_url }}" alt="센터 사진" class="centerImage">
+                <div class="centerContent">
+                    <div class="title-content">
+                        <p class="titleContent-centerName">{{ center.name }}</p>
+                        <img src="/Team1/Team1/static/img/reviewStar-icon.png" alt="리뷰 별 점수" class="reviewStar-icon">
+                        <p class="titleContent-score">5.0</p>
+                    </div>
+                    <div class="centerDetail-container">
+                        <p class="centerDetail-address">{{ center.address }}</p>
+                        <p class="centerDetail-phone">{{ center.phone }}</p>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="pagination">
+        <button class="pagination-arrow" id="prev-page" disabled>&lt;</button>
+        <div id="page-numbers"></div>
+        <button class="pagination-arrow" id="next-page">&gt;</button>
     </div>
     </div>
     <script src="/Team1/Team1/static/js/centerList.js"></script>
