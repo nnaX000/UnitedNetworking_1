@@ -52,7 +52,7 @@ def filter_centers(request):
     filtered_df = filtered_df.fillna('')
 
     # 결과 데이터 추출 (센터 이름과 사진 링크만 포함)
-    results = filtered_df[['id', '센터 이름', '사진']].to_dict('records')
+    results = filtered_df[['id', '센터 이름', '사진','주소']].to_dict('records')
 
     return JsonResponse(results, safe=False)
 
