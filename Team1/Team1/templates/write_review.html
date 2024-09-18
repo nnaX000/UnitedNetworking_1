@@ -64,8 +64,6 @@
 </html>
 
 
-
-
 <!--
     <div class="review-form">
         <h1>이 수업 어떠셨나요?</h1>
@@ -78,7 +76,7 @@
         <form method="POST">
             {% csrf_token %}
 
-            //별점 라디오 버튼
+            별점 라디오 버튼
             <label for="star">별점:</label>
             <div id="star">
                 <label><input type="radio" name="star" value="1" required> 1점</label>
@@ -88,7 +86,7 @@
                 <label><input type="radio" name="star" value="5" required> 5점</label>
             </div>
 
-            //키워드 체크박스
+            키워드 체크박스
             <label for="keyword">키워드:</label>
             <div id="keyword">
                 <label><input type="checkbox" name="keyword" value="친절해요"> 친절해요</label>
@@ -97,7 +95,7 @@
                 <label><input type="checkbox" name="keyword" value="운동맛집"> 운동맛집</label>
             </div>
 
-            //리뷰 작성
+            리뷰 작성
             <label for="detail">리뷰 내용 (50자 이내):</label>
             <textarea name="detail" id="detail" maxlength="50" required></textarea>
 
@@ -109,4 +107,3 @@
     </div>
 </body>
 </html>
--->

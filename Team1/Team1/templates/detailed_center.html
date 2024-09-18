@@ -141,6 +141,21 @@
             </div>
         </div>
     </div>
-    <script src="/Team1/Team1/static/js/detailed_center.js"></script>
+
+    <h2>후기</h2>
+    <div id="review-section">
+        {% if reviews %}
+            <ul>
+                {% for review in reviews %}
+                    <li class="review-item">
+                        <strong>{{ review.user_name }} (강사: {{ review.class_id.teacher }}):</strong> {{ review.detail }} (별점: {{ review.star }})
+                        <p>키워드: {{ review.keyword }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>등록된 후기가 없습니다.</p>
+        {% endif %}
+    </div>
 </body>
 </html>
