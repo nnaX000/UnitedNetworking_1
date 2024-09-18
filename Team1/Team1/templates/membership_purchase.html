@@ -26,28 +26,56 @@
     <h3>{{ product }} 구매</h3>
 
     <button id="confirmButton" class="confirm-button">구매</button>
+    
+       <!-- The Modal -->
+    <div id="purchaseModal" class="modal">
+        <div class="modal-content">
+            <img id="productIcon" src="" alt="구매 완료 아이콘">
+            <h2 id="modalMessage"></h2>
+            <button id="closeModal" class="close-button">확인</button>
+        </div>
+    </div>
 
     <script>
-        document.getElementById('confirmButton').addEventListener('click', function() {
-            // 구매 요청을 서버로 전송
+        // Get the modal
+        var modal = document.getElementById("purchaseModal");
+
+        // Get the button that closes the modal
+        var closeBtn = document.getElementById("closeModal");
+
+        // Modal message element
+        var modalMessage = document.getElementById("modalMessage");
+
+        // Function to handle purchase
+        function purchaseMembership(productName) {
+            // Simulate a purchase request to the server
             fetch(`/myPage/purchase_membership/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-CSRFToken': '{{ csrf_token }}'  // CSRF 토큰 필요
                 },
-                body: JSON.stringify({ 'product': '{{ product }}' })
+                body: JSON.stringify({ 'product': productName })
             })
-
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    // 구매가 완료되면 멤버십 페이지로 리디렉트
-                    window.location.href = '/myPage/membership/';
+                    // Display the product name dynamically in the modal
+                    modalMessage.textContent = productName + '이(가) 구매되었습니다.';
+                    
+                    // Open the modal
+                    modal.style.display = "block";
                 } else {
                     alert('프리미엄 멤버십 상태에서는 추가 크레딧을 구매할 수 없습니다.');
                 }
             });
+        }
+
+        // When the user clicks the close button, close the modal
+        closeBtn.addEventListener('click', function() {
+            modal.style.display = "none";
+            // Redirect to membership page or handle further actions
+            window.location.href = '/myPage/membership/';
         });
     </script>
 </body>
