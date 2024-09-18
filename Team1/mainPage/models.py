@@ -67,14 +67,5 @@ class Review(models.Model):
     def __str__(self):
         return f"Review by User {self.user_id} for Class {self.class_id} - {self.star} Stars"
 
-class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='mainPage_profile')
-    alert = models.BooleanField(default=False)
-    using_credit = models.CharField(max_length=20, default="0")
-    remaining_credit = models.CharField(max_length=20, default="0")
-    credit_period = models.CharField(max_length=255, blank=True, null=True)
-    phone_number = models.CharField(max_length=20, blank=True, null=True)
 
-    def __str__(self):
-        return f'{self.user.username}의 프로필'
 
