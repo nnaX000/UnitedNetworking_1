@@ -19,6 +19,14 @@ body {
     margin-left: 20%;
     align-items: right;
 }
+.membership-button {
+    background-color: transparent;
+    border: none;
+    font-size: 14px;
+    color: #555;
+    cursor: pointer;
+    font-weight: bold;
+}
 header {
     display: flex;
     justify-content: space-between;

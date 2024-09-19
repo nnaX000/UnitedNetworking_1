@@ -134,7 +134,7 @@ h1.title {
     font-size: 8px;
     cursor: pointer;
 }
-.submit-btn {
+.btn btn-primary{
     background-color: #7c89ff;
     color: white;
     border: none;
@@ -148,7 +148,7 @@ h1.title {
     box-shadow: 2px 4px 6px 2px rgba(0.1, 0, 0, 0.1);
 }
 
-.submit-btn:hover {
+.btn btn-primary:hover {
     background-color: #456acc;
 }
 

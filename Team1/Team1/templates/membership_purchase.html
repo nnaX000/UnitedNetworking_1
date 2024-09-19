@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>멤버십 구매 확인</title>
+    {% load static %}
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -19,6 +20,38 @@
             cursor: pointer;
             margin-top: 20px;
         }
+        .modal {
+            display: none; /* Hide modal by default */
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4); /* Modal background with opacity */
+        }
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 300px;
+            text-align: center;
+        }
+        .close-button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        img {
+            max-width: 50px;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
@@ -26,28 +59,59 @@
     <h3>{{ product }} 구매</h3>
 
     <button id="confirmButton" class="confirm-button">구매</button>
+    
+    <!-- The Modal -->
+    <div id="purchaseModal" class="modal">
+        <div class="modal-content">
+            <img src="{% static 'img/check.png' %}" id="productIcon" alt="구매 완료 아이콘">
+            <h2 id="modalMessage"></h2>
+            <button id="closeModal" class="close-button">확인</button>
+        </div>
+    </div>
 
     <script>
-        document.getElementById('confirmButton').addEventListener('click', function() {
-            // 구매 요청을 서버로 전송
+        // Get the modal
+        var modal = document.getElementById("purchaseModal");
+
+        // Get the purchase button
+        var confirmButton = document.getElementById("confirmButton");
+
+        // Get the close button inside the modal
+        var closeBtn = document.getElementById("closeModal");
+
+        // Modal message element
+        var modalMessage = document.getElementById("modalMessage");
+
+        // Handle purchase on button click
+        confirmButton.addEventListener('click', function() {
+            // Simulate a purchase request to the server
             fetch(`/myPage/purchase_membership/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-CSRFToken': '{{ csrf_token }}'  // CSRF 토큰 필요
                 },
-                body: JSON.stringify({ 'product': '{{ product }}' })
+                body: JSON.stringify({ 'product': '{{ product }}' })  // Use Django template variable here
             })
-
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    // 구매가 완료되면 멤버십 페이지로 리디렉트
-                    window.location.href = '/myPage/membership/';
+                    // Display the product name dynamically in the modal
+                    modalMessage.textContent = '{{ product }}이(가) 구매되었습니다.';
+                    
+                    // Open the modal
+                    modal.style.display = "block";
                 } else {
                     alert('프리미엄 멤버십 상태에서는 추가 크레딧을 구매할 수 없습니다.');
                 }
             });
+        });
+
+        // When the user clicks the close button, close the modal
+        closeBtn.addEventListener('click', function() {
+            modal.style.display = "none";
+            // Redirect to membership page or handle further actions
+            window.location.href = '/myPage/membership/';
         });
     </script>
 </body>
