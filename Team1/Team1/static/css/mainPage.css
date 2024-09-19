@@ -18,6 +18,9 @@ body {
     margin-bottom: 10px;
     margin-left: 20%;
     align-items: right;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
 }
 .membership-button {
     background-color: transparent;
@@ -100,4 +103,14 @@ header {
     max-width: 100%;
     height: auto;
     border-radius: 5px;
+}
+@media (max-width: 390px) and (max-height: 850px) {
+    .logo {
+        width: 80px;
+    }
+
+    button {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
 }

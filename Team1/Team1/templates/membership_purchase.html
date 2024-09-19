@@ -5,59 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>멤버십 구매 확인</title>
     {% load static %}
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            text-align: center;
-        }
-        .confirm-button {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-        .modal {
-            display: none; /* Hide modal by default */
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.4); /* Modal background with opacity */
-        }
-        .modal-content {
-            background-color: white;
-            margin: 15% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 300px;
-            text-align: center;
-        }
-        .close-button {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-        img {
-            max-width: 50px;
-            margin-bottom: 10px;
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'css/membership_purchase.css' %}">
 </head>
 <body>
-    <h1>멤버십 구매 확인</h1>
-    <h3>{{ product }} 구매</h3>
-
+    <div class="container">
+        <header>
+            <button id="membership-btn" class="membership-button" onclick="location.href='{% url 'membership' %}'">멤버십</button>
+            <img src="{% static 'img/logo.png' %}" alt="CLASSFIT 로고" class="logo">
+            <button id="user-icon"  class="user-icon" onclick="location.href='{% url 'myPage' %}'">
+                <img src="{% static 'img/account.png' %}" class="user-icon">
+            </button> 
+        </header>    
+    </div>
+    <div class="membership-item">
+        <h3>{{ product }} 구매</h3>
+    </div>
+    <div class="warning">
+        <h4>🚨구매 전 확인해주세요</h4>
+    - 멤버십(크레딧)은 구매일로부터 6개월 간 사용 가능합니다.<br>
+    - 6개월 이내 사용하지 않은 크레딧은 자동 소멸됩니다.<br>
+    - 구매한 크레딧은 환불이 불가하니, 사용 기간을 꼭 확인하세요.<br>
+    - 멤버십 사용은 본인 계정에 한하며, 타인에게 양도할 수 없습니다.<br>
+    </div>
     <button id="confirmButton" class="confirm-button">구매</button>
     
     <!-- The Modal -->
