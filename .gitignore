@@ -12,3 +12,4 @@ Team1/db.sqlite3
 /Team1/signInUp/migrations/__pycache__
 /Team1/Team1/__pycache__
 /Team1/detailPage/migrations/__pycache__
+venv/

@@ -1,0 +1,229 @@
+html, body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    width: 393px;
+    height: 100%;
+    margin: 0;
+}
+
+.container {
+    width: 100%;
+}
+
+.topBar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 50px;
+    margin-top: 82px;
+}
+
+.topBar-membership {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    color: #000000;
+}
+
+.topBar-classfit {
+    font-family: 'Exo';
+    font-style: italic;
+    font-weight: 700;
+    font-size: 32px;
+    color: #7C89FF;
+}
+
+.topBar-profileIcon {
+    width: 24px;
+    height: 24px;
+}
+
+.form-container {
+    max-width: 600px;
+    margin-left: 25px;
+    margin-right: 20px;
+}
+
+.form-containerTop {
+    background-color: #E5E7FF;
+    border-radius: 5px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    height: auto;
+    margin-bottom: 56px;
+    width: 348px;
+    margin-left: 25px;
+}
+
+.grid-form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 두 열 설정 */
+    gap: 10px 39px; /* 요소 사이의 간격 */
+}
+
+.centerName-form {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    color: #000000;
+    margin-left: 18px;
+    padding-top: 12px;
+    padding-bottom: 7px;
+}
+
+.classTime-form .classDetail-form .classDuration-form .classTeacher-form{
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #000000;
+}
+
+.classTime-form .classDuration-form {
+    margin-left: 103px;
+}
+
+.form-containerBottom {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 100px;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%; /* 필요에 따라 조정 */
+}
+
+.form-containerBottom form {
+    display: flex;
+    flex-direction: column;
+    width: 100%; /* 필요에 따라 너비 조정 */
+    align-items: flex-start; /* 요소들을 왼쪽 정렬 */
+}
+
+.form-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+    width: 100%;
+    margin-left: 55px;
+}
+
+.form-row label {
+    width: 100px; /* label의 너비 고정 */
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.form-container label {
+    display: block;
+    margin-bottom: 10px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 44px;
+    color: #000000;
+}
+
+.creditInput .timeInput {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 44px;
+    color: #000000;
+}
+
+.form-container input {
+    width: 159px;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+}
+
+.Input-box {
+    background: #E5E7FF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+}
+
+.button-container {
+    margin-top: 51px;
+}
+
+.form-container button {
+    width: 290px;
+    padding: 13px;
+    background-color: #7C89FF;
+    box-shadow: 0px 1px 10.9px rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.form-container button:hover {
+    background-color: #7C89FF;
+}
+
+/* 모달 스타일 */
+.modal {
+    display: none; /* 기본적으로 숨김 */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* 어두운 배경 */
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-btn:hover, .close-btn:focus {
+    color: black;
+    cursor: pointer;
+}
