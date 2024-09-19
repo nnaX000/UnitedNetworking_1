@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/Team1/Team1/static/css/reservation_form.css">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/reservation_form.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Exo:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@600&display=swap" rel="stylesheet">
@@ -16,7 +17,8 @@
         <div class="topBar">
             <p class="topBar-membership">멤버십</p>
             <P class="topBar-classfit">CLASSFIT</P>
-            <img src="/Team1/Team1/static/img/profile-icon.png" alt="프로필 아이콘" class="topBar-profileIcon">
+            {% load static %}
+            <img src="{% static 'img/profile-icon.png' %}" alt="프로필 아이콘" class="topBar-profileIcon">
         </div>
     </div>
     <div class="form-container">
@@ -25,7 +27,7 @@
             <div class="grid-form">
                 <p class="classTime-form">{{ class_instance.time }}</p>
                 <p class="classDetail-form">{{ class_instance.detail }}</p>
-                <p class="classDuration-form">({{ class_instance.duration }}분)</p>
+                <p class="classDuration-form">{{ class_instance.duration }}분</p>
                 <p class="classTeacher-form">{{ class_instance.teacher }} 강사</p>
             </div>
         </div>
@@ -92,12 +94,9 @@
         </form>
         -->
     </div>
-
-{% if message == 'reservation_success' %}
-    <script src="/Team1/Team1/static/js/reservation_form.js">
-        alert("예약이 완료되었습니다.");
-    </script>
-{% endif %}
-
+    {% load static %}
+    {% if message == 'reservation_success' %}
+        <script src="{% static 'js/reservation_form.js' %}"></script>
+    {% endif %}
 </body>
 </html>

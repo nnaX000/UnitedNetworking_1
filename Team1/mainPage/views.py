@@ -246,8 +246,10 @@ def review_list(request, center_id):
 def myPage(request):
     return render(request, 'myPage.html')
 
-
 # 멤버쉽 페이지로 이동
 def membership(request):
     return render(request, 'membership.html')
 
+ # 예약 페이지 로직
+def reservation_view(request):
+    return render(request, 'reservation_form.html')

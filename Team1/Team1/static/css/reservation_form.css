@@ -87,6 +87,7 @@ body {
     font-size: 13px;
     display: flex;
     align-items: center;
+    text-align: center;
     color: #000000;
 }
 
@@ -120,9 +121,10 @@ body {
 .form-row {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     margin-bottom: 10px;
     width: 100%;
+    margin-left: 55px;
 }
 
 .form-row label {
