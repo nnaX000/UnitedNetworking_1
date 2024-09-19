@@ -70,6 +70,71 @@
             </div>
             -->
         </div>
+        <div id="review-section">
+            {% if reviews %}
+                {% for review in reviews %}
+                    <div class="reviews">
+                        <div class="reviewTitle-container">
+                            <p class="review-title">후기</p>
+                            <p class="starIcon-top">★</p>
+                            <p class="reviewTitle-score">{{ review.star }} ({{ review.count }}+)</p>
+                        </div>
+                        <div class="reviewSmallTitle-container">
+                            <img src="{{ review.profile_image_url }}" class="reviewPage-profileIcon" alt="리뷰페이지 프로필 아이콘">
+                            <p class="reviewer-name">{{ review.user_name }}</p>
+                        </div>
+                        <div class="review-name-container">
+                            <p class="review-name">{{ review.center_name }} | {{ review.teacher_name }} 강사</p>
+                            <p class="starIcon">★</p>
+                            <p class="review-score">{{ review.star }}</p>
+                        </div>
+                        <div class="reviewComment-container">
+                            {% for comment in review.comments %}
+                                <button>{{ review.keyword }}</button>
+                            {% endfor %}
+                        </div>
+                        <div class="reviewContent-container">
+                            <p class="review-content">{{ review.detail }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>등록된 후기가 없습니다.</p>
+            {% endif %}
+        </div>
+        <div>
+            <div class="pagination">
+                <button class="pagination-arrow" id="prev-page" disabled>&lt;</button>
+                <div id="page-numbers"></div>
+                <button class="pagination-arrow" id="next-page">&gt;</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+        
+
+
+    <!--
+    <h2>후기</h2>
+    <div id="review-section">
+        {% if reviews %}
+            <ul>
+                {% for review in reviews %}
+                    <li class="review-item">
+                        <strong>{{ review.user_name }} (강사: {{ review.class_id.teacher }}):</strong> {{ review.detail }} (별점: {{ review.star }})
+                        <p>키워드: {{ review.keyword }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>등록된 후기가 없습니다.</p>
+        {% endif %}
+    </div>
+    -->
+
+
+        <!--
         <div class="reviews">
             <div class="reviewTitle-container">
                 <p class="review-title">후기</p>
@@ -140,22 +205,4 @@
                 <button class="pagination-arrow" id="next-page">&gt;</button>
             </div>
         </div>
-    </div>
-
-    <h2>후기</h2>
-    <div id="review-section">
-        {% if reviews %}
-            <ul>
-                {% for review in reviews %}
-                    <li class="review-item">
-                        <strong>{{ review.user_name }} (강사: {{ review.class_id.teacher }}):</strong> {{ review.detail }} (별점: {{ review.star }})
-                        <p>키워드: {{ review.keyword }}</p>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>등록된 후기가 없습니다.</p>
-        {% endif %}
-    </div>
-</body>
-</html>
+        -->
