@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>리뷰 작성</title>
+    <style>
+        .review-form {
+            width: 80%;
+            margin: 0 auto;
+        }
+        .review-form h1 {
+            text-align: center;
+        }
+        .review-form label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        .review-form textarea {
+            width: 100%;
+            height: 80px;
+            resize: vertical;
+        }
+        .review-form .buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .review-form .buttons button {
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="review-form">
+        <h1>이 수업 어떠셨나요?</h1>
+
+        <p><strong>센터 이름:</strong> {{ reservation.center_name }}</p>
+        <p><strong>수업 날짜:</strong> {{ reservation.class_id.date }}</p>
+        <p><strong>수업 시간:</strong> {{ reservation.class_id.time }}</p>
+        <p><strong>강사 이름:</strong> {{ reservation.class_id.teacher }}</p>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <!-- 별점 라디오 버튼 -->
+            <label for="star">별점:</label>
+            <div id="star">
+                <label><input type="radio" name="star" value="1" required> 1점</label>
+                <label><input type="radio" name="star" value="2" required> 2점</label>
+                <label><input type="radio" name="star" value="3" required> 3점</label>
+                <label><input type="radio" name="star" value="4" required> 4점</label>
+                <label><input type="radio" name="star" value="5" required> 5점</label>
+            </div>
+
+            <!-- 키워드 체크박스 -->
+            <label for="keyword">키워드:</label>
+            <div id="keyword">
+                <label><input type="checkbox" name="keyword" value="친절해요"> 친절해요</label>
+                <label><input type="checkbox" name="keyword" value="깔끔해요"> 깔끔해요</label>
+                <label><input type="checkbox" name="keyword" value="재방문각"> 재방문각</label>
+                <label><input type="checkbox" name="keyword" value="운동맛집"> 운동맛집</label>
+            </div>
+
+            <!-- 리뷰 작성 -->
+            <label for="detail">리뷰 내용 (50자 이내):</label>
+            <textarea name="detail" id="detail" maxlength="50" required></textarea>
+
+            <div class="buttons">
+                <button type="button" onclick="window.location.href='{% url 'my_reservation' %}'">취소하기</button>
+                <button type="submit">등록하기</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

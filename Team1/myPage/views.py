@@ -2,15 +2,16 @@ import datetime
 import json
 
 from datetime import date, timedelta
-from django.http import JsonResponse
-from django.shortcuts import render, redirect
+from django.http import JsonResponse, HttpResponseRedirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout as auth_logout
 from django.contrib import messages
+from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 
 from .models import UserProfile
-from mainPage.models import Reservation
+from mainPage.models import Reservation, Review
 
 import datetime
 from datetime import date, timedelta
@@ -75,6 +76,68 @@ def my_reservation(request):
         'reservations': user_reservations,
         'message': message
     })
+
+@login_required
+def cancel_reservation(request, reservation_id):
+    # 예약 객체 가져오기
+    reservation = get_object_or_404(Reservation, id=reservation_id, user_id=request.user)
+
+    # 크레딧 반환 처리
+    user_profile = UserProfile.objects.get(user=request.user)
+
+    if user_profile.remaining_credit != '프리미엄 멤버십':
+        try:
+            remaining_credit = int(user_profile.remaining_credit)
+            user_profile.remaining_credit = remaining_credit + reservation.class_id.credit_num
+        except ValueError:
+            # 만약 크레딧이 숫자가 아닐 경우, 기본 크레딧을 반환
+            user_profile.remaining_credit = reservation.class_id.credit_num
+
+        # 소진 크레딧도 복구
+        if user_profile.using_credit:
+            try:
+                using_credit = int(user_profile.using_credit)
+                user_profile.using_credit = max(0, using_credit - reservation.class_id.credit_num)
+            except ValueError:
+                # 소진 크레딧이 숫자가 아닐 경우 기본값 0으로 설정
+                user_profile.using_credit = 0
+
+        user_profile.save()
+
+    # 예약 내역 삭제
+    reservation.delete()
+
+    # 취소 완료 메시지
+    messages.success(request, '예약이 취소되었습니다.')
+
+    return HttpResponseRedirect(reverse('my_reservation'))
+
+@login_required
+def write_review(request, reservation_id):
+    reservation = get_object_or_404(Reservation, id=reservation_id, user_id=request.user)
+    class_instance = reservation.class_id
+
+    if request.method == 'POST':
+        # 리뷰 저장
+        star = request.POST.get('star')
+        detail = request.POST.get('detail')
+        keywords = request.POST.getlist('keyword')
+
+        Review.objects.create(
+            user_id=request.user,
+            class_id=class_instance,
+            reservation_id=reservation,
+            star=star,
+            keyword=','.join(keywords),
+            detail=detail
+        )
+
+        messages.success(request, '리뷰가 작성되었습니다.')
+
+        # 리뷰가 등록된 후 center_detail로 리다이렉트
+        return redirect('center_detail', center_id=class_instance.center_data_id)
+
+    return render(request, 'write_review.html', {'reservation': reservation})
 
 
 @login_required

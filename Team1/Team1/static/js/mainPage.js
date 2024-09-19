@@ -1,3 +1,4 @@
+
 // 페이지가 처음 로드될 때 데이터를 가져옵니다.
 document.addEventListener('DOMContentLoaded', function() {
     fetch(`/mainPage/filter_centers/`)
@@ -13,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     resultItem.innerHTML = `
                         <h3>${center['센터 이름']}</h3>
                         <img src="${center['사진']}" alt="${center['센터 이름']} 사진">
+                        <h3>${center['주소']}</h3>
                     `;
                     resultItem.addEventListener('click', function() {
                         window.location.href = `center/${center['id']}/`;

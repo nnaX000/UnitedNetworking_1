@@ -1,8 +1,9 @@
 from django.contrib import admin
-from .models import UserProfile, Reservation, Class, Review
+from mainPage.models import Reservation, Class, Review
+from myPage.models import UserProfile
 
 class UserProfileAdmin(admin.ModelAdmin):
-    list_display = ('user', 'alert', 'using_credit', 'remaining_credit', 'credit_period', 'phone_number')
+    list_display = ('user', 'nickname', 'alert', 'using_credit', 'remaining_credit', 'credit_period', 'phone_number')
 
 class ReservationAdmin(admin.ModelAdmin):
     list_display = ('user_id', 'class_id', 'center_name', 'teacher', 'date', 'time')

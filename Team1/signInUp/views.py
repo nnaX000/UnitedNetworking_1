@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 import re
 
-from .models import UserProfile
+from myPage.models import UserProfile
 
 def signup(request):
     form_errors = {}
@@ -50,6 +50,7 @@ def signup(request):
             # UserProfile 생성
             UserProfile.objects.create(
                 user=new_user,
+                nickname=nickname,
                 alert=False,
                 using_credit=0,
                 remaining_credit=0,
