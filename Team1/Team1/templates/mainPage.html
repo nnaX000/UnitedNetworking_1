@@ -1,23 +1,253 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>메인페이지</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/mainPage.css' %}">
+    <!--<link rel="stylesheet" href="{% static 'css/mainPage.css' %}">-->
+    <style>
+        @import url('//fonts.googleapis.com/earlyaccess/notosanskr.css');
+        body {
+            font-family: 'Noto Sans KR';
+            margin: 20px;
+        }
+        .container{
+            margin-top: 30px;
+        }
+        .logo {
+            width: 150px;
+            margin-bottom: 10px;
+            align-items: center;
+            display: block;
+            margin-left: 20%;
+        }
+        .user-icon {
+            width: 30px;
+            margin-bottom: 10px;
+            margin-left: 20%;
+            align-items: right;
+            background-color: transparent;
+            cursor: pointer;
+            border: none;
+        }
+        .membership-button {
+            background-color: transparent;
+            border: none;
+            font-size: 14px;
+            color: #555;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: -10px;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .search {
+            background-color: #7b88fe; /* Light blue background */
+            width: 392px;              /* Fixed width */
+            height: 240px;             /* Fixed height */
+            border-radius: 20px;       /* Rounded corners for the entire search area */
+            padding: 20px;             /* Padding around the content */
+            display: flex;
+            justify-content: space-around; /* Space between the dropdowns and button */
+            align-items: flex-start;       /* Center the items vertically */
+            gap: 20px;                 /* Gap between items */
+           
+        }
+        
+        .dropdown {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;           /* Remove default browser styling */
+            background-color: white;    /* White background */
+            border: none;
+            padding: 10px 40px 10px 20px; /* Padding to allow for custom arrow */
+            font-size: 16px;
+            border-radius: 50px;        /* Rounded corners */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Light shadow */
+            cursor: pointer;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2210%22%20height%3D%2210%22%3E%3Cpath%20d%3D%22M0%2C0%20L5%2C5%20L10%2C0%22%20fill%3D%22%23000%22/%3E%3C/svg%3E'); /* Custom dropdown arrow */
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 10px 10px;
+            width: 150px; /* Set a fixed width for the dropdowns */
+            outline: none;
+        }
+        
+        .dropdown option {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #E8EAF6; /* Light blue background for options */
+        }
+        
+        .search-button {
+            background-color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Shadow for the button */
+            font-size: 16px;
+            cursor: pointer;
+            width: 100px; /* Fixed width for the search button */
+            text-align: center;
+        }
+        
+        /* Hover effect for the button */
+        .search-button:hover {
+            background-color: #f0f0f0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Stronger shadow on hover */
+        }
+        
+        /* Style for each result item container */
+        .result-item {
+            margin: 20px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s;
+        }
+        
+        .result-item:hover {
+            transform: scale(1.02); /* Slight zoom on hover */
+        }
+        
+        /* Inner structure */
+        .result-item-inner {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Image container */
+        .result-image-container {
+            width: 100%;
+            overflow: hidden;
+            border-radius: 5px;
+        }
+        
+       
+        
+        /* Information container */
+        .result-info-container {
+            padding: 10px;
+            text-align: center;
+        }
+        
+        .result-name {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin: 10px 0 5px;
+            color: #333;
+        }
+        
+        .result-address {
+            font-size: 1em;
+            color: #777;
+            margin: 0;
+        }
+        
+       
+        
+        .ad-container {
+            position: relative;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .ad {
+            width: 100%;
+            height: auto;
+            display: none;
+        }
+        .ad-container .ad:first-child {
+            display: block;
+        }
+        
+                /* Chatbot Container */
+        .chatbot-container {
+            position: relative;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        /* Chatbot Box */
+        .chatbot-box {
+            display: inline-block;
+            background-color: #eef3ff;
+            padding: 15px 25px;
+            border-radius: 20px;
+            font-size: 1.2em;
+            color: #333;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+            position: relative; /* Required for the icon to be positioned relative to the box */
+            margin-right: 80px; /* Space for the icon */
+            cursor: pointer;
+        }
+
+        /* Speech bubble tail */
+        .chatbot-box::after {
+            content: '';
+            position: absolute;
+            right: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-left: 20px solid #eef3ff; /* Color matches the bubble background */
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+        }
+
+        /* Chatbot Icon */
+        .chatbot-icon {
+            right: -70px; /* Ensure the icon is placed to the right of the bubble */
+            margin-top:-10%;
+            transform: translateY(-50%);
+            display: flex;
+            align-items: right;
+            justify-content: right;
+    
+        }
+
+        .chatbot-icon img {
+            position: absolute;
+            width: 60px;
+            height: 50px;   
+        }
+
+        .footer-logo {
+            width: 150px;
+            margin: 50px auto 20px;
+            display: block;
+        }                
+         @media (max-width: 390px) {
+            .logo {
+                width: 80px;
+            }
+        
+            button {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <header>
             <button id="membership-btn" class="membership-button" onclick="location.href='{% url 'membership' %}'">멤버십</button>
-            <button id="user-icon" onclick="location.href='{% url 'mainPage' %}'">
-                <img src="{% static 'img/logo.png' %}" alt="CLASSFIT 로고" class="logo">
-            </button>
-            <button id="user-icon" onclick="location.href='{% url 'myPage' %}'">
+            <img src="{% static 'img/logo.png' %}" alt="CLASSFIT 로고" class="logo">
+            <button id="user-icon"  class="user-icon" onclick="location.href='{% url 'myPage' %}'">
                 <img src="{% static 'img/account.png' %}" class="user-icon">
-            </button>
-        </header>     
+            </button> 
+        </header>    
     </div>
    
     <div class="search">
@@ -47,12 +277,59 @@
         </select>
         <button id="searchButton" class="search-button">검색</button>
     </div>
+    
+    <a onclick="location.href='{% url 'my_reservation' %}'">
+        <h2> 지금 바로 예약해보세요 > </h2>
+    </a>
 
     <div id="results">
-        <h2>지금 바로 예약해보세요 ></h2>
         <!-- 검색 결과가 여기에 표시됩니다 -->
     </div>
+
+   <!-- Footer Section -->
+<footer class="footer-container">
+    <!-- Ad images container -->
+    <div id="ad-container" class="ad-container">
+        <img src="{% static 'img/ad1.png' %}" class="ad" alt="광고 1">
+        <img src="{% static 'img/ad2.png' %}" class="ad" alt="광고 2">
+        <img src="{% static 'img/ad3.png' %}" class="ad" alt="광고 3">
+    </div>
+
+    <div class="chatbot-container">
+        <div class="chatbot-box">
+            나에게 꼭 맞는 운동을 추천받아보는 건 어때요?
+        </div>
+        <div class="chatbot-icon">
+            <img src="{% static 'img/chatbot.png' %}" alt="Chatbot Icon">
+        </div>
+    </div>
+    
+    <!-- Footer Logo -->
+    <img src="{% static 'img/logo.png' %}" alt="CLASSFIT 로고" class="footer-logo">
+</footer>
+    
+    <!--<script src="{% static 'js/mainPage.js' %}"></script>-->
     <script>
+        // Ad rotation logic
+        let currentAdIndex = 0;
+        const ads = document.querySelectorAll('.ad');
+        const totalAds = ads.length;
+
+        function showNextAd() {
+            ads.forEach((ad, index) => {
+                ad.style.display = 'none'; // Hide all ads
+            });
+
+            ads[currentAdIndex].style.display = 'block'; // Show the current ad
+            currentAdIndex = (currentAdIndex + 1) % totalAds; // Move to the next ad
+        }
+
+        setInterval(showNextAd, 3000); // Rotate ads every 3 seconds
+
+        document.querySelector('.chatbot-box').addEventListener('click', function() {
+            window.location.href = 'chatbot.html'; // Redirect to the chatbot page
+        });
+
         // 페이지가 처음 로드될 때 데이터를 가져옵니다.
         document.addEventListener('DOMContentLoaded', function() {
             fetch(`/mainPage/filter_centers/`)
@@ -62,13 +339,19 @@
                     resultsDiv.innerHTML = ''; 
 
                     if (data.length > 0) {
-                        data.forEach(center => {
+                        data.slice(0, 3).forEach(center => {
                             const resultItem = document.createElement('div');
                             resultItem.classList.add('result-item');
                             resultItem.innerHTML = `
-                                <h3>${center['센터 이름']}</h3>
-                                <img src="${center['사진']}" alt="${center['센터 이름']} 사진">
-                                <h3>${center['주소']}</h3>
+                                <div class="result-item-inner">
+                                    <div class="result-image-container">
+                                        <img src="${center['사진']}" alt="${center['센터 이름']} 사진" class="result-image">
+                                    </div>
+                                    <div class="result-info-container">
+                                        <h3 class="result-name">${center['센터 이름']}</h3>
+                                        <p class="result-address">${center['주소']}</p>
+                                    </div>
+                                </div>
                             `;
                             resultItem.addEventListener('click', function() {
                                 window.location.href = `center/${center['id']}/`;
@@ -81,7 +364,7 @@
                 });
         });
 
-    
+
         document.getElementById('searchButton').addEventListener('click', function() {
         const dong = document.getElementById('dong').value;
         const exercise = document.getElementById('exercise').value;
@@ -97,8 +380,14 @@
                         const resultItem = document.createElement('div');
                         resultItem.classList.add('result-item');
                         resultItem.innerHTML = `
-                            <h3>${center['센터 이름']}</h3>
-                            <img src="${center['사진']}" alt="${center['센터 이름']} 사진">
+                            <div class="result-item-inner">
+                                <div class="result-image-container">
+                                    <img src="${center['사진']}" alt="${center['센터 이름']} 사진" class="result-image">
+                                </div>
+                                <div class="result-info-container">
+                                    <h3 class="result-name">${center['센터 이름']}</h3>
+                                </div>
+                            </div>
                         `;
                         resultItem.addEventListener('click', function() {
                             window.location.href = `center/${center['id']}/`;
@@ -110,6 +399,6 @@
                 }
             });
         });
-    </script>    
+</script>
 </body>
 </html>

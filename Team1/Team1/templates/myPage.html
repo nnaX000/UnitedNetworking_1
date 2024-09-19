@@ -47,6 +47,7 @@
                 <div class="divider"></div>
             </div>
         </main>
+    </div>
     {% else %}
     <!-- 로그인했을 때 -->
     <h1>{{ nickname }}님, 오늘도 건강한 하루 되세요!</h1>
@@ -88,12 +89,6 @@
     </form>
 
     {% endif %}
-</div>
-<script>
-    document.getElementById("membership-btn").addEventListener("click", function() {
-        window.location.href = "membership.html"; // 멤버십 페이지로 이동
-    });
-    
-</script>
+    </div>
 </body>
 </html>
