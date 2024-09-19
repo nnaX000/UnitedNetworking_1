@@ -5,20 +5,14 @@ body {
     color: #333;
 }
 
-.container {
-    width: 100%;
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
+.container{
+    margin-top: 30px;
 }
-
-header {
-    display: flex;
-    justify-content: space-between;
+.logo {
+    margin-bottom: 10px;
     align-items: center;
-    margin-bottom: 20px;
+    display: block;
 }
-
 .membership-button {
     background-color: transparent;
     border: none;
@@ -26,24 +20,26 @@ header {
     color: #555;
     cursor: pointer;
     font-weight: bold;
+    margin-top: -10px;
 }
-
-.logo {
-    width: 100px;
+header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
     margin-bottom: 20px;
-    margin-left: 38%;
 }
 
 .login-section {
     text-align: center;
     margin-bottom: 30px;
 }
-
 .user-icon {
     width: 60px;
     margin-bottom: 10px;
+    margin-left: 20%;
+    align-items: right;
+    cursor: pointer;
 }
-
 h2 {
     font-size: 18px;
     margin-bottom: 20px;

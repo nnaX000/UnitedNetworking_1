@@ -11,7 +11,9 @@
     <div class="container">
         <header>
             <button id="membership-btn" class="membership-button" onclick="location.href='{% url 'membership' %}'">멤버십</button>
-            <img src="{% static 'img/logo.png' %}" alt="CLASSFIT 로고" class="logo">
+            <button id="user-icon" onclick="location.href='{% url 'mainPage' %}'">
+                <img src="{% static 'img/logo.png' %}" alt="CLASSFIT 로고" class="logo">
+            </button>
             <button id="user-icon" onclick="location.href='{% url 'myPage' %}'">
                 <img src="{% static 'img/account.png' %}" class="user-icon">
             </button>
