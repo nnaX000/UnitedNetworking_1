@@ -32,8 +32,11 @@ header {
     display: inline-block;
     margin-left: 0;
 }
-h2{
+.membership-item .h2{
     margin-left: 10px;
+    padding-left:0;
+    display: inline-block ;
+    vertical-align: middle;
 }
 
 .membership-button {
