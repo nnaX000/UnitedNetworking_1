@@ -111,8 +111,7 @@
         </div>
     </div>
 </body>
-</html>
-        
+</html>     
 
 
     <!--
@@ -122,7 +121,7 @@
             <ul>
                 {% for review in reviews %}
                     <li class="review-item">
-                        <strong>{{ review.user_name }} (강사: {{ review.class_id.teacher }}):</strong> {{ review.detail }} (별점: {{ review.star }})
+                        <strong>{{ review.user_name }} (강사: {{ review.teacher }}):</strong> {{ review.detail }} (별점: {{ review.star }})
                         <p>키워드: {{ review.keyword }}</p>
                     </li>
                 {% endfor %}
@@ -131,10 +130,7 @@
             <p>등록된 후기가 없습니다.</p>
         {% endif %}
     </div>
-    -->
 
-
-        <!--
         <div class="reviews">
             <div class="reviewTitle-container">
                 <p class="review-title">후기</p>

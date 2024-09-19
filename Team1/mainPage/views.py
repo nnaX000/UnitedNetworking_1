@@ -232,7 +232,7 @@ def review_list(request, center_id):
     reviews = Review.objects.filter(class_id__center_data_id=center_id).select_related('class_id', 'user_id')
 
     review_data = [{
-        'user_name': review.user_id.username,
+        'user_name': review.user_id.myPage_profile.nickname if review.user_id.myPage_profile.nickname else review.user_id.username,  # 닉네임이 없으면 이메일(username)을 표시
         'teacher': review.class_id.teacher,
         'detail': review.detail,
         'star': review.star,

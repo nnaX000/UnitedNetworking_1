@@ -2,14 +2,18 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>회원가입 완료</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입완료</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/signin.css' %}">
 </head>
 <body>
-    <div style="text-align: center;">
-        <h1>환영합니다, {{ nickname }}님!</h1>
+    <div class="container">
+        <img src="{% static 'img/logo.png' %}" alt="CLASSFIT 로고" class="logo">
+        <p>환영합니다, <span id="nickname">{{ nickname }}</span>님</p>
         <p>회원가입이 완료되었습니다.</p>
         <a href="{% url 'signInUp:login' %}">
-            <button>로그인</button>
+            <button id="loginButton">로그인하러 가기</button>
         </a>
     </div>
 </body>

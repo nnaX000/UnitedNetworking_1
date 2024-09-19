@@ -4,58 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>멤버십</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        .membership-item {
-            margin: 20px 0;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .membership-item h3 {
-            margin: 0;
-        }
-        .purchase-button {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .purchase-button:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
-        }
-    </style>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/membership.css' %}">
 </head>
 <body>
-    <h1>멤버십 구매</h1>
-
+    <div class="container">
+        <header>
+            <button id="membership-btn" class="membership-button">멤버십</button>
+            <img src="{% static 'img/logo.png' %}" alt="CLASSFIT 로고" class="logo">
+            <img src="{% static 'img/account.png' %}" alt="User Icon" class="user-icon">
+        </header>
+    </div>
+    
     <div class="membership-item">
-        <h3>프리미엄 멤버십 - 500,000원</h3>
-        <button class="purchase-button" onclick="window.location.href='{% url 'membership_purchase' product='프리미엄 멤버십' %}'">구매</button>
+        <div class="title-and-button">
+            <img src="{% static 'img/thumb.png' %}" alt="추천이모지" class="thumb">
+            <h2>프리미엄 멤버십<br>500,000원</h2>
+            <button class="purchase-button" onclick="window.location.href='{% url 'membership_purchase' product='프리미엄 멤버십' %}'">구매</button>
+        </div>
+        <p class = "discribe">월 50만원으로 무제한 운동을 즐길 수 있어요</p>
+    </div>
+    <div class="membership-item">
+        <div class="title-and-button">
+            <h2>5 크레딧<br>100,000원</h2>
+            <button class="purchase-button" onclick="window.location.href='{% url 'membership_purchase' product='5 크레딧' %}'">구매</button>
+        </div>
+        <p class = "discribe">월 50만원으로 무제한 운동을 즐길 수 있어요</p>
     </div>
 
     <div class="membership-item">
-        <h3>5 크레딧 - 100,000원</h3>
-        <button class="purchase-button" onclick="window.location.href='{% url 'membership_purchase' product='5 크레딧' %}'">구매</button>
+        <div class="title-and-button">
+            <h2>3 크레딧<br>60,000원</h2>
+            <button class="purchase-button" onclick="window.location.href='{% url 'membership_purchase' product='3 크레딧' %}'">구매</button>
+        </div>
+        <p class = "discribe">월 50만원으로 무제한 운동을 즐길 수 있어요</p>
     </div>
 
     <div class="membership-item">
-        <h3>3 크레딧 - 60,000원</h3>
-        <button class="purchase-button" onclick="window.location.href='{% url 'membership_purchase' product='3 크레딧' %}'">구매</button>
-    </div>
-
-    <div class="membership-item">
-        <h3>1 크레딧 - 20,000원</h3>
-        <button class="purchase-button" onclick="window.location.href='{% url 'membership_purchase' product='1 크레딧' %}'">구매</button>
+        <div class="title-and-button">
+            <h2>1 크레딧<br>20,000원</h2>
+            <button class="purchase-button" onclick="window.location.href='{% url 'membership_purchase' product='1 크레딧' %}'">구매</button>
+        </div>
+        <p class = "discribe">월 50만원으로 무제한 운동을 즐길 수 있어요</p>
     </div>
 
     <script>
