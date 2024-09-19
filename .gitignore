@@ -1,5 +1,6 @@
 myenv
 .env
+venv/
 Team1/db.sqlite3
 /Team1/detailPage/__pycache__
 /Team1/mainPage/__pycache__
