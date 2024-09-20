@@ -3,218 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Exo:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/Team1/Team1/static/css/detailed_center.css">
     <title>센터 상세 정보</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            line-height: 1.6;
-        }
-
-        .center-info {
-            text-align: left;
-            margin-bottom: 20px;
-        }
-
-        .center-info img {
-            width: 100%;
-            max-width: 500px;
-            height: auto;
-            border-radius: 10px;
-            margin-bottom: 10px;
-        }
-
-        .map-container {
-            width: 100%;
-            height: 300px;
-            margin-bottom: 20px;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .tabs {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-
-        .tabs button {
-            flex: 1;
-            padding: 10px;
-            border: 1px solid #ddd;
-            background: #f9f9f9;
-            cursor: pointer;
-        }
-
-        .tabs button.active {
-            background: #fff;
-            border-bottom: none;
-            font-weight: bold;
-        }
-
-        .tab-content {
-            border: 1px solid #ddd;
-            padding: 20px;
-            background: #fff;
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .reviews {
-            margin-top: 30px;
-        }
-
-        .review-item {
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 10px;
-            margin-bottom: 10px;
-        }
-
-        .review-item:last-child {
-            border-bottom: none;
-        }
-
-        .facility-icons {
-            display: flex;
-            justify-content: space-around;
-            margin: 20px 0;
-        }
-
-        .facility-icons button {
-            background-color: #e0e0e0;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .facility-icons button:focus {
-            outline: none;
-            background-color: #d0d0d0;
-        }
-
-        .image-gallery {
-            display: flex;
-            justify-content: space-around;
-            margin: 20px 0;
-        }
-
-        .image-gallery img {
-            width: 48%;
-            border-radius: 10px;
-        }
-
-        .info-section {
-            margin-top: 20px;
-        }
-
-        .info-section h3 {
-            font-size: 20px;
-            margin-bottom: 10px;
-        }
-
-        .info-section p {
-            margin: 5px 0;
-            font-size: 16px;
-            color: #555;
-        }
-        .reviews {
-            margin-top: 30px;
-        }
-
-        .review-item {
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 10px;
-            margin-bottom: 10px;
-        }
-
-        .review-item:last-child {
-            border-bottom: none;
-        }
-
-        .review-form {
-            margin-top: 20px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            background: #f9f9f9;
-            border-radius: 5px;
-        }
-
-        .review-form h3 {
-            font-size: 18px;
-            margin-bottom: 10px;
-        }
-
-        .review-form textarea {
-            width: 100%;
-            height: 100px;
-            margin-bottom: 10px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-
-        .review-form button {
-            padding: 10px 20px;
-            border: none;
-            background-color: #007bff;
-            color: #fff;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .review-form button:hover {
-            background-color: #0056b3;
-        }
-    </style>
 </head>
 <body>
+    <div class="container">
+        <div class="topBar">
+            <p class="topBar-membership">멤버십</p>
+            <P class="topBar-classfit">CLASSFIT</P>
+            <img src="/Team1/Team1/static/img/profile-icon.png" alt="프로필 아이콘" class="topBar-profileIcon">
+        </div>
+        <div class="center-info" id="centerInfo" data-center-id="{{ center.id }}">
+            <div class="centerInfo-top">
+                <p id="centerName" class="centerName">{{ center.name }}</p>
+                <img src="/Team1/Team1/static/img/share-icon.png" alt="공유 아이콘" class="centerInfo-shareIcon">
+            </div>
+            <img src="{{ center.image_url }}" alt="센터 사진" class="centerImage">
+            <div id="map" class="map-container"></div>
+            <div class="locationInfo">
+                <img src="/Team1/Team1/static/img/location-icon.png" alt="위치 아이콘" class="location-icon">
+                <p id="centerAddress" class="centerAddress">{{ center.address }}</p>
+            </div>
+            <div class="phoneInfo">
+                <img src="/Team1/Team1/static/img/phone-icon.png" alt="전화 아이콘" class="phone-icon">
+                <p id="centerPhone" class="centerPhone">{{ center.phone }}</p>
+            </div>
+        </div>
 
-    <div class="center-info" id="centerInfo" data-center-id="{{ center.id }}">
-        <img src="{{ center.image_url }}" alt="센터 사진" id="centerImage">
-        <h2 id="centerName">{{ center.name }}</h2>
-        <p id="centerAddress">{{ center.address }}</p>
-        <p id="centerPhone">{{ center.phone }}</p>
+        <div class="tab-container">
+            <div class="tabs">
+                <button id="infoTab" class="active infoTab">정보</button>
+                <button id="scheduleTab" class="scheduleTab">스케줄</button>
+            </div>
+
+            <div id="infoContent" class="tab-content active">
+                <p id="centerInfo" class="centerInfo">{{ center.detail_info }}</p>
+
+                <p class="info-title"> 무료로 이용할 수 있어요</p>
+                <div class="facility-icons">
+                    <button>파우더룸</button>
+                    <button>샤워실</button>
+                    <button>운동복</button>
+                    <button>요가매트</button>
+                </div>
+                <p class="info-title">따로 준비하면 좋아요</p>
+                <div class="info-section">
+                    <button>타월</button>
+                    <button>텀블러</button>
+                    <button>토삭스</button>
+                    <button>운동화</button>
+                </div>
+            </div>
+
+            <div id="scheduleContent" class="tab-content">
+                <ul id="scheduleList">
+                    <!-- 스케줄 목록이 여기에 표시됩니다 -->
+                </ul>
+            </div>
+            <!--
+            <div class="image-gallery" id="imageGallery">
+                <img src="https://via.placeholder.com/300x200" alt="샤워실">
+                <img src="https://via.placeholder.com/300x200" alt="파우더룸">
+            </div>
+            -->
+        </div>
+        <div id="review-section">
+            {% if reviews %}
+                {% for review in reviews %}
+                    <div class="reviews">
+                        <div class="reviewTitle-container">
+                            <p class="review-title">후기</p>
+                            <p class="starIcon-top">★</p>
+                            <p class="reviewTitle-score">{{ review.star }} ({{ review.count }}+)</p>
+                        </div>
+                        <div class="reviewSmallTitle-container">
+                            <img src="{{ review.profile_image_url }}" class="reviewPage-profileIcon" alt="리뷰페이지 프로필 아이콘">
+                            <p class="reviewer-name">{{ review.user_name }}</p>
+                        </div>
+                        <div class="review-name-container">
+                            <p class="review-name">{{ review.center_name }} | {{ review.teacher_name }} 강사</p>
+                            <p class="starIcon">★</p>
+                            <p class="review-score">{{ review.star }}</p>
+                        </div>
+                        <div class="reviewComment-container">
+                            {% for comment in review.comments %}
+                                <button>{{ review.keyword }}</button>
+                            {% endfor %}
+                        </div>
+                        <div class="reviewContent-container">
+                            <p class="review-content">{{ review.detail }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>등록된 후기가 없습니다.</p>
+            {% endif %}
+        </div>
+        <div>
+            <div class="pagination">
+                <button class="pagination-arrow" id="prev-page" disabled>&lt;</button>
+                <div id="page-numbers"></div>
+                <button class="pagination-arrow" id="next-page">&gt;</button>
+            </div>
+        </div>
     </div>
+</body>
+</html>     
 
-    <div id="map" class="map-container"></div>
 
-    <div class="facility-icons">
-        <button>샤워실</button>
-        <button>파우더룸</button>
-    </div>
-
-    <div class="tabs">
-        <button id="infoTab" class="active">정보</button>
-        <button id="scheduleTab">스케줄</button>
-    </div>
-
-    <div id="infoContent" class="tab-content active">
-        <p id="centerInfo">{{ center.detail_info }}</p>
-    </div>
-
-    <div id="scheduleContent" class="tab-content">
-        <ul id="scheduleList">
-            <!-- 스케줄 목록이 여기에 표시됩니다 -->
-        </ul>
-    </div>
-
-    <div class="image-gallery" id="imageGallery">
-        <img src="https://via.placeholder.com/300x200" alt="샤워실">
-        <img src="https://via.placeholder.com/300x200" alt="파우더룸">
-    </div>
-
-    <div class="info-section">
-        <h3>따로 준비하면 좋아요</h3>
-        <p>- 타월</p>
-        <p>- 개인 물병</p>
-        <p>- 토삭스</p>
-    </div>
-
+    <!--
     <h2>후기</h2>
     <div id="review-section">
         {% if reviews %}
@@ -231,139 +131,74 @@
         {% endif %}
     </div>
 
-
-    <script>
-        // 탭 기능 구현
-        document.getElementById('infoTab').addEventListener('click', function() {
-            document.getElementById('infoContent').classList.add('active');
-            document.getElementById('scheduleContent').classList.remove('active');
-            this.classList.add('active');
-            document.getElementById('scheduleTab').classList.remove('active');
-        });
-
-        document.getElementById('scheduleTab').addEventListener('click', function() {
-            document.getElementById('scheduleContent').classList.add('active');
-            document.getElementById('infoContent').classList.remove('active');
-            this.classList.add('active');
-            document.getElementById('infoTab').classList.remove('active');
-
-            // 스케줄 데이터를 로드하는 함수 호출
-            loadScheduleData();
-        });
-
-        function loadScheduleData() {
-            const centerId = document.getElementById('centerInfo').getAttribute('data-center-id');
-            console.log('centerId:', centerId);
-
-            fetch(`/mainPage/get_schedule/${centerId}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('Schedule data:', data);  // 데이터를 출력해 무엇을 받았는지 확인합니다.
-
-                    const scheduleList = document.getElementById('scheduleList');
-                    scheduleList.innerHTML = ''; // 이전 스케줄 항목들 제거
-
-                    if (data.length === 0) {
-                        scheduleList.innerHTML = '<li>스케줄이 없습니다.</li>';
-                    } else {
-                        data.forEach(item => {
-                            console.log('Item:', item);  // 각 item의 구조를 확인하기 위해 출력
-
-                            const listItem = document.createElement('li');
-                            listItem.innerHTML = `
-                                <div>
-                                    <strong>${item.time}</strong> - ${item.detail} - ${item.credit_num} 크레딧
-                                    <br> ${item.duration}분 ${item.teacher} 강사
-                                    <button onclick="openReservationForm('${item.id}', '${item.time}', '${item.detail}', '${item.credit_num}', '${item.teacher}', '${item.duration}')">예약</button>
-                                </div>
-                            `;
-                            scheduleList.appendChild(listItem);
-                        });
-                    }
-                })
-                .catch(error => {
-                    console.error('Error loading schedule:', error);
-                    document.getElementById('scheduleList').innerHTML = '<li>스케줄을 불러오는 중 오류가 발생했습니다.</li>';
-                });
-                }
-
-
-                function openReservationForm(classId, time, detail, creditNum, teacher, duration) {
-                    if (!classId) {
-                        console.error("classId is undefined or null");
-                        return;
-                    }
-                    const url = `/mainPage/reservation/?classId=${classId}&time=${time}&detail=${detail}&creditNum=${creditNum}&teacher=${teacher}&duration=${duration}`;
-                    window.location.href = url;
-            }
-
-        var centerLat = "{{ center.latitude }}";
-        var centerLng = "{{ center.longitude }}";
-
-        // 카카오맵 API를 사용한 지도 초기화
-        function initMap() {
-            var container = document.getElementById('map');
-            var options = {
-                center: new kakao.maps.LatLng(centerLat, centerLng),
-                level: 3
-            };
-            var map = new kakao.maps.Map(container, options);
-
-            var markerPosition  = new kakao.maps.LatLng(centerLat, centerLng);
-            var marker = new kakao.maps.Marker({
-                position: markerPosition
-            });
-            marker.setMap(map);
-        }
-
-        // 카카오맵 API 비동기 로드
-        function loadScript() {
-            var script = document.createElement('script');
-            script.src = 'https://dapi.kakao.com/v2/maps/sdk.js?appkey={{ kakao_api_key }}&autoload=false';
-            script.onload = function() {
-                kakao.maps.load(initMap); // 지도 API를 로드한 후 initMap 함수 호출
-            };
-            document.head.appendChild(script);
-        }
-
-        document.addEventListener('DOMContentLoaded', loadScript);
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const centerId = "{{ center.id }}";
-
-            fetch(`/mainPage/review_list/${centerId}/`)
-                .then(response => response.json())
-                .then(data => {
-                    const reviewSection = document.getElementById('review-section');
-                    reviewSection.innerHTML = ''; // 기존 내용을 비우고
-
-                    if (data.length === 0) {
-                        reviewSection.innerHTML = '<p>등록된 후기가 없습니다.</p>';
-                    } else {
-                        const ul = document.createElement('ul');
-                        data.forEach(review => {
-                            const li = document.createElement('li');
-                            li.classList.add('review-item');
-                            li.innerHTML = `
-                                <strong>${review.user_name} (강사: ${review.teacher}):</strong> ${review.detail} (별점: ${review.star})
-                                <p>키워드: ${review.keyword}</p>
-                            `;
-                            ul.appendChild(li);
-                        });
-                        reviewSection.appendChild(ul);
-                    }
-                })
-                .catch(error => {
-                    console.error('후기 목록을 가져오는 중 오류가 발생했습니다:', error);
-                    document.getElementById('review-section').innerHTML = '<p>후기를 불러오는 중 오류가 발생했습니다.</p>';
-                });
-        });
-    </script>
-
-</body>
-</html>
+        <div class="reviews">
+            <div class="reviewTitle-container">
+                <p class="review-title">후기</p>
+                <p class="starIcon-top">★</p>
+                <p class="reviewTitle-score">4.8(30+)</p>
+            </div>
+            <div class="reviewSmallTitle-container">
+                <img src="/Team1/Team1/static/img/reviewPage-profile.png" class="reviewPage-profileIcon" alt="리뷰페이지 프로필 아이콘">
+                <p class="reviewer-name">이선민</p>
+            </div>
+            <div class="review-name-container">
+                <p class="review-name">리포머 | 김지민 강사</p>
+                <p class="starIcon">★</p>
+                <p class="review-score">4.8</p>
+            </div>
+            <div class="reviewComment-container">
+                <button>친절해요</button>
+                <button>깔끔해요</button>
+                <button>친절해요</button>
+                <button>깔끔해요</button>
+            </div>
+            <div class="reviewContent-container">
+                <p class="review-content">너무 좋아요 또 오고싶어요. 너무 좋아요 또 오고싶어요</p>
+            </div>
+            <div class="reviewTitle-container"></div>
+            <div class="reviewSmallTitle-container">
+                <img src="/Team1/Team1/static/img/reviewPage-profile.png" class="reviewPage-profileIcon" alt="리뷰페이지 프로필 아이콘">
+                <p class="reviewer-name">이선민</p>
+            </div>
+            <div class="review-name-container">
+                <p class="review-name">리포머 | 김지민 강사</p>
+                <p class="starIcon">★</p>
+                <p class="review-score">4.8</p>
+            </div>
+            <div class="reviewComment-container">
+                <button>친절해요</button>
+                <button>깔끔해요</button>
+                <button>친절해요</button>
+                <button>깔끔해요</button>
+            </div>
+            <div class="reviewContent-container">
+                <p class="review-content">너무 좋아요 또 오고싶어요. 너무 좋아요 또 오고싶어요</p>
+            </div>
+            <div class="reviewTitle-container"></div>
+            <div class="reviewSmallTitle-container">
+                <img src="/Team1/Team1/static/img/reviewPage-profile.png" class="reviewPage-profileIcon" alt="리뷰페이지 프로필 아이콘">
+                <p class="reviewer-name">이선민</p>
+            </div>
+            <div class="review-name-container">
+                <p class="review-name">리포머 | 김지민 강사</p>
+                <p class="starIcon">★</p>
+                <p class="review-score">4.8</p>
+            </div>
+            <div class="reviewComment-container">
+                <button>친절해요</button>
+                <button>깔끔해요</button>
+                <button>친절해요</button>
+                <button>깔끔해요</button>
+            </div>
+            <div class="reviewContent-container">
+                <p class="review-content">너무 좋아요 또 오고싶어요. 너무 좋아요 또 오고싶어요</p>
+            </div>
+        </div>
+        <div>
+            <div class="pagination">
+                <button class="pagination-arrow" id="prev-page" disabled>&lt;</button>
+                <div id="page-numbers"></div>
+                <button class="pagination-arrow" id="next-page">&gt;</button>
+            </div>
+        </div>
+        -->

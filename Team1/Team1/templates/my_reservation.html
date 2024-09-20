@@ -2,24 +2,67 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/Team1/Team1/static/css/my_reservation.css">
+    <link href="https://fonts.googleapis.com/css2?family=Exo:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
     <title>예약 내역</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-        }
-        th {
-            background-color: #f4f4f4;
-        }
-    </style>
 </head>
 <body>
-    <h1>예약 내역</h1>
+    <div class="container">
+        <div class="topBar">
+            <p class="topBar-membership">멤버십</p>
+            <P class="topBar-classfit">CLASSFIT</P>
+            <img src="/Team1/Team1/static/img/profile-icon.png" alt="프로필 아이콘" class="topBar-profileIcon">
+        </div>
+    </div>
+    <p class="headTitle">예약 내역</p>
+    <div>
+        <div class="topContainer">
+            {% for reservation in reservations %}
+            <div class="reservationContainer">
+                <div class="reservationContext">
+                    <img src="{{ reservation.center_image_url }}" alt="센터 사진" class="center-image">
+                    <div class="reservationContext-text">
+                        <p>{{ reservation.center_name }}</p>
+                        <p>{{ reservation.class_id.teacher }}</p>
+                        <div>
+                                {{ reservation.class_id.date }}
+                            {{ reservation.class_id.time }}
+                        </div>
+                        {% if reservation.is_expired %}
+                        <!--예약이 만료된 경우 리뷰 작성 버튼 표시-->
+                    <a href="{% url 'write_review' reservation.id %}" class="review-button">리뷰 작성</a>
+                    {% else %}
+                        <!--예약이 취소되지 않은 경우 취소 버튼 표시 -->
+                    <form action="{% url 'cancel_reservation' reservation.id %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="cancel-button">예약 취소</button>
+                    </form>
+                    {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+                <p colspan="6">예약 내역이 없습니다.</p>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="pagination">
+        <button class="pagination-arrow" id="prev-page" disabled>&lt;</button>
+        <div id="page-numbers"></div>
+        <button class="pagination-arrow" id="next-page">&gt;</button>
+    </div>
+    <script src="/Team1/Team1/static/js/my_reservation.js"></script>
+</body>
+</html>
 
+
+    <!--
+    <p>예약 내역</p>
     <table>
         <thead>
             <tr>
@@ -41,10 +84,10 @@
                 <td>{{ reservation.class_id.time }}</td>
                 <td>
                     {% if reservation.is_expired %}
-                        <!-- 예약이 만료된 경우 리뷰 작성 버튼 표시 -->
+                         예약이 만료된 경우 리뷰 작성 버튼 표시 
                         <a href="{% url 'write_review' reservation.id %}">리뷰 작성</a>
                     {% else %}
-                        <!-- 예약이 취소되지 않은 경우 취소 버튼 표시 -->
+                         예약이 취소되지 않은 경우 취소 버튼 표시 
                         <form action="{% url 'cancel_reservation' reservation.id %}" method="POST">
                             {% csrf_token %}
                             <button type="submit">예약 취소</button>
@@ -63,3 +106,5 @@
     <a href="{% url 'myPage' %}">마이페이지</a>
 </body>
 </html>
+
+-->

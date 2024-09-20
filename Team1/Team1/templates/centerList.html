@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Exo:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <link rel="stylesheet" href="/Team1/Team1/static/css/centerList.css">
+    <title>리뷰</title>
+</head>
+<body>
+    <div class="container">
+        <div class="topBar">
+            <p class="topBar-membership">멤버십</p>
+            <P class="topBar-classfit">CLASSFIT</P>
+            <img src="/Team1/Team1/static/img/profile-icon.png" alt="프로필 아이콘" class="topBar-profileIcon">
+        </div>
+    </div>
+    <div class="secondContainer">
+        <div class="dropdown-container">
+            <div class="dropdown">
+                <i class="fas fa-caret-down"></i>
+                <select>
+                    <option value="option1">청파동</option>
+                    <option value="option2">이촌1동</option>
+                    <option value="option3">한강로동</option>
+                    <option value="option4">남영동</option>
+                    <option value="option5">이태원1동</option>
+                    <option value="option6">한남동</option>
+                </select>
+            </div>
+            <div class="dropdown">
+                <select>
+                    <option value="option7">PT&헬스</option>
+                    <option value="option8">테니스&배드민턴</option>
+                    <option value="option9">필라테스</option>
+                    <option value="option10">요가</option>
+                    <option value="option11">골프</option>
+                    <option value="option12">수영</option>
+                    <option value="option13">복싱</option>
+                </select>
+            </div>
+            <button class="btn">검색</button>
+        </div>
+    </div>
+    <div class="thirdContainer">
+        <div class="listContainer">
+            <div class="boxContainer">
+                <img src="{{ center.image_url }}" alt="센터 사진" class="centerImage">
+                <div class="centerContent">
+                    <div class="title-content">
+                        <p class="titleContent-centerName">{{ center.name }}</p>
+                        <img src="/Team1/Team1/static/img/reviewStar-icon.png" alt="리뷰 별 점수" class="reviewStar-icon">
+                        <p class="titleContent-score">5.0</p>
+                    </div>
+                    <div class="centerDetail-container">
+                        <p class="centerDetail-address">{{ center.address }}</p>
+                        <p class="centerDetail-phone">{{ center.phone }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pagination">
+        <button class="pagination-arrow" id="prev-page" disabled>&lt;</button>
+        <div id="page-numbers"></div>
+        <button class="pagination-arrow" id="next-page">&gt;</button>
+    </div>
+    </div>
+    <script src="/Team1/Team1/static/js/centerList.js"></script>
+</body>
+</html>

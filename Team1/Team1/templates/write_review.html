@@ -2,34 +2,69 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>리뷰 작성</title>
-    <style>
-        .review-form {
-            width: 80%;
-            margin: 0 auto;
-        }
-        .review-form h1 {
-            text-align: center;
-        }
-        .review-form label {
-            display: block;
-            margin: 10px 0 5px;
-        }
-        .review-form textarea {
-            width: 100%;
-            height: 80px;
-            resize: vertical;
-        }
-        .review-form .buttons {
-            text-align: center;
-            margin-top: 20px;
-        }
-        .review-form .buttons button {
-            margin: 0 10px;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Exo:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <link rel="stylesheet" href="/Team1/Team1/static/css/write_review.css">
+    <title>리뷰</title>
 </head>
 <body>
+    <div class="container">
+        <div class="topBar">
+            <p class="topBar-membership">멤버십</p>
+            <P class="topBar-classfit">CLASSFIT</P>
+            <img src="/Team1/Team1/static/img/profile-icon.png" alt="프로필 아이콘" class="topBar-profileIcon">
+        </div>
+        <div class="review-title">
+            이 수업 어떠셨나요?
+        </div>
+        <div class="info-container">
+            <p class="centerName-review">{{ reservation.center_name }}</p>
+            <div class="grid-review">
+                <p class="classTime-review" id="classTime-review">{{ class_instance.time }}</p>
+                <p class="classDetail-review" id="classDetail-review">{{ class_instance.detail }}</p>
+                <p class="classDuration-review" id="classDuration-review">({{ class_instance.duration }}분)</p>
+                <p class="classTeacher-review" id="classTeacher-review">{{ reservation.class_id.teacher }} 강사</p>
+            </div>
+        </div>
+        <form method="POST">
+            {% csrf_token %}    
+            <div class="star-rating" id="star">
+                <img src="/Team1/Team1/static/img/reviewEmptyStar-icon.png" alt=" 빈 리뷰 별 아이콘" class="reviewEmptyStar-icon" data-value="1">
+                <img src="/Team1/Team1/static/img/reviewEmptyStar-icon.png" alt="빈 리뷰 별 아이콘" class="reviewEmptyStar-icon" data-value="2">
+                <img src="/Team1/Team1/static/img/reviewEmptyStar-icon.png" alt="빈 리뷰 별 아이콘" class="reviewEmptyStar-icon" data-value="3">
+                <img src="/Team1/Team1/static/img/reviewEmptyStar-icon.png" alt="빈 리뷰 별 아이콘" class="reviewEmptyStar-icon" data-value="4">
+                <img src="/Team1/Team1/static/img/reviewEmptyStar-icon.png" alt="빈 리뷰 별 아이콘" class="reviewEmptyStar-icon" data-value="5">
+            </div>
+            <div class="chooseKeyword-container">
+                <p class="chooseKeyword">키워드를 골라주세요</p>
+                <div class="keywords" id="keyword">
+                    <button class="keyword-button">친절해요</button>
+                    <button class="keyword-button">깔끔해요</button>
+                    <button class="keyword-button">재방문각</button>
+                    <button class="keyword-button">운동맛집</button>
+                </div>
+            </div>
+            <div class="reviewForm-container">
+                <form id="textForm">
+                    <textarea id="detail" name="textInput" maxlength="50" placeholder="수업에 대한 후기를 남겨주세요."></textarea>
+                </form>
+            </div>
+            <div id="charCount" class="char-count">0/50</div>
+            <div class="reviewButton">
+                <button class="cancel" onclick="window.location.href='{% url 'my_reservation' %}'">취소하기</button>
+                <button class="enroll">등록하기</button>
+            </div>
+        </form>
+    </div>
+    <script src="/Team1/Team1/static/js/write_review.js"></script>
+</body>
+</html>
+
+
+<!--
     <div class="review-form">
         <h1>이 수업 어떠셨나요?</h1>
 
@@ -41,7 +76,7 @@
         <form method="POST">
             {% csrf_token %}
 
-            <!-- 별점 라디오 버튼 -->
+            별점 라디오 버튼
             <label for="star">별점:</label>
             <div id="star">
                 <label><input type="radio" name="star" value="1" required> 1점</label>
@@ -51,7 +86,7 @@
                 <label><input type="radio" name="star" value="5" required> 5점</label>
             </div>
 
-            <!-- 키워드 체크박스 -->
+            키워드 체크박스
             <label for="keyword">키워드:</label>
             <div id="keyword">
                 <label><input type="checkbox" name="keyword" value="친절해요"> 친절해요</label>
@@ -60,7 +95,7 @@
                 <label><input type="checkbox" name="keyword" value="운동맛집"> 운동맛집</label>
             </div>
 
-            <!-- 리뷰 작성 -->
+            리뷰 작성
             <label for="detail">리뷰 내용 (50자 이내):</label>
             <textarea name="detail" id="detail" maxlength="50" required></textarea>
 

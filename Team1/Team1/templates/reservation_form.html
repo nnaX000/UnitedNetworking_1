@@ -3,77 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>예약 페이지</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            line-height: 1.6;
-        }
-        .form-container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            border: 1px solid #ddd;
-            background-color: #f9f9f9;
-        }
-        .form-container h2 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .form-container label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-        .form-container input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ddd;
-        }
-        .form-container button {
-            width: 100%;
-            padding: 10px;
-            background-color: #333;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-        }
-        .form-container button:hover {
-            background-color: #555;
-        }
-    </style>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/reservation_form.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Exo:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+    <title>예약</title>
 </head>
 <body>
+    <div class="container">
+        <div class="topBar">
+            <p class="topBar-membership">멤버십</p>
+            <P class="topBar-classfit">CLASSFIT</P>
+            {% load static %}
+            <img src="{% static 'img/profile-icon.png' %}" alt="프로필 아이콘" class="topBar-profileIcon">
+        </div>
+    </div>
+    <div class="form-container">
+        <div class="form-containerTop">
+            <p class="centerName-form">{{ center_name }}</p>
+            <div class="grid-form">
+                <p class="classTime-form">{{ class_instance.time }}</p>
+                <p class="classDetail-form">{{ class_instance.detail }}</p>
+                <p class="classDuration-form">{{ class_instance.duration }}분</p>
+                <p class="classTeacher-form">{{ class_instance.teacher }} 강사</p>
+            </div>
+        </div>
+        <div class="form-containerBottom">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-row">
+                    <label for="name">이름</label>
+                    <input type="text" id="name" name="name" required class="Input-box">
+                </div>
+                
+                <div class="form-row">
+                    <label for="phone">전화번호</label>
+                    <input type="text" id="phone" name="phone" required class="Input-box">
+                </div>
+                
+                <div class="form-row">
+                    <label for="email">이메일</label>
+                    <input type="email" id="email" name="email" required class="Input-box">
+                </div>
+                
+                <div class="form-row">
+                    <label for="classDate">수업 일자</label>
+                    <p class="timeInput">{{ class_instance.date }} {{ class_instance.time }} ({{ class_instance.duration }}분)</p>
+                </div>
 
-<div class="form-container">
-    <h2>{{ center_name }}</h2>
-    <h2>{{ class_instance.detail }} 예약</h2>
-    <p>{{ class_instance.teacher }} 강사님</p>
-    <p>{{ class_instance.date }} {{ class_instance.time }} ({{ class_instance.duration }}분)</p>
-    <p>결제 금액: {{ class_instance.credit_num }} 크레딧</p>
+                <div class="form-row">
+                    <label for="classPrice">결제 금액</label>
+                    <p class="creditInput">{{ class_instance.credit_num }} 크레딧</p>
+                </div>
 
-    <form method="POST">
-        {% csrf_token %}
-        <label for="name">이름</label>
-        <input type="text" id="name" name="name" value="{{ name }}" required>
+                <div class="button-container">
+                    <button type="submit" id="reserve-btn">예약</button>
+                </div>
+            </form>
+        </div>
 
-        <label for="phone">전화번호</label>
-        <input type="text" id="phone" name="phone" value="{{ phone }}" required>
+        <div id="reservation-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <p>예약이 완료되었습니다!</p>
+            </div>
+        </div>
 
-        <label for="email">이메일</label>
-        <input type="email" id="email" name="email" value="{{ email }}" required>
 
-        <button type="submit">예약하기</button>
-    </form>
-</div>
+        <!--
+        <h2>{{ class_instance.detail }} 예약</h2>
+        <p>{{ class_instance.teacher }} 강사님</p>
+        <p>{{ class_instance.date }} {{ class_instance.time }} ({{ class_instance.duration }}분)</p>
+        <p>결제 금액: {{ class_instance.credit_num }} 크레딧</p>
 
-{% if message == 'reservation_success' %}
-    <script>
-        alert("예약이 완료되었습니다.");
-    </script>
-{% endif %}
+        <form method="POST">
+            {% csrf_token %}
+            <label for="name">이름</label>
+            <input type="text" id="name" name="name" value="{{ name }}" required>
 
+            <label for="phone">전화번호</label>
+            <input type="text" id="phone" name="phone" value="{{ phone }}" required>
+
+            <label for="email">이메일</label>
+            <input type="email" id="email" name="email" value="{{ email }}" required>
+
+            <button type="submit">예약하기</button>
+        </form>
+        -->
+    </div>
+    {% load static %}
+    {% if message == 'reservation_success' %}
+        <script src="{% static 'js/reservation_form.js' %}"></script>
+    {% endif %}
 </body>
 </html>
