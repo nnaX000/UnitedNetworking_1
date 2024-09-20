@@ -26,10 +26,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0', '.cloudtype.app']
+ALLOWED_HOSTS = ['*']
 
 
-# Application definition
+# Application definition'*'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -81,8 +81,12 @@ WSGI_APPLICATION = 'Team1.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3', 
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'mariadb',  # 클라우드타입에서 생성한 DB 이름
+        'USER': 'seohee128',  # 클라우드타입에서 제공된 사용자 이름
+        'PASSWORD': '8037',  # 클라우드타입에서 제공된 비밀번호
+        'HOST': 'svc.sel4.cloudtype.app',
+        'PORT': '31255',
     }
 }
 
