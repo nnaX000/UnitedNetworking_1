@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot UI with API</title>
+    <style>
+        @import url('//fonts.googleapis.com/earlyaccess/notosanskr.css');
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .chat-container {
+            width: 360px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background-color: #f6f8fc;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            width: 120px;
+            display: block;
+        }
+
+        .user-icon {
+            width: 30px;
+            height: 30px;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .membership-button {
+            background-color: transparent;
+            border: none;
+            font-size: 14px;
+            color: #555;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .chat-area {
+            flex-grow: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            overflow-y: auto;
+            max-height: 500px;
+        }
+
+        .message {
+            margin-bottom: 15px;
+        }
+
+        .bot-message {
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .bot-message .bubble {
+            background-color: #f0f2f7;
+            border-radius: 10px;
+            padding: 10px;
+            font-size: 14px;
+            color: #333;
+            max-width: 250px;
+            margin-bottom: 10px;
+        }
+
+        .user-message {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .user-message .bubble {
+            background-color: #e6eaf1;
+            border-radius: 10px;
+            padding: 10px;
+            font-size: 14px;
+            color: #333;
+            max-width: 250px;
+            margin-top:10%;
+        }
+
+        .options {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+        }
+
+        .options button {
+            background-color: #e6eaf1;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            color: #333;
+        }
+
+        .options button:hover {
+            background-color: #d0d4dd;
+        }
+
+        .footer {
+            padding: 10px;
+            background-color: #f6f8fc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer input {
+            border: none;
+            border-radius: 20px;
+            padding: 10px;
+            flex-grow: 1;
+            margin-right: 10px;
+            background-color: #f0f2f7;
+        }
+
+        .footer button {
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        /* Loading Spinner */
+        .loading {
+            margin: auto;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <header>
+            <button id="membership-btn" class="membership-button" onclick="location.href='{% url 'membership' %}'">멤버십</button>
+            <img src="{% static 'img/logo.png' %}" alt="CLASSFIT 로고" class="logo">
+            <button id="user-icon" class="user-icon" onclick="location.href='{% url 'myPage' %}'">
+                <img src="{% static 'img/account.png' %}" class="user-icon">
+            </button> 
+        </header>
+   
+        <div id="chat-area" class="chat-area">
+            <!-- Dynamic chat content will be inserted here -->
+            <div class="message bot-message">
+                <div class="bubble">안녕하세요. 클라스핏 AI 챗봇이에요. 고객님께 맞는 운동을 추천드릴게요!</div>
+            </div>
+            <div class="message bot-message">
+                <div class="bubble">선호하는 키워드를 선택해주세요.</div>
+            </div>
+            <div class="options">
+                <button onclick="handleOptionClick('같이 하는 운동')">같이 하는 운동</button>
+                <button onclick="handleOptionClick('혼자 하는 운동')">혼자 하는 운동</button>
+            </div>
+        </div>
+
+        <div class="footer">
+            <input id="user-input" type="text" placeholder="메시지를 입력하세요" />
+            <button id="send-button">⤶</button>
+        </div>
+    </div>
+
+    <script>
+        // Elements for interaction
+        const chatArea = document.getElementById('chat-area');
+        const userInput = document.getElementById('user-input');
+        const sendButton = document.getElementById('send-button');
+
+        // Sample API URL (replace with actual endpoint)
+        const chatbotAPI = "http://43.201.148.25:8002";
+
+        // Function to append user message to chat area
+        function addUserMessage(message) {
+            const userMessageDiv = document.createElement('div');
+            userMessageDiv.classList.add('message', 'user-message');
+            userMessageDiv.innerHTML = `<div class="bubble">${message}</div>`;
+            chatArea.appendChild(userMessageDiv);
+            chatArea.scrollTop = chatArea.scrollHeight;
+        }
+
+        // Function to append bot message to chat area
+        function addBotMessage(message) {
+            const botMessageDiv = document.createElement('div');
+            botMessageDiv.classList.add('message', 'bot-message');
+            botMessageDiv.innerHTML = `<div class="bubble">${message}</div>`;
+            chatArea.appendChild(botMessageDiv);
+            chatArea.scrollTop = chatArea.scrollHeight;
+        }
+
+        // Function to display a loading indicator
+        function showLoading() {
+            const loadingDiv = document.createElement('div');
+            loadingDiv.classList.add('message', 'bot-message');
+            loadingDiv.innerHTML = `<div class="loading"></div>`;
+            loadingDiv.id = 'loading';
+            chatArea.appendChild(loadingDiv);
+            chatArea.scrollTop = chatArea.scrollHeight;
+        }
+
+        // Function to remove loading indicator
+        function hideLoading() {
+            const loadingDiv = document.getElementById('loading');
+            if (loadingDiv) {
+                loadingDiv.remove();
+            }
+        }
+
+        // Function to handle sending user input to the chatbot API
+        async function sendMessage(userMessage) {
+            if (!userMessage) return;
+
+            // Add user's message to chat area
+            addUserMessage(userMessage);
+
+            // Clear input field if the message comes from input
+            userInput.value = '';
+
+            // Show loading spinner
+            showLoading();
+
+            try {
+                // Simulate API call (replace this with actual fetch to your API)
+                const response = await fetch(chatbotAPI, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message: userMessage }),
+                });
+
+                const data = await response.json();
+
+                // Remove loading spinner
+                hideLoading();
+
+                // Add bot's response to chat area
+                addBotMessage(data.response);  // Assuming API returns a 'response' field
+
+            } catch (error) {
+                console.error('Error communicating with chatbot:', error);
+                hideLoading();
+                addBotMessage('죄송합니다. 서버와 통신할 수 없습니다.');
+            }
+        }
+
+        // Event listener for send button (for typing messages)
+        sendButton.addEventListener('click', () => sendMessage(userInput.value));
+
+        // Event listener for Enter key to send message (for typing messages)
+        userInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                sendMessage(userInput.value);
+            }
+        });
+
+        // Handle option button clicks
+        function handleOptionClick(option) {
+            sendMessage(option); // Send the selected option to the chatbot
+        }
+    </script>
+</body>
+</html>
