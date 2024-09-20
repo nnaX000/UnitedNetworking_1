@@ -93,12 +93,12 @@
                 position: markerPosition
             });
             marker.setMap(map);
-        }
+        }   
 
         // 카카오맵 API 비동기 로드
         function loadScript() {
             var script = document.createElement('script');
-            script.src = 'https://dapi.kakao.com/v2/maps/sdk.js?appkey={{ kakao_api_key }}&autoload=false';
+            script.src = 'https://dapi.kakao.com/v2/maps/sdk.js?appkey=0d9764d3d7fd5c1dd0af3f9d719674e2&autoload=false';
             script.onload = function() {
                 kakao.maps.load(initMap); // 지도 API를 로드한 후 initMap 함수 호출
             };
@@ -106,8 +106,8 @@
         }
 
         document.addEventListener('DOMContentLoaded', loadScript);
-
-
+        
+        
     //pagination 설정 코드
     const totalPages = 6; // 총 페이지 수 설정
     const pageNumbersContainer = document.getElementById('page-numbers');
