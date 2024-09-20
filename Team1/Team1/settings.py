@@ -82,8 +82,8 @@ WSGI_APPLICATION = 'Team1.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mariadb',  # 클라우드타입에서 생성한 DB 이름
-        'USER': 'mariadb',  # 클라우드타입에서 제공된 사용자 이름
+        'NAME': 'mysql',  # 클라우드타입에서 생성한 DB 이름
+        'USER': 'root@localhost',  # 클라우드타입에서 제공된 사용자 이름
         'PASSWORD': '8037',  # 클라우드타입에서 제공된 비밀번호
         'HOST': 'svc.sel4.cloudtype.app',
         'PORT': '31255',
