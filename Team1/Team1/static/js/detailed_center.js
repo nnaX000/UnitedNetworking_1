@@ -41,8 +41,11 @@
                             console.log('Item:', item);  // 각 item의 구조를 확인하기 위해 출력
 
                             const listItem = document.createElement('li');
-                            //
+                            //추가
                             listItem.classList.add('scheduleList'); // 스타일 적용
+                            //추가
+                            const itemDiv = document.createElement('div');
+                            itemDiv.classList.add('scheduleItem'); // CSS 클래스를 추가
 
                             listItem.innerHTML = `
                                 <div>
@@ -51,6 +54,8 @@
                                     <button onclick="openReservationForm('${item.id}', '${item.time}', '${item.detail}', '${item.credit_num}', '${item.teacher}', '${item.duration}')">예약</button>
                                 </div>
                             `;
+                            //아래 한줄 추가
+                            itemDiv.appendChild(listItem);
                             scheduleList.appendChild(listItem);
                         });
                     }

@@ -8,7 +8,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
-    <link rel="stylesheet" href="/Team1/Team1/static/css/write_review.css">
     <link rel="stylesheet" type="text/css" href="{% static 'css/write_review.css' %}">
     <title>리뷰</title>
 </head>
@@ -17,7 +16,7 @@
         <div class="topBar">
             <p class="topBar-membership">멤버십</p>
             <P class="topBar-classfit">CLASSFIT</P>
-            <img src="/Team1/Team1/static/img/profile-icon.png" alt="프로필 아이콘" class="topBar-profileIcon">
+            <img src="{% static 'img/profile-icon.png' %}" alt="프로필 아이콘" class="topBar-profileIcon">
         </div>
         <div class="review-title">
             이 수업 어떠셨나요?
@@ -34,11 +33,11 @@
         <form method="POST">
             {% csrf_token %}    
             <div class="star-rating" id="star">
-                <img src="/Team1/Team1/static/img/reviewEmptyStar-icon.png" alt=" 빈 리뷰 별 아이콘" class="reviewEmptyStar-icon" data-value="1">
-                <img src="/Team1/Team1/static/img/reviewEmptyStar-icon.png" alt="빈 리뷰 별 아이콘" class="reviewEmptyStar-icon" data-value="2">
-                <img src="/Team1/Team1/static/img/reviewEmptyStar-icon.png" alt="빈 리뷰 별 아이콘" class="reviewEmptyStar-icon" data-value="3">
-                <img src="/Team1/Team1/static/img/reviewEmptyStar-icon.png" alt="빈 리뷰 별 아이콘" class="reviewEmptyStar-icon" data-value="4">
-                <img src="/Team1/Team1/static/img/reviewEmptyStar-icon.png" alt="빈 리뷰 별 아이콘" class="reviewEmptyStar-icon" data-value="5">
+                <img src="{% static 'img/reviewEmptyStar-icon.png' %}" alt=" 빈 리뷰 별 아이콘" class="reviewEmptyStar-icon" data-value="1">
+                <img src="{% static 'img/reviewEmptyStar-icon.png' %}" alt="빈 리뷰 별 아이콘" class="reviewEmptyStar-icon" data-value="2">
+                <img src="{% static 'img/reviewEmptyStar-icon.png' %}" alt="빈 리뷰 별 아이콘" class="reviewEmptyStar-icon" data-value="3">
+                <img src="{% static 'img/reviewEmptyStar-icon.png' %}" alt="빈 리뷰 별 아이콘" class="reviewEmptyStar-icon" data-value="4">
+                <img src="{% static 'img/reviewEmptyStar-icon.png' %}" alt="빈 리뷰 별 아이콘" class="reviewEmptyStar-icon" data-value="5">
             </div>
             <div class="chooseKeyword-container">
                 <p class="chooseKeyword">키워드를 골라주세요</p>
