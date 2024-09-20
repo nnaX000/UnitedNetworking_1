@@ -74,3 +74,12 @@ document.addEventListener('DOMContentLoaded', () => {
         charCount.textContent = `${currentLength}/50`;
     });
 });
+
+
+const buttons = document.querySelectorAll('.keyword-button');
+
+buttons.forEach(button => {
+    button.addEventListener('click', () => {
+        button.classList.toggle('selected');
+    });
+});

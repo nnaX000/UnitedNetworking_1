@@ -285,7 +285,7 @@
         <button id="searchButton" class="search-button">검색</button>
     </div>
     
-    <a onclick="location.href='{% url 'my_reservation' %}'">
+    <a onclick="location.href='{% url 'center_list' %}'">
         <h2> 지금 바로 예약해보세요 > </h2>
     </a>
 
@@ -303,7 +303,7 @@
     </div>
 
     <div class="chatbot-container">
-        <a onclick="location.href='{% url 'chatbot' %}'">
+             <a onclick="location.href='{% url 'chatbot' %}'">
             <div class="chatbot-box">
                 나에게 꼭 맞는 운동을 추천받아보는 건 어때요?
             </div>
@@ -311,8 +311,8 @@
                 <img src="{% static 'img/chatbot.png' %}" alt="Chatbot Icon">
             </div>
         </a>
-    </div>
-    
+    </div>    
+
     <!-- Footer Logo -->
     <img src="{% static 'img/logo.png' %}" alt="CLASSFIT 로고" class="footer-logo">
 </footer>

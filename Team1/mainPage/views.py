@@ -253,3 +253,10 @@ def membership(request):
  # 예약 페이지 로직
 def reservation_view(request):
     return render(request, 'reservation_form.html')
+
+def chatbot_view(request):
+    # 여기에서 챗봇 관련 로직을 처리합니다.
+    return render(request, 'chatbot.html')  # chatbot.html 템플릿을 렌더링
+
+def center_list_view(request):
+    return render(request, 'centerList.html')

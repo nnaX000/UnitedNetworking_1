@@ -213,3 +213,12 @@ def logout_view(request):
         messages.success(request, '로그아웃 되었습니다.')
         return redirect('login')  # 로그아웃 후 로그인 페이지로 redirect
     return redirect('myPage')  # GET 요청 시 마이페이지로 redirect
+
+
+
+def my_reservation(request):
+    return render(request, 'my_reservation.html')
+
+def write_review(request, reservation_id):
+    # 뷰 로직
+    return render(request, 'write_review.html')

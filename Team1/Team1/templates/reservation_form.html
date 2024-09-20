@@ -23,7 +23,7 @@
     </div>
     <div class="form-container">
         <div class="form-containerTop">
-            <p class="centerName-form">{{ center_name }}</p>
+            <p class="centerName-form">{{ center.name }}</p>
             <div class="grid-form">
                 <p class="classTime-form">{{ class_instance.time }}</p>
                 <p class="classDetail-form">{{ class_instance.detail }}</p>
@@ -51,10 +51,10 @@
                 
                 <div class="form-row">
                     <label for="classDate">수업 일자</label>
-                    <p class="timeInput">{{ class_instance.date }} {{ class_instance.time }} ({{ class_instance.duration }}분)</p>
+                    <p class="timeInput">{{ class_instance.date }} {{ class_instance.time }} {{ class_instance.duration }}분</p>
                 </div>
 
-                <div class="form-row">
+                <div class="form-row">  
                     <label for="classPrice">결제 금액</label>
                     <p class="creditInput">{{ class_instance.credit_num }} 크레딧</p>
                 </div>

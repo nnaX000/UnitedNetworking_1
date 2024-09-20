@@ -1,4 +1,3 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -8,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/write_review.css' %}">
     <title>리뷰</title>
 </head>
@@ -26,7 +26,7 @@
             <div class="grid-review">
                 <p class="classTime-review" id="classTime-review">{{ class_instance.time }}</p>
                 <p class="classDetail-review" id="classDetail-review">{{ class_instance.detail }}</p>
-                <p class="classDuration-review" id="classDuration-review">({{ class_instance.duration }}분)</p>
+                <p class="classDuration-review" id="classDuration-review">{{ class_instance.duration }}분</p>
                 <p class="classTeacher-review" id="classTeacher-review">{{ reservation.class_id.teacher }} 강사</p>
             </div>
         </div>
@@ -56,7 +56,7 @@
             <div id="charCount" class="char-count">0/50</div>
             <div class="reviewButton">
                 <button class="cancel" onclick="window.location.href='{% url 'my_reservation' %}'">취소하기</button>
-                <button class="enroll">등록하기</button>
+                <button class="enroll" >등록하기</button>
             </div>
         </form>
     </div>

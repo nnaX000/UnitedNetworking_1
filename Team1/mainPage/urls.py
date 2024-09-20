@@ -16,4 +16,6 @@ urlpatterns = [
     path('waiting_list/', views.add_to_waiting_list, name='waiting_list'),
     #리뷰 불러오기
     path('review_list/<int:center_id>/', views.review_list, name='review_list'),
+    path('chatbot/', views.chatbot_view, name='chatbot'),
+    path('center_list/', views.center_list_view, name='center_list'),
 ]
