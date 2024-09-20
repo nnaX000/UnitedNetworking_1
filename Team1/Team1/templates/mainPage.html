@@ -303,12 +303,14 @@
     </div>
 
     <div class="chatbot-container">
-        <div class="chatbot-box">
-            나에게 꼭 맞는 운동을 추천받아보는 건 어때요?
-        </div>
-        <div class="chatbot-icon">
-            <img src="{% static 'img/chatbot.png' %}" alt="Chatbot Icon">
-        </div>
+        <a onclick="location.href='{% url 'chatbot' %}'">
+            <div class="chatbot-box">
+                나에게 꼭 맞는 운동을 추천받아보는 건 어때요?
+            </div>
+            <div class="chatbot-icon">
+                <img src="{% static 'img/chatbot.png' %}" alt="Chatbot Icon">
+            </div>
+        </a>
     </div>
     
     <!-- Footer Logo -->
