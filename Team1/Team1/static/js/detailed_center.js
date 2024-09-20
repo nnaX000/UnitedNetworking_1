@@ -41,6 +41,9 @@
                             console.log('Item:', item);  // 각 item의 구조를 확인하기 위해 출력
 
                             const listItem = document.createElement('li');
+                            //
+                            listItem.classList.add('scheduleList'); // 스타일 적용
+
                             listItem.innerHTML = `
                                 <div>
                                     <strong>${item.time}</strong> - ${item.detail} - ${item.credit_num} 크레딧
