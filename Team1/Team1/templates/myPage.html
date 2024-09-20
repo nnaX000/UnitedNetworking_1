@@ -50,45 +50,54 @@
     </div>
     {% else %}
     <!-- 로그인했을 때 -->
-    <h1>{{ nickname }}님, 오늘도 건강한 하루 되세요!</h1>
-
-    <div>
-        <h3>잔여 크레딧</h3>
-        <p>{{ remaining_credit }}</p>
+    <div class="container">
+        <header>
+            <button id="membership-btn" class="membership-button" onclick="location.href='{% url 'membership' %}'">멤버십</button>
+            <a onclick="location.href='{% url 'mainPage' %}'">
+                <img src="{%static 'img/logo.png' %}" alt="CLASSFIT 로고" class="logo">
+            </a>
+        </header>
+        <main>
+            
+            <div class="login-section">
+                <img src="{%static 'img/account.png' %}" alt="User Icon" class="user-icon">
+                <h1>{{ nickname }}님, 오늘도 건강한 하루 되세요!</h1>
+                
+                <div class="credits">
+                    <button class="credit-button">잔여 크레딧</button> <p>{{ remaining_credit }}</p>
+                    <button class="credit-button">소진 크레딧</button><p>{{ using_credit }}</p>
+                    <button class="credit-button">잔여 기간</button> <p>{{ credit_period }}</p>
+                </div>
+            </div>
+            <div class="notification-section">
+                <div class="divider"></div> <!-- 구분선 추가 -->
+                <a href="{% url 'my_reservation' %}">
+                    <h3>예약 내역</h3>
+                </a>
+                <div class="divider"></div>
+                <form method="post" action="{% url 'update_alert' %}">
+                {% csrf_token %}
+                    <div class="toggle-wrapper">
+                        <label for="notification-toggle"><h3>수업 전 푸시 알림</h3></label>
+                        <label class="switch">
+                            <input type="hidden" name="alert" value="off">
+                            <input type="checkbox" name = "alert"  value="on" {% if alert %}checked{% endif %} id="notification-toggle" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </form>
+                <div class="divider"></div>
+                <form method="post" action="{% url 'signInUp:logout' %}">
+                    {% csrf_token %}
+                    <button type="submit">로그아웃</button>
+                </form>
+                <div class="divider"></div>
+            </div>
+        </main>
     </div>
-
-    <div>
-        <h3>소진 크레딧</h3>
-        <p>{{ using_credit }}</p>
-    </div>
-
-    <div>
-        <h3>잔여 기간</h3>
-        <p>{{ credit_period }}</p>
-    </div>
-
-    <a href="{% url 'my_reservation' %}" class="btn">예약 내역</a><br><br>
-
-    <div>
-        <h3>수업 전 푸시 알림</h3>
-        <form method="post" action="{% url 'update_alert' %}">
-            {% csrf_token %}
-            <label>
-                <input type="radio" name="alert" value="on" {% if alert %}checked{% endif %}> ON
-            </label>
-            <label>
-                <input type="radio" name="alert" value="off" {% if not alert %}checked{% endif %}> OFF
-            </label>
-            <button type="submit">변경</button> <!-- submit 버튼 추가 -->
-        </form>
-    </div>
-
-    <form method="post" action="{% url 'signInUp:logout' %}">
-        {% csrf_token %}
-        <button type="submit">로그아웃</button>
-    </form>
+    
 
     {% endif %}
-    </div>
+    
 </body>
 </html>
