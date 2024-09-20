@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -8,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <link rel="stylesheet" href="/Team1/Team1/static/css/write_review.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/write_review.css' %}">
     <title>리뷰</title>
 </head>
 <body>
@@ -59,7 +61,7 @@
             </div>
         </form>
     </div>
-    <script src="/Team1/Team1/static/js/write_review.js"></script>
+    <script src="{% static 'js/write_review.js' %}"></script>
 </body>
 </html>
 

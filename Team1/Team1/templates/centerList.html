@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -8,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <link rel="stylesheet" href="/Team1/Team1/static/css/centerList.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/centerList.css' %}">
     <title>리뷰</title>
 </head>
 <body>
@@ -69,6 +71,6 @@
         <button class="pagination-arrow" id="next-page">&gt;</button>
     </div>
     </div>
-    <script src="/Team1/Team1/static/js/centerList.js"></script>
+    <script src="{% static 'js/centerList.js' %}"></script>
 </body>
 </html>

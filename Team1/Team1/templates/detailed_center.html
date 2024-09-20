@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -7,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/Team1/Team1/static/css/detailed_center.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/detailed_center.css' %}">
     <title>센터 상세 정보</title>
 </head>
 <body>
@@ -14,21 +16,21 @@
         <div class="topBar">
             <p class="topBar-membership">멤버십</p>
             <P class="topBar-classfit">CLASSFIT</P>
-            <img src="/Team1/Team1/static/img/profile-icon.png" alt="프로필 아이콘" class="topBar-profileIcon">
+            <img src="{% static 'img/profile-icon.png' %}" alt="프로필 아이콘" class="topBar-profileIcon">
         </div>
         <div class="center-info" id="centerInfo" data-center-id="{{ center.id }}">
             <div class="centerInfo-top">
                 <p id="centerName" class="centerName">{{ center.name }}</p>
-                <img src="/Team1/Team1/static/img/share-icon.png" alt="공유 아이콘" class="centerInfo-shareIcon">
+                <img src="{% static 'img/share-icon.png' %}" alt="공유 아이콘" class="centerInfo-shareIcon">
             </div>
             <img src="{{ center.image_url }}" alt="센터 사진" class="centerImage">
             <div id="map" class="map-container"></div>
             <div class="locationInfo">
-                <img src="/Team1/Team1/static/img/location-icon.png" alt="위치 아이콘" class="location-icon">
+                <img src="{% static 'img/location-icon.png' %}" alt="위치 아이콘" class="location-icon">
                 <p id="centerAddress" class="centerAddress">{{ center.address }}</p>
             </div>
             <div class="phoneInfo">
-                <img src="/Team1/Team1/static/img/phone-icon.png" alt="전화 아이콘" class="phone-icon">
+                <img src="{% static 'img/phone-icon.png' %}" alt="전화 아이콘" class="phone-icon">
                 <p id="centerPhone" class="centerPhone">{{ center.phone }}</p>
             </div>
         </div>
@@ -59,7 +61,7 @@
             </div>
 
             <div id="scheduleContent" class="tab-content">
-                <ul id="scheduleList">
+                <ul id="scheduleList" class="scheduleList">
                     <!-- 스케줄 목록이 여기에 표시됩니다 -->
                 </ul>
             </div>
@@ -110,8 +112,9 @@
             </div>
         </div>
     </div>
+    <script src="{% static 'js/detailed_center.js' %}"></script>
 </body>
-</html>     
+</html>
 
 
     <!--
@@ -192,13 +195,6 @@
             </div>
             <div class="reviewContent-container">
                 <p class="review-content">너무 좋아요 또 오고싶어요. 너무 좋아요 또 오고싶어요</p>
-            </div>
-        </div>
-        <div>
-            <div class="pagination">
-                <button class="pagination-arrow" id="prev-page" disabled>&lt;</button>
-                <div id="page-numbers"></div>
-                <button class="pagination-arrow" id="next-page">&gt;</button>
             </div>
         </div>
         -->
