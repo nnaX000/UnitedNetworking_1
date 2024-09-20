@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
     <link rel="stylesheet" href="/Team1/Team1/static/css/my_reservation.css">
     <link href="https://fonts.googleapis.com/css2?family=Exo:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
@@ -16,7 +17,7 @@
         <div class="topBar">
             <p class="topBar-membership">멤버십</p>
             <P class="topBar-classfit">CLASSFIT</P>
-            <img src="/Team1/Team1/static/img/profile-icon.png" alt="프로필 아이콘" class="topBar-profileIcon">
+            <img src="{% static 'img/profile-icon.png' %}" alt="프로필 아이콘" class="topBar-profileIcon">
         </div>
     </div>
     <p class="headTitle">예약 내역</p>
@@ -56,7 +57,7 @@
         <div id="page-numbers"></div>
         <button class="pagination-arrow" id="next-page">&gt;</button>
     </div>
-    <script src="/Team1/Team1/static/js/my_reservation.js"></script>
+    <script src="{% static 'js/my_reservation.js' %}"></script>
 </body>
 </html>
 
